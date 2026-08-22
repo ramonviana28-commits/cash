@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -123,7 +124,6 @@
     }
 
     #qrcode {
-      display: block;
       width: 220px;
       height: 220px;
       margin: 0 auto;
@@ -175,17 +175,6 @@
       margin-top: 20px;
     }
 
-    .debug {
-      margin-top: 20px;
-      padding: 10px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 11px;
-      color: #64748b;
-      word-break: break-all;
-    }
-
     @media (max-width: 480px) {
       .container {
         padding: 15px 10px 40px;
@@ -222,7 +211,6 @@
       </div>
 
       <div class="choice">
-
         <div class="choice-label">
           Sua escolha
         </div>
@@ -232,7 +220,6 @@
           id="choiceName">
           Carregando...
         </div>
-
       </div>
 
       <div class="value-label">
@@ -280,7 +267,6 @@
           readonly></textarea>
 
         <button
-          type="button"
           class="copy-button"
           onclick="copiarPix()">
 
@@ -288,11 +274,6 @@
 
         </button>
 
-      </div>
-
-      <div
-        id="debug"
-        class="debug">
       </div>
 
     </div>
@@ -308,18 +289,12 @@
 
     /*
      * ==========================================================
-     * CONFIGURAÇÃO DA API
+     * EDGE FUNCTION DO SUPABASE
      * ==========================================================
-     *
-     * ATENÇÃO:
-     *
-     * Esta URL será preenchida quando a Edge Function
-     * do Supabase estiver criada.
-     *
-     * NÃO coloque a chave secreta do Asaas neste arquivo.
      */
 
-    const PAYMENT_API_URL = "";
+    const PAYMENT_API_URL =
+      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/smart-processor";
 
 
     /*
@@ -335,8 +310,6 @@
      * ==========================================================
      * CANDIDATOS
      * ==========================================================
-     *
-     * Os IDs abaixo são exatamente os IDs enviados pelo Tally.
      */
 
     const CANDIDATOS = {
@@ -358,12 +331,8 @@
 
     /*
      * ==========================================================
-     * LER PARÂMETROS DA URL
+     * LER PAYMENT_OPTION_ID
      * ==========================================================
-     *
-     * Exemplo:
-     *
-     * pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44
      */
 
     const params =
@@ -375,7 +344,7 @@
 
     /*
      * ==========================================================
-     * ELEMENTOS DA PÁGINA
+     * ELEMENTOS
      * ==========================================================
      */
 
@@ -384,9 +353,6 @@
 
     const status =
       document.getElementById("status");
-
-    const statusMessage =
-      document.getElementById("statusMessage");
 
     const paymentArea =
       document.getElementById("paymentArea");
@@ -397,13 +363,10 @@
     const qrcode =
       document.getElementById("qrcode");
 
-    const debug =
-      document.getElementById("debug");
-
 
     /*
      * ==========================================================
-     * MOSTRAR STATUS
+     * STATUS
      * ==========================================================
      */
 
@@ -421,7 +384,6 @@
           ${message}
         </div>
       `;
-
     }
 
 
@@ -434,27 +396,20 @@
     function identificarEscolha(id) {
 
       if (!id) {
-
         return null;
-
       }
 
       return CANDIDATOS[id] || null;
-
     }
 
 
     /*
      * ==========================================================
-     * INICIALIZAÇÃO
+     * INICIAR
      * ==========================================================
      */
 
     function iniciar() {
-
-      /*
-       * Não recebeu payment_option_id.
-       */
 
       if (!paymentOptionId) {
 
@@ -467,26 +422,13 @@
           "Nenhuma opção de voto foi informada."
         );
 
-        debug.innerHTML =
-          "<strong>Erro:</strong><br>" +
-          "A URL não contém o parâmetro payment_option_id.";
-
         return;
-
       }
 
-
-      /*
-       * Procura o candidato pelo ID.
-       */
 
       const candidato =
         identificarEscolha(paymentOptionId);
 
-
-      /*
-       * ID não cadastrado.
-       */
 
       if (!candidato) {
 
@@ -499,53 +441,13 @@
           "O identificador da opção de voto não corresponde a nenhuma opção cadastrada."
         );
 
-        debug.innerHTML =
-          "<strong>payment_option_id recebido:</strong><br>" +
-          paymentOptionId;
-
         return;
-
       }
 
-
-      /*
-       * Candidato encontrado.
-       */
 
       choiceName.textContent =
         candidato.nome;
 
-
-      /*
-       * Diagnóstico temporário.
-       */
-
-      debug.innerHTML =
-        "<strong>payment_option_id recebido:</strong><br>" +
-        paymentOptionId;
-
-
-      /*
-       * Se a API ainda não estiver configurada,
-       * apenas confirma que a escolha foi recebida.
-       */
-
-      if (!PAYMENT_API_URL) {
-
-        showStatus(
-          "success",
-          "Escolha recebida corretamente!",
-          "O sistema recebeu o identificador da sua escolha. A próxima etapa será gerar o PIX."
-        );
-
-        return;
-
-      }
-
-
-      /*
-       * API configurada.
-       */
 
       criarPagamento();
 
@@ -556,17 +458,6 @@
      * ==========================================================
      * CRIAR PAGAMENTO
      * ==========================================================
-     *
-     * O navegador envia apenas o ID da opção.
-     *
-     * O backend será responsável por:
-     *
-     * 1. Validar o candidato
-     * 2. Criar o cliente/pagamento no Asaas
-     * 3. Gerar o PIX
-     * 4. Retornar o QR Code
-     * 5. Retornar o PIX copia e cola
-     *
      */
 
     async function criarPagamento() {
@@ -581,32 +472,26 @@
       try {
 
         const response =
-          await fetch(
-            PAYMENT_API_URL,
-            {
-              method: "POST",
+          await fetch(PAYMENT_API_URL, {
 
-              headers: {
-                "Content-Type": "application/json"
-              },
+            method: "POST",
 
-              body: JSON.stringify({
+            headers: {
+              "Content-Type": "application/json"
+            },
 
-                payment_option_id:
-                  paymentOptionId,
+            body: JSON.stringify({
 
-                amount:
-                  PAYMENT_VALUE
+              payment_option_id:
+                paymentOptionId,
 
-              })
+              amount:
+                PAYMENT_VALUE
 
-            }
-          );
+            })
 
+          });
 
-        /*
-         * Tenta interpretar a resposta como JSON.
-         */
 
         let data;
 
@@ -615,7 +500,7 @@
           data =
             await response.json();
 
-        } catch (jsonError) {
+        } catch {
 
           throw new Error(
             "O servidor retornou uma resposta inválida."
@@ -624,44 +509,87 @@
         }
 
 
-        /*
-         * Erro HTTP.
-         */
-
         if (!response.ok) {
 
           throw new Error(
             data.message ||
             data.error ||
-            "Erro ao criar pagamento."
+            "Não foi possível criar o pagamento."
           );
 
         }
 
 
         /*
-         * Backend informou erro.
+         * Aceita success=true quando a Edge Function
+         * retornar esse campo.
          */
 
-        if (data.success === false) {
+        if (
+          data.success === false
+        ) {
 
           throw new Error(
             data.message ||
             data.error ||
-            "Não foi possível gerar o PIX."
+            "O pagamento não pôde ser criado."
           );
 
         }
 
 
         /*
-         * QR Code.
+         * ======================================================
+         * PIX COPIA E COLA
+         * ======================================================
+         *
+         * Aceitamos alguns nomes comuns para facilitar
+         * a integração com a Edge Function.
          */
 
-        if (data.qr_code) {
+        const codigoPix =
+          data.pix_code ||
+          data.pixCode ||
+          data.payload ||
+          data.encodedImage ||
+          data.qr_code_text ||
+          data.qrCodeText ||
+          "";
 
-          qrcode.src =
-            data.qr_code;
+
+        /*
+         * ======================================================
+         * QR CODE
+         * ======================================================
+         */
+
+        const qrCode =
+          data.qr_code ||
+          data.qrCode ||
+          data.qr_code_url ||
+          data.qrCodeUrl ||
+          "";
+
+
+        /*
+         * Se a API devolver uma imagem/base64.
+         */
+
+        if (qrCode) {
+
+          if (
+            qrCode.startsWith("data:image")
+          ) {
+
+            qrcode.src =
+              qrCode;
+
+          } else {
+
+            qrcode.src =
+              qrCode;
+
+          }
 
         }
 
@@ -670,47 +598,38 @@
          * PIX copia e cola.
          */
 
-        if (data.pix_code) {
+        if (codigoPix) {
 
           pixCode.value =
-            data.pix_code;
+            codigoPix;
 
         }
 
 
         /*
-         * Verifica se recebeu pelo menos
-         * um dos dados necessários.
+         * Se nenhum dado PIX veio da API,
+         * informa o problema.
          */
 
         if (
-          !data.qr_code &&
-          !data.pix_code
+          !codigoPix &&
+          !qrCode
         ) {
 
           throw new Error(
-            "O pagamento foi criado, mas o servidor não retornou os dados do PIX."
+            "O pagamento foi processado, mas a API não retornou o QR Code ou o código PIX."
           );
 
         }
 
 
-        /*
-         * Exibe área do pagamento.
-         */
-
         paymentArea.style.display =
           "block";
 
 
-        /*
-         * Remove diagnóstico quando
-         * o pagamento estiver funcionando.
-         */
-
         showStatus(
           "success",
-          "PIX gerado!",
+          "PIX gerado com sucesso!",
           "Escaneie o QR Code ou copie o código PIX para realizar o pagamento."
         );
 
@@ -718,7 +637,7 @@
       } catch (error) {
 
         console.error(
-          "Erro ao criar pagamento:",
+          "Erro ao gerar pagamento:",
           error
         );
 
@@ -754,13 +673,8 @@
         );
 
         return;
-
       }
 
-
-      /*
-       * Método moderno.
-       */
 
       try {
 
@@ -772,23 +686,7 @@
           "PIX copiado com sucesso!"
         );
 
-        return;
-
       } catch (error) {
-
-        /*
-         * Continua para o método alternativo.
-         */
-
-      }
-
-
-      /*
-       * Método alternativo para navegadores
-       * que não permitem navigator.clipboard.
-       */
-
-      try {
 
         pixCode.focus();
 
@@ -800,12 +698,6 @@
 
         alert(
           "PIX copiado!"
-        );
-
-      } catch (error) {
-
-        alert(
-          "Não foi possível copiar automaticamente. Selecione o código PIX e copie manualmente."
         );
 
       }
@@ -825,3 +717,4 @@
 
 </body>
 </html>
+```
