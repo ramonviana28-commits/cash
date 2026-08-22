@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -124,6 +123,7 @@
     }
 
     #qrcode {
+      display: block;
       width: 220px;
       height: 220px;
       margin: 0 auto;
@@ -131,7 +131,6 @@
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ddd;
-      object-fit: contain;
     }
 
     .pix-label {
@@ -175,6 +174,18 @@
       margin-top: 20px;
     }
 
+    .debug {
+      display: none;
+      margin-top: 20px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #64748b;
+      word-break: break-all;
+    }
+
     @media (max-width: 480px) {
       .container {
         padding: 15px 10px 40px;
@@ -186,10 +197,6 @@
 
       h1 {
         font-size: 23px;
-      }
-
-      .value {
-        font-size: 30px;
       }
     }
   </style>
@@ -211,6 +218,7 @@
       </div>
 
       <div class="choice">
+
         <div class="choice-label">
           Sua escolha
         </div>
@@ -220,6 +228,7 @@
           id="choiceName">
           Carregando...
         </div>
+
       </div>
 
       <div class="value-label">
@@ -267,13 +276,19 @@
           readonly></textarea>
 
         <button
+          id="copyButton"
           class="copy-button"
-          onclick="copiarPix()">
+          type="button">
 
           📋 Copiar PIX
 
         </button>
 
+      </div>
+
+      <div
+        id="debug"
+        class="debug">
       </div>
 
     </div>
@@ -289,18 +304,20 @@
 
     /*
      * ==========================================================
-     * EDGE FUNCTION DO SUPABASE
+     * CONFIGURAÇÃO
      * ==========================================================
+     *
+     * Esta é a Edge Function que cria a cobrança no Asaas.
      */
 
     const PAYMENT_API_URL =
-      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/smart-processor";
+      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/smooth-function";
 
 
     /*
-     * ==========================================================
-     * VALOR DO VOTO
-     * ==========================================================
+     * Valor fixo do voto.
+     *
+     * O backend também deve manter R$ 5,00 como valor oficial.
      */
 
     const PAYMENT_VALUE = 5.00;
@@ -308,23 +325,20 @@
 
     /*
      * ==========================================================
-     * CANDIDATOS
+     * OPÇÕES DA PESQUISA
      * ==========================================================
      */
 
-    const CANDIDATOS = {
+    const OPTIONS = {
 
-      "9823e037-4045-40dd-8b5f-a183ea4cdc44": {
-        nome: "LULA"
-      },
+      "9823e037-4045-40dd-8b5f-a183ea4cdc44":
+        "LULA",
 
-      "1b457898-2a19-4342-a5f6-2a867b07f27c": {
-        nome: "FLÁVIO BOLSONARO"
-      },
+      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3":
+        "FLÁVIO BOLSONARO",
 
-      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3": {
-        nome: "RENAN SANTOS"
-      }
+      "1b457898-2a19-4342-a5f6-2a867b07f27c":
+        "RENAN SANTOS"
 
     };
 
@@ -354,6 +368,9 @@
     const status =
       document.getElementById("status");
 
+    const statusMessage =
+      document.getElementById("statusMessage");
+
     const paymentArea =
       document.getElementById("paymentArea");
 
@@ -363,27 +380,55 @@
     const qrcode =
       document.getElementById("qrcode");
 
+    const debug =
+      document.getElementById("debug");
+
+    const copyButton =
+      document.getElementById("copyButton");
+
 
     /*
      * ==========================================================
-     * STATUS
+     * MOSTRAR STATUS
      * ==========================================================
      */
 
-    function showStatus(type, title, message) {
+    function showStatus(
+      type,
+      title,
+      message
+    ) {
 
       status.className =
         "status " + type;
 
       status.innerHTML = `
         <div class="status-title">
-          ${title}
+          ${escapeHtml(title)}
         </div>
 
         <div>
-          ${message}
+          ${escapeHtml(message)}
         </div>
       `;
+    }
+
+
+    /*
+     * ==========================================================
+     * ESCAPAR TEXTO
+     * ==========================================================
+     */
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
     }
 
 
@@ -395,61 +440,7 @@
 
     function identificarEscolha(id) {
 
-      if (!id) {
-        return null;
-      }
-
-      return CANDIDATOS[id] || null;
-    }
-
-
-    /*
-     * ==========================================================
-     * INICIAR
-     * ==========================================================
-     */
-
-    function iniciar() {
-
-      if (!paymentOptionId) {
-
-        choiceName.textContent =
-          "Nenhuma escolha foi informada";
-
-        showStatus(
-          "error",
-          "Não foi possível gerar o pagamento.",
-          "Nenhuma opção de voto foi informada."
-        );
-
-        return;
-      }
-
-
-      const candidato =
-        identificarEscolha(paymentOptionId);
-
-
-      if (!candidato) {
-
-        choiceName.textContent =
-          "Opção desconhecida";
-
-        showStatus(
-          "error",
-          "Não foi possível gerar o pagamento.",
-          "O identificador da opção de voto não corresponde a nenhuma opção cadastrada."
-        );
-
-        return;
-      }
-
-
-      choiceName.textContent =
-        candidato.nome;
-
-
-      criarPagamento();
+      return OPTIONS[id] || null;
 
     }
 
@@ -471,26 +462,74 @@
 
       try {
 
+        /*
+         * Timeout de 30 segundos.
+         */
+
+        const controller =
+          new AbortController();
+
+        const timeout =
+          setTimeout(
+            () => controller.abort(),
+            30000
+          );
+
+
+        /*
+         * IMPORTANTE:
+         *
+         * Usamos text/plain para evitar
+         * preflight CORS desnecessário.
+         *
+         * A Edge Function continua usando:
+         *
+         * await req.json()
+         */
+
         const response =
-          await fetch(PAYMENT_API_URL, {
+          await fetch(
+            PAYMENT_API_URL,
+            {
+              method: "POST",
 
-            method: "POST",
+              mode: "cors",
 
-            headers: {
-              "Content-Type": "application/json"
-            },
+              cache: "no-store",
 
-            body: JSON.stringify({
+              signal:
+                controller.signal,
 
-              payment_option_id:
-                paymentOptionId,
+              headers: {
+                "Content-Type":
+                  "text/plain;charset=UTF-8",
 
-              amount:
-                PAYMENT_VALUE
+                "Accept":
+                  "application/json"
+              },
 
-            })
+              body: JSON.stringify({
 
-          });
+                payment_option_id:
+                  paymentOptionId,
+
+                amount:
+                  PAYMENT_VALUE
+
+              })
+            }
+          );
+
+
+        clearTimeout(timeout);
+
+
+        /*
+         * Tenta interpretar a resposta como JSON.
+         */
+
+        const responseText =
+          await response.text();
 
 
         let data;
@@ -498,63 +537,47 @@
         try {
 
           data =
-            await response.json();
+            JSON.parse(responseText);
 
         } catch {
 
           throw new Error(
-            "O servidor retornou uma resposta inválida."
+            "A Edge Function respondeu algo que não é JSON."
           );
 
         }
 
+
+        /*
+         * ======================================================
+         * ERRO HTTP
+         * ======================================================
+         */
 
         if (!response.ok) {
 
           throw new Error(
-            data.message ||
-            data.error ||
-            "Não foi possível criar o pagamento."
+            data?.message ||
+            `Erro HTTP ${response.status}.`
           );
 
         }
 
 
         /*
-         * Aceita success=true quando a Edge Function
-         * retornar esse campo.
+         * ======================================================
+         * VERIFICAR SUCESSO
+         * ======================================================
          */
 
-        if (
-          data.success === false
-        ) {
+        if (!data.success) {
 
           throw new Error(
-            data.message ||
-            data.error ||
-            "O pagamento não pôde ser criado."
+            data?.message ||
+            "A Edge Function não conseguiu criar o pagamento."
           );
 
         }
-
-
-        /*
-         * ======================================================
-         * PIX COPIA E COLA
-         * ======================================================
-         *
-         * Aceitamos alguns nomes comuns para facilitar
-         * a integração com a Edge Function.
-         */
-
-        const codigoPix =
-          data.pix_code ||
-          data.pixCode ||
-          data.payload ||
-          data.encodedImage ||
-          data.qr_code_text ||
-          data.qrCodeText ||
-          "";
 
 
         /*
@@ -563,69 +586,52 @@
          * ======================================================
          */
 
-        const qrCode =
-          data.qr_code ||
-          data.qrCode ||
-          data.qr_code_url ||
-          data.qrCodeUrl ||
-          "";
+        if (data.qr_code) {
 
+          qrcode.src =
+            data.qr_code;
 
-        /*
-         * Se a API devolver uma imagem/base64.
-         */
+          qrcode.style.display =
+            "block";
 
-        if (qrCode) {
+        } else {
 
-          if (
-            qrCode.startsWith("data:image")
-          ) {
-
-            qrcode.src =
-              qrCode;
-
-          } else {
-
-            qrcode.src =
-              qrCode;
-
-          }
+          qrcode.style.display =
+            "none";
 
         }
 
 
         /*
-         * PIX copia e cola.
+         * ======================================================
+         * PIX COPIA E COLA
+         * ======================================================
          */
 
-        if (codigoPix) {
+        if (data.pix_code) {
 
           pixCode.value =
-            codigoPix;
+            data.pix_code;
+
+        } else {
+
+          pixCode.value =
+            "Código PIX não retornado.";
 
         }
 
 
         /*
-         * Se nenhum dado PIX veio da API,
-         * informa o problema.
+         * Mostrar área de pagamento.
          */
-
-        if (
-          !codigoPix &&
-          !qrCode
-        ) {
-
-          throw new Error(
-            "O pagamento foi processado, mas a API não retornou o QR Code ou o código PIX."
-          );
-
-        }
-
 
         paymentArea.style.display =
           "block";
 
+
+        /*
+         * Mensagem de sucesso.
+         */
 
         showStatus(
           "success",
@@ -634,19 +640,50 @@
         );
 
 
+        /*
+         * Debug temporário no console.
+         */
+
+        console.log(
+          "Pagamento criado:",
+          data
+        );
+
       } catch (error) {
 
         console.error(
-          "Erro ao gerar pagamento:",
+          "Erro ao chamar smooth-function:",
           error
         );
+
+
+        let message =
+          "Não foi possível conectar ao servidor de pagamento.";
+
+
+        if (
+          error &&
+          error.name === "AbortError"
+        ) {
+
+          message =
+            "A conexão demorou mais de 30 segundos e foi encerrada.";
+
+        } else if (
+          error &&
+          error.message
+        ) {
+
+          message =
+            error.message;
+
+        }
 
 
         showStatus(
           "error",
           "Não foi possível gerar o pagamento.",
-          error.message ||
-          "Ocorreu um erro ao preparar o PIX."
+          message
         );
 
       }
@@ -673,6 +710,7 @@
         );
 
         return;
+
       }
 
 
@@ -682,19 +720,28 @@
           codigo
         );
 
-        alert(
-          "PIX copiado com sucesso!"
+        copyButton.textContent =
+          "✅ PIX copiado!";
+
+
+        setTimeout(
+          () => {
+
+            copyButton.textContent =
+              "📋 Copiar PIX";
+
+          },
+          2000
         );
 
-      } catch (error) {
+
+      } catch {
 
         pixCode.focus();
 
         pixCode.select();
 
-        document.execCommand(
-          "copy"
-        );
+        document.execCommand("copy");
 
         alert(
           "PIX copiado!"
@@ -707,7 +754,90 @@
 
     /*
      * ==========================================================
+     * EVENTO DO BOTÃO
+     * ==========================================================
+     */
+
+    copyButton.addEventListener(
+      "click",
+      copiarPix
+    );
+
+
+    /*
+     * ==========================================================
      * INICIAR
+     * ==========================================================
+     */
+
+    async function iniciar() {
+
+      /*
+       * Verifica se recebeu o ID.
+       */
+
+      if (!paymentOptionId) {
+
+        choiceName.textContent =
+          "Nenhuma escolha foi informada";
+
+        showStatus(
+          "error",
+          "Não foi possível gerar o pagamento.",
+          "Nenhuma opção de voto foi informada."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Identifica o candidato.
+       */
+
+      const nome =
+        identificarEscolha(
+          paymentOptionId
+        );
+
+
+      if (!nome) {
+
+        choiceName.textContent =
+          "Opção desconhecida";
+
+        showStatus(
+          "error",
+          "Não foi possível gerar o pagamento.",
+          "O identificador da opção de voto não está cadastrado."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Mostra candidato.
+       */
+
+      choiceName.textContent =
+        nome;
+
+
+      /*
+       * Agora chama a Edge Function.
+       */
+
+      await criarPagamento();
+
+    }
+
+
+    /*
+     * ==========================================================
+     * EXECUTAR
      * ==========================================================
      */
 
@@ -717,4 +847,3 @@
 
 </body>
 </html>
-```
