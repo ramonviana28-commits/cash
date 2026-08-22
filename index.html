@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pagamento do voto</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 25px 15px 50px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .choice {
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .choice-label {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 5px;
+    }
+
+    .choice-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .value-label {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .value {
+      text-align: center;
+      font-size: 34px;
+      font-weight: bold;
+      margin: 4px 0 25px;
+      color: #111;
+    }
+
+    .status {
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+
+    .status.loading {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .status.success {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .status.error {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .status-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .payment-area {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .qr-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    #qrcode {
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .pix-label {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .pix-code {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 12px;
+      background: #f9fafb;
+      word-break: break-all;
+    }
+
+    .copy-button {
+      width: 100%;
+      border: none;
+      background: #111;
+      color: #fff;
+      padding: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .copy-button:hover {
+      opacity: 0.9;
+    }
+
+    .footer {
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .debug {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #64748b;
+      word-break: break-all;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 10px 40px;
+      }
+
+      .card {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="logo">📦</div>
+
+      <h1>Finalize seu voto</h1>
+
+      <div class="subtitle">
+        Faça o pagamento de <strong>R$ 5,00</strong> via PIX
+        para confirmar sua participação.
+      </div>
+
+      <div class="choice">
+
+        <div class="choice-label">
+          Sua escolha
+        </div>
+
+        <div
+          class="choice-name"
+          id="choiceName">
+          Carregando...
+        </div>
+
+      </div>
+
+      <div class="value-label">
+        Valor para confirmar o voto
+      </div>
+
+      <div class="value">
+        R$ 5,00
+      </div>
+
+      <div
+        id="status"
+        class="status loading">
+
+        <div class="status-title">
+          Processando...
+        </div>
+
+        <div id="statusMessage">
+          Estamos preparando seu pagamento.
+        </div>
+
+      </div>
+
+      <div
+        id="paymentArea"
+        class="payment-area">
+
+        <div class="qr-container">
+
+          <img
+            id="qrcode"
+            src=""
+            alt="QR Code PIX">
+
+        </div>
+
+        <div class="pix-label">
+          PIX copia e cola
+        </div>
+
+        <textarea
+          id="pixCode"
+          class="pix-code"
+          readonly></textarea>
+
+        <button
+          class="copy-button"
+          onclick="copiarPix()">
+
+          📋 Copiar PIX
+
+        </button>
+
+      </div>
+
+      <!--
+        Área temporária de diagnóstico.
+
+        Depois que tudo estiver funcionando,
+        podemos remover esta área.
+      -->
+      <div
+        id="debug"
+        class="debug">
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Pagamento processado via PIX.
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /*
+     * ==========================================================
+     * CONFIGURAÇÃO
+     * ==========================================================
+     *
+     * NÃO coloque a chave secreta do Asaas aqui.
+     *
+     * O navegador nunca deve receber a chave secreta.
+     *
+     * Posteriormente vamos colocar aqui somente a URL
+     * pública da nossa Edge Function do Supabase.
+     */
+
+    const PAYMENT_API_URL = "";
+
+
+    /*
+     * ==========================================================
+     * VALOR DO VOTO
+     * ==========================================================
+     */
+
+    const PAYMENT_VALUE = 5.00;
+
+
+    /*
+     * ==========================================================
+     * LENDO O PAYMENT_OPTION_ID DA URL
+     * ==========================================================
+     *
+     * Exemplo:
+     *
+     * pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44
+     */
+
+    const params = new URLSearchParams(window.location.search);
+
+    const paymentOptionId =
+      params.get("payment_option_id");
+
+
+    /*
+     * ==========================================================
+     * ELEMENTOS DA PÁGINA
+     * ==========================================================
+     */
+
+    const choiceName =
+      document.getElementById("choiceName");
+
+    const status =
+      document.getElementById("status");
+
+    const statusMessage =
+      document.getElementById("statusMessage");
+
+    const paymentArea =
+      document.getElementById("paymentArea");
+
+    const pixCode =
+      document.getElementById("pixCode");
+
+    const qrcode =
+      document.getElementById("qrcode");
+
+    const debug =
+      document.getElementById("debug");
+
+
+    /*
+     * ==========================================================
+     * FUNÇÃO PARA MOSTRAR STATUS
+     * ==========================================================
+     */
+
+    function showStatus(type, title, message) {
+
+      status.className = "status " + type;
+
+      status.innerHTML = `
+        <div class="status-title">
+          ${title}
+        </div>
+
+        <div>
+          ${message}
+        </div>
+      `;
+    }
+
+
+    /*
+     * ==========================================================
+     * IDENTIFICAÇÃO TEMPORÁRIA DA OPÇÃO
+     * ==========================================================
+     *
+     * Neste momento temos certeza de que o Tally está enviando
+     * corretamente o ID.
+     *
+     * Para LULA, por exemplo:
+     *
+     * 9823e037-4045-40dd-8b5f-a183ea4cdc44
+     *
+     * Os outros IDs não serão inventados aqui.
+     *
+     * Posteriormente o Supabase poderá consultar uma tabela
+     * com todos os candidatos.
+     */
+
+    function identificarEscolha(id) {
+
+      if (!id) {
+        return "Nenhuma opção informada";
+      }
+
+      /*
+       * ID confirmado no teste do Tally.
+       */
+
+      if (
+        id === "9823e037-4045-40dd-8b5f-a183ea4cdc44"
+      ) {
+
+        return "LULA";
+
+      }
+
+
+      /*
+       * Se ainda não tivermos cadastrado o ID,
+       * mostramos uma mensagem genérica.
+       */
+
+      return "Opção selecionada";
+
+
+    }
+
+
+    /*
+     * ==========================================================
+     * VERIFICAÇÃO INICIAL
+     * ==========================================================
+     */
+
+    function iniciar() {
+
+      /*
+       * Não existe parâmetro.
+       */
+
+      if (!paymentOptionId) {
+
+        choiceName.textContent =
+          "Nenhuma escolha foi informada";
+
+        showStatus(
+          "error",
+          "Não foi possível gerar o pagamento.",
+          "Nenhuma opção de voto foi informada."
+        );
+
+        debug.innerHTML =
+          "URL sem payment_option_id.";
+
+        return;
+
+      }
+
+
+      /*
+       * Existe parâmetro.
+       */
+
+      const nome =
+        identificarEscolha(paymentOptionId);
+
+      choiceName.textContent =
+        nome;
+
+
+      /*
+       * Mostra temporariamente o ID recebido.
+       *
+       * Isso será removido quando terminarmos os testes.
+       */
+
+      debug.innerHTML =
+        "<strong>payment_option_id recebido:</strong><br>" +
+        paymentOptionId;
+
+
+      /*
+       * Se ainda não configuramos a API,
+       * não tentamos chamar o Asaas.
+       */
+
+      if (!PAYMENT_API_URL) {
+
+        showStatus(
+          "success",
+          "Escolha recebida corretamente!",
+          "O sistema recebeu o identificador da sua escolha. A próxima etapa será gerar o PIX."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Se a API estiver configurada,
+       * cria o pagamento.
+       */
+
+      criarPagamento();
+
+    }
+
+
+    /*
+     * ==========================================================
+     * CRIAR PAGAMENTO
+     * ==========================================================
+     *
+     * Esta função será usada quando criarmos a Edge Function
+     * do Supabase.
+     *
+     * O navegador envia somente:
+     *
+     * payment_option_id
+     *
+     * e o backend conversa com o Asaas.
+     */
+
+    async function criarPagamento() {
+
+      showStatus(
+        "loading",
+        "Gerando pagamento...",
+        "Aguarde enquanto preparamos seu PIX."
+      );
+
+
+      try {
+
+        const response =
+          await fetch(PAYMENT_API_URL, {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+              payment_option_id:
+                paymentOptionId,
+
+              amount:
+                PAYMENT_VALUE
+
+            })
+
+          });
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.message ||
+            "Erro ao criar pagamento."
+          );
+
+        }
+
+
+        /*
+         * ======================================================
+         * RESPOSTA ESPERADA DO BACKEND
+         * ======================================================
+         *
+         * {
+         *   success: true,
+         *   payment_id: "...",
+         *   pix_code: "...",
+         *   qr_code: "data:image/png;base64,..."
+         * }
+         *
+         */
+
+
+        if (data.qr_code) {
+
+          qrcode.src =
+            data.qr_code;
+
+        }
+
+
+        if (data.pix_code) {
+
+          pixCode.value =
+            data.pix_code;
+
+        }
+
+
+        paymentArea.style.display =
+          "block";
+
+
+        showStatus(
+          "success",
+          "PIX gerado!",
+          "Escaneie o QR Code ou copie o código PIX para realizar o pagamento."
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+          "error",
+          "Não foi possível gerar o pagamento.",
+          error.message ||
+          "Ocorreu um erro ao preparar o PIX."
+        );
+
+      }
+
+    }
+
+
+    /*
+     * ==========================================================
+     * COPIAR PIX
+     * ==========================================================
+     */
+
+    async function copiarPix() {
+
+      const codigo =
+        pixCode.value.trim();
+
+
+      if (!codigo) {
+
+        alert(
+          "O código PIX ainda não está disponível."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        await navigator.clipboard.writeText(
+          codigo
+        );
+
+        alert(
+          "PIX copiado com sucesso!"
+        );
+
+      } catch (error) {
+
+        pixCode.select();
+
+        document.execCommand(
+          "copy"
+        );
+
+        alert(
+          "PIX copiado!"
+        );
+
+      }
+
+    }
+
+
+    /*
+     * ==========================================================
+     * INICIAR PÁGINA
+     * ==========================================================
+     */
+
+    iniciar();
+
+  </script>
+
+</body>
+</html>
