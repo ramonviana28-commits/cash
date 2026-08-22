@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -130,6 +131,7 @@
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ddd;
+      object-fit: contain;
     }
 
     .pix-label {
@@ -283,12 +285,6 @@
 
       </div>
 
-      <!--
-        Área temporária de diagnóstico.
-
-        Depois que tudo estiver funcionando,
-        podemos remover esta área.
-      -->
       <div
         id="debug"
         class="debug">
@@ -307,15 +303,13 @@
 
     /*
      * ==========================================================
-     * CONFIGURAÇÃO
+     * CONFIGURAÇÃO DA API
      * ==========================================================
      *
-     * NÃO coloque a chave secreta do Asaas aqui.
+     * Deixe vazio enquanto a Edge Function do Supabase
+     * ainda não estiver configurada.
      *
-     * O navegador nunca deve receber a chave secreta.
-     *
-     * Posteriormente vamos colocar aqui somente a URL
-     * pública da nossa Edge Function do Supabase.
+     * Depois colocaremos aqui a URL pública da função.
      */
 
     const PAYMENT_API_URL = "";
@@ -332,6 +326,28 @@
 
     /*
      * ==========================================================
+     * IDs DAS OPÇÕES DO TALLY
+     * ==========================================================
+     *
+     * Estes são os IDs configurados no seu formulário Tally.
+     */
+
+    const VOTE_OPTIONS = {
+
+      "9823e037-4045-40dd-8b5f-a183ea4cdc44":
+        "LULA",
+
+      "1b457898-2a19-4342-a5f6-2a867b07f27c":
+        "FLÁVIO BOLSONARO",
+
+      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3":
+        "RENAN SANTOS"
+
+    };
+
+
+    /*
+     * ==========================================================
      * LENDO O PAYMENT_OPTION_ID DA URL
      * ==========================================================
      *
@@ -340,10 +356,13 @@
      * pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44
      */
 
-    const params = new URLSearchParams(window.location.search);
+    const params =
+      new URLSearchParams(window.location.search);
 
     const paymentOptionId =
-      params.get("payment_option_id");
+      (params.get("payment_option_id") || "")
+        .trim()
+        .toLowerCase();
 
 
     /*
@@ -382,7 +401,8 @@
 
     function showStatus(type, title, message) {
 
-      status.className = "status " + type;
+      status.className =
+        "status " + type;
 
       status.innerHTML = `
         <div class="status-title">
@@ -393,53 +413,50 @@
           ${message}
         </div>
       `;
+
     }
 
 
     /*
      * ==========================================================
-     * IDENTIFICAÇÃO TEMPORÁRIA DA OPÇÃO
+     * IDENTIFICAR ESCOLHA
      * ==========================================================
-     *
-     * Neste momento temos certeza de que o Tally está enviando
-     * corretamente o ID.
-     *
-     * Para LULA, por exemplo:
-     *
-     * 9823e037-4045-40dd-8b5f-a183ea4cdc44
-     *
-     * Os outros IDs não serão inventados aqui.
-     *
-     * Posteriormente o Supabase poderá consultar uma tabela
-     * com todos os candidatos.
      */
 
     function identificarEscolha(id) {
 
       if (!id) {
+
         return "Nenhuma opção informada";
+
       }
 
+
+      const idNormalizado =
+        id.trim().toLowerCase();
+
+
       /*
-       * ID confirmado no teste do Tally.
+       * Procura o UUID na lista de opções.
        */
 
       if (
-        id === "9823e037-4045-40dd-8b5f-a183ea4cdc44"
+        Object.prototype.hasOwnProperty.call(
+          VOTE_OPTIONS,
+          idNormalizado
+        )
       ) {
 
-        return "LULA";
+        return VOTE_OPTIONS[idNormalizado];
 
       }
 
 
       /*
-       * Se ainda não tivermos cadastrado o ID,
-       * mostramos uma mensagem genérica.
+       * UUID não cadastrado.
        */
 
-      return "Opção selecionada";
-
+      return "Opção desconhecida";
 
     }
 
@@ -468,7 +485,8 @@
         );
 
         debug.innerHTML =
-          "URL sem payment_option_id.";
+          "<strong>Erro:</strong><br>" +
+          "A URL não contém o parâmetro payment_option_id.";
 
         return;
 
@@ -476,20 +494,19 @@
 
 
       /*
-       * Existe parâmetro.
+       * Identifica o candidato.
        */
 
       const nome =
         identificarEscolha(paymentOptionId);
+
 
       choiceName.textContent =
         nome;
 
 
       /*
-       * Mostra temporariamente o ID recebido.
-       *
-       * Isso será removido quando terminarmos os testes.
+       * Mostra o ID recebido para diagnóstico.
        */
 
       debug.innerHTML =
@@ -498,8 +515,25 @@
 
 
       /*
-       * Se ainda não configuramos a API,
-       * não tentamos chamar o Asaas.
+       * UUID desconhecido.
+       */
+
+      if (nome === "Opção desconhecida") {
+
+        showStatus(
+          "error",
+          "Não foi possível gerar o pagamento.",
+          "O identificador da opção de voto não corresponde a nenhuma opção cadastrada."
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * Se a API ainda não estiver configurada,
+       * apenas confirma que a escolha foi recebida.
        */
 
       if (!PAYMENT_API_URL) {
@@ -516,7 +550,7 @@
 
 
       /*
-       * Se a API estiver configurada,
+       * API configurada:
        * cria o pagamento.
        */
 
@@ -530,14 +564,13 @@
      * CRIAR PAGAMENTO
      * ==========================================================
      *
-     * Esta função será usada quando criarmos a Edge Function
-     * do Supabase.
-     *
-     * O navegador envia somente:
+     * O navegador envia:
      *
      * payment_option_id
      *
-     * e o backend conversa com o Asaas.
+     * e o valor.
+     *
+     * A chave secreta do Asaas NÃO fica neste arquivo.
      */
 
     async function criarPagamento() {
@@ -552,25 +585,28 @@
       try {
 
         const response =
-          await fetch(PAYMENT_API_URL, {
+          await fetch(
+            PAYMENT_API_URL,
+            {
 
-            method: "POST",
+              method: "POST",
 
-            headers: {
-              "Content-Type": "application/json"
-            },
+              headers: {
+                "Content-Type": "application/json"
+              },
 
-            body: JSON.stringify({
+              body: JSON.stringify({
 
-              payment_option_id:
-                paymentOptionId,
+                payment_option_id:
+                  paymentOptionId,
 
-              amount:
-                PAYMENT_VALUE
+                amount:
+                  PAYMENT_VALUE
 
-            })
+              })
 
-          });
+            }
+          );
 
 
         const data =
@@ -631,7 +667,10 @@
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "Erro ao gerar pagamento:",
+          error
+        );
 
 
         showStatus(
@@ -698,7 +737,7 @@
 
     /*
      * ==========================================================
-     * INICIAR PÁGINA
+     * INICIAR
      * ==========================================================
      */
 
@@ -708,3 +747,4 @@
 
 </body>
 </html>
+```
