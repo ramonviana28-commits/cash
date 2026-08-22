@@ -123,6 +123,7 @@
     }
 
     #qrcode {
+      display: block;
       width: 220px;
       height: 220px;
       margin: 0 auto;
@@ -196,6 +197,10 @@
 
       h1 {
         font-size: 23px;
+      }
+
+      .value {
+        font-size: 30px;
       }
     }
   </style>
@@ -275,6 +280,7 @@
           readonly></textarea>
 
         <button
+          type="button"
           class="copy-button"
           onclick="copiarPix()">
 
@@ -305,10 +311,12 @@
      * CONFIGURAÇÃO DA API
      * ==========================================================
      *
-     * Deixe vazio enquanto a Edge Function do Supabase
-     * ainda não estiver configurada.
+     * ATENÇÃO:
      *
-     * Depois colocaremos aqui a URL pública da função.
+     * Esta URL será preenchida quando a Edge Function
+     * do Supabase estiver criada.
+     *
+     * NÃO coloque a chave secreta do Asaas neste arquivo.
      */
 
     const PAYMENT_API_URL = "";
@@ -325,29 +333,32 @@
 
     /*
      * ==========================================================
-     * IDs DAS OPÇÕES DO TALLY
+     * CANDIDATOS
      * ==========================================================
      *
-     * Estes são os IDs configurados no seu formulário Tally.
+     * Os IDs abaixo são exatamente os IDs enviados pelo Tally.
      */
 
-    const VOTE_OPTIONS = {
+    const CANDIDATOS = {
 
-      "9823e037-4045-40dd-8b5f-a183ea4cdc44":
-        "LULA",
+      "9823e037-4045-40dd-8b5f-a183ea4cdc44": {
+        nome: "LULA"
+      },
 
-      "1b457898-2a19-4342-a5f6-2a867b07f27c":
-        "FLÁVIO BOLSONARO",
+      "1b457898-2a19-4342-a5f6-2a867b07f27c": {
+        nome: "FLÁVIO BOLSONARO"
+      },
 
-      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3":
-        "RENAN SANTOS"
+      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3": {
+        nome: "RENAN SANTOS"
+      }
 
     };
 
 
     /*
      * ==========================================================
-     * LENDO O PAYMENT_OPTION_ID DA URL
+     * LER PARÂMETROS DA URL
      * ==========================================================
      *
      * Exemplo:
@@ -359,9 +370,7 @@
       new URLSearchParams(window.location.search);
 
     const paymentOptionId =
-      (params.get("payment_option_id") || "")
-        .trim()
-        .toLowerCase();
+      params.get("payment_option_id");
 
 
     /*
@@ -394,7 +403,7 @@
 
     /*
      * ==========================================================
-     * FUNÇÃO PARA MOSTRAR STATUS
+     * MOSTRAR STATUS
      * ==========================================================
      */
 
@@ -418,7 +427,7 @@
 
     /*
      * ==========================================================
-     * IDENTIFICAR ESCOLHA
+     * IDENTIFICAR CANDIDATO
      * ==========================================================
      */
 
@@ -426,50 +435,25 @@
 
       if (!id) {
 
-        return "Nenhuma opção informada";
+        return null;
 
       }
 
-
-      const idNormalizado =
-        id.trim().toLowerCase();
-
-
-      /*
-       * Procura o UUID na lista de opções.
-       */
-
-      if (
-        Object.prototype.hasOwnProperty.call(
-          VOTE_OPTIONS,
-          idNormalizado
-        )
-      ) {
-
-        return VOTE_OPTIONS[idNormalizado];
-
-      }
-
-
-      /*
-       * UUID não cadastrado.
-       */
-
-      return "Opção desconhecida";
+      return CANDIDATOS[id] || null;
 
     }
 
 
     /*
      * ==========================================================
-     * VERIFICAÇÃO INICIAL
+     * INICIALIZAÇÃO
      * ==========================================================
      */
 
     function iniciar() {
 
       /*
-       * Não existe parâmetro.
+       * Não recebeu payment_option_id.
        */
 
       if (!paymentOptionId) {
@@ -493,31 +477,21 @@
 
 
       /*
-       * Identifica o candidato.
+       * Procura o candidato pelo ID.
        */
 
-      const nome =
+      const candidato =
         identificarEscolha(paymentOptionId);
 
 
-      choiceName.textContent =
-        nome;
-
-
       /*
-       * Mostra o ID recebido para diagnóstico.
+       * ID não cadastrado.
        */
 
-      debug.innerHTML =
-        "<strong>payment_option_id recebido:</strong><br>" +
-        paymentOptionId;
+      if (!candidato) {
 
-
-      /*
-       * UUID desconhecido.
-       */
-
-      if (nome === "Opção desconhecida") {
+        choiceName.textContent =
+          "Opção desconhecida";
 
         showStatus(
           "error",
@@ -525,9 +499,30 @@
           "O identificador da opção de voto não corresponde a nenhuma opção cadastrada."
         );
 
+        debug.innerHTML =
+          "<strong>payment_option_id recebido:</strong><br>" +
+          paymentOptionId;
+
         return;
 
       }
+
+
+      /*
+       * Candidato encontrado.
+       */
+
+      choiceName.textContent =
+        candidato.nome;
+
+
+      /*
+       * Diagnóstico temporário.
+       */
+
+      debug.innerHTML =
+        "<strong>payment_option_id recebido:</strong><br>" +
+        paymentOptionId;
 
 
       /*
@@ -549,8 +544,7 @@
 
 
       /*
-       * API configurada:
-       * cria o pagamento.
+       * API configurada.
        */
 
       criarPagamento();
@@ -563,13 +557,16 @@
      * CRIAR PAGAMENTO
      * ==========================================================
      *
-     * O navegador envia:
+     * O navegador envia apenas o ID da opção.
      *
-     * payment_option_id
+     * O backend será responsável por:
      *
-     * e o valor.
+     * 1. Validar o candidato
+     * 2. Criar o cliente/pagamento no Asaas
+     * 3. Gerar o PIX
+     * 4. Retornar o QR Code
+     * 5. Retornar o PIX copia e cola
      *
-     * A chave secreta do Asaas NÃO fica neste arquivo.
      */
 
     async function criarPagamento() {
@@ -587,7 +584,6 @@
           await fetch(
             PAYMENT_API_URL,
             {
-
               method: "POST",
 
               headers: {
@@ -608,14 +604,35 @@
           );
 
 
-        const data =
-          await response.json();
+        /*
+         * Tenta interpretar a resposta como JSON.
+         */
 
+        let data;
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch (jsonError) {
+
+          throw new Error(
+            "O servidor retornou uma resposta inválida."
+          );
+
+        }
+
+
+        /*
+         * Erro HTTP.
+         */
 
         if (!response.ok) {
 
           throw new Error(
             data.message ||
+            data.error ||
             "Erro ao criar pagamento."
           );
 
@@ -623,19 +640,23 @@
 
 
         /*
-         * ======================================================
-         * RESPOSTA ESPERADA DO BACKEND
-         * ======================================================
-         *
-         * {
-         *   success: true,
-         *   payment_id: "...",
-         *   pix_code: "...",
-         *   qr_code: "data:image/png;base64,..."
-         * }
-         *
+         * Backend informou erro.
          */
 
+        if (data.success === false) {
+
+          throw new Error(
+            data.message ||
+            data.error ||
+            "Não foi possível gerar o PIX."
+          );
+
+        }
+
+
+        /*
+         * QR Code.
+         */
 
         if (data.qr_code) {
 
@@ -645,6 +666,10 @@
         }
 
 
+        /*
+         * PIX copia e cola.
+         */
+
         if (data.pix_code) {
 
           pixCode.value =
@@ -653,9 +678,35 @@
         }
 
 
+        /*
+         * Verifica se recebeu pelo menos
+         * um dos dados necessários.
+         */
+
+        if (
+          !data.qr_code &&
+          !data.pix_code
+        ) {
+
+          throw new Error(
+            "O pagamento foi criado, mas o servidor não retornou os dados do PIX."
+          );
+
+        }
+
+
+        /*
+         * Exibe área do pagamento.
+         */
+
         paymentArea.style.display =
           "block";
 
+
+        /*
+         * Remove diagnóstico quando
+         * o pagamento estiver funcionando.
+         */
 
         showStatus(
           "success",
@@ -667,7 +718,7 @@
       } catch (error) {
 
         console.error(
-          "Erro ao gerar pagamento:",
+          "Erro ao criar pagamento:",
           error
         );
 
@@ -707,6 +758,10 @@
       }
 
 
+      /*
+       * Método moderno.
+       */
+
       try {
 
         await navigator.clipboard.writeText(
@@ -717,7 +772,25 @@
           "PIX copiado com sucesso!"
         );
 
+        return;
+
       } catch (error) {
+
+        /*
+         * Continua para o método alternativo.
+         */
+
+      }
+
+
+      /*
+       * Método alternativo para navegadores
+       * que não permitem navigator.clipboard.
+       */
+
+      try {
+
+        pixCode.focus();
 
         pixCode.select();
 
@@ -727,6 +800,12 @@
 
         alert(
           "PIX copiado!"
+        );
+
+      } catch (error) {
+
+        alert(
+          "Não foi possível copiar automaticamente. Selecione o código PIX e copie manualmente."
         );
 
       }
@@ -746,4 +825,3 @@
 
 </body>
 </html>
-```
