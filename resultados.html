@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Resultado da votação</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #111827;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 30px 15px 50px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .icon {
+      text-align: center;
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 28px;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    .total-box {
+      text-align: center;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 25px;
+    }
+
+    .total-label {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    .total-value {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .result-item {
+      margin-bottom: 24px;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .candidate-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .percentage {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .bar-background {
+      width: 100%;
+      height: 18px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #111827;
+      border-radius: 999px;
+      width: 0;
+      transition: width 0.6s ease;
+    }
+
+    .vote-count {
+      margin-top: 7px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .status {
+      text-align: center;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .loading {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .updated-at {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 20px 16px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .candidate-name {
+        font-size: 16px;
+      }
+
+      .percentage {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <div class="icon">
+        🔥
+      </div>
+
+      <h1>
+        Resultado atual
+      </h1>
+
+      <div class="subtitle">
+        Veja como está a votação neste momento.
+        Apenas votos com pagamento confirmado são contabilizados.
+      </div>
+
+      <div
+        id="status"
+        class="status loading"
+      >
+        Carregando resultado...
+      </div>
+
+      <div
+        id="content"
+        style="display:none;"
+      >
+
+        <div class="total-box">
+
+          <div class="total-label">
+            Votos confirmados
+          </div>
+
+          <div
+            id="totalVotes"
+            class="total-value"
+          >
+            0
+          </div>
+
+        </div>
+
+        <div id="results"></div>
+
+        <div
+          id="updatedAt"
+          class="updated-at"
+        ></div>
+
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Resultado atualizado automaticamente.
+    </div>
+
+  </div>
+
+  <script>
+
+    const RESULTS_API_URL =
+      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/results-api";
+
+    const SURVEY_ID = 1;
+
+    const REFRESH_INTERVAL =
+      10000;
+
+    const statusBox =
+      document.getElementById("status");
+
+    const content =
+      document.getElementById("content");
+
+    const totalVotesElement =
+      document.getElementById("totalVotes");
+
+    const resultsElement =
+      document.getElementById("results");
+
+    const updatedAtElement =
+      document.getElementById("updatedAt");
+
+
+    function showError(message) {
+
+      statusBox.className =
+        "status error";
+
+      statusBox.textContent =
+        message;
+
+      statusBox.style.display =
+        "block";
+
+      content.style.display =
+        "none";
+    }
+
+
+    function showLoading() {
+
+      statusBox.className =
+        "status loading";
+
+      statusBox.textContent =
+        "Carregando resultado...";
+
+      statusBox.style.display =
+        "block";
+    }
+
+
+    function formatVotes(value) {
+
+      if (value === 1) {
+        return "1 voto";
+      }
+
+      return value + " votos";
+    }
+
+
+    function renderResults(data) {
+
+      statusBox.style.display =
+        "none";
+
+      content.style.display =
+        "block";
+
+      totalVotesElement.textContent =
+        data.total_votes ?? 0;
+
+      resultsElement.innerHTML =
+        "";
+
+      const results =
+        Array.isArray(data.results)
+          ? data.results
+          : [];
+
+      for (const item of results) {
+
+        const wrapper =
+          document.createElement("div");
+
+        wrapper.className =
+          "result-item";
+
+        const top =
+          document.createElement("div");
+
+        top.className =
+          "result-top";
+
+        const name =
+          document.createElement("div");
+
+        name.className =
+          "candidate-name";
+
+        name.textContent =
+          item.title;
+
+        const percentage =
+          document.createElement("div");
+
+        percentage.className =
+          "percentage";
+
+        percentage.textContent =
+          Number(item.percentage || 0)
+            .toFixed(
+              Number(item.percentage) % 1 === 0
+                ? 0
+                : 1
+            ) + "%";
+
+        top.appendChild(name);
+        top.appendChild(percentage);
+
+        const barBackground =
+          document.createElement("div");
+
+        barBackground.className =
+          "bar-background";
+
+        const barFill =
+          document.createElement("div");
+
+        barFill.className =
+          "bar-fill";
+
+        const percentValue =
+          Math.max(
+            0,
+            Math.min(
+              100,
+              Number(
+                item.percentage || 0
+              )
+            )
+          );
+
+        barFill.style.width =
+          percentValue + "%";
+
+        barBackground.appendChild(
+          barFill
+        );
+
+        const votes =
+          document.createElement("div");
+
+        votes.className =
+          "vote-count";
+
+        votes.textContent =
+          formatVotes(
+            Number(item.votes || 0)
+          );
+
+        wrapper.appendChild(top);
+        wrapper.appendChild(
+          barBackground
+        );
+        wrapper.appendChild(votes);
+
+        resultsElement.appendChild(
+          wrapper
+        );
+      }
+
+      const now =
+        new Date();
+
+      updatedAtElement.textContent =
+        "Atualizado às " +
+        now.toLocaleTimeString(
+          "pt-BR",
+          {
+            hour:
+              "2-digit",
+            minute:
+              "2-digit",
+            second:
+              "2-digit"
+          }
+        );
+    }
+
+
+    async function loadResults() {
+
+      try {
+
+        const response =
+          await fetch(
+            RESULTS_API_URL +
+            "?survey_id=" +
+            SURVEY_ID +
+            "&t=" +
+            Date.now(),
+            {
+              method:
+                "GET",
+
+              cache:
+                "no-store"
+            }
+          );
+
+        const data =
+          await response.json();
+
+        if (!response.ok) {
+
+          throw new Error(
+            data?.error ||
+            "Não foi possível carregar o resultado."
+          );
+        }
+
+        if (!data.success) {
+
+          throw new Error(
+            data?.error ||
+            "Erro ao carregar resultado."
+          );
+        }
+
+        renderResults(
+          data
+        );
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+        showError(
+          error instanceof Error
+            ? error.message
+            : "Erro ao carregar resultado."
+        );
+      }
+    }
+
+
+    showLoading();
+
+    loadResults();
+
+
+    setInterval(
+      loadResults,
+      REFRESH_INTERVAL
+    );
+
+  </script>
+
+</body>
+</html>
