@@ -80,8 +80,7 @@
           transparent 1px
         );
 
-      background-size:
-        45px 45px;
+      background-size: 45px 45px;
 
       opacity: .5;
     }
@@ -97,10 +96,6 @@
 
       flex-direction: column;
     }
-
-    /* =========================================================
-       CABEÇALHO
-       ========================================================= */
 
     .top {
       width: 100%;
@@ -192,10 +187,6 @@
       line-height: 1.5;
     }
 
-    /* =========================================================
-       CONTAINER
-       ========================================================= */
-
     .container {
       width: 100%;
 
@@ -207,10 +198,6 @@
         12px 15px
         45px;
     }
-
-    /* =========================================================
-       CARD
-       ========================================================= */
 
     .card {
       overflow: hidden;
@@ -240,25 +227,69 @@
     }
 
     /* =========================================================
-       ESCOLHA
+       ESCOLHA + FOTO
        ========================================================= */
 
     .choice {
       position: relative;
 
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
       padding:
-        16px 17px;
+        13px 15px;
 
       margin-bottom: 20px;
 
       border:
         1px solid
-        rgba(255, 216, 0, .22);
+        rgba(255, 216, 0, .25);
 
       border-radius: 13px;
 
       background:
         rgba(255,255,255,.055);
+    }
+
+    .choice-photo-wrapper {
+      width: 68px;
+
+      height: 68px;
+
+      min-width: 68px;
+
+      border-radius: 13px;
+
+      overflow: hidden;
+
+      border:
+        2px solid
+        rgba(255,216,0,.50);
+
+      background: #111827;
+
+      box-shadow:
+        0 0 18px
+        rgba(255,216,0,.08);
+    }
+
+    .choice-photo {
+      display: block;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .choice-info {
+      min-width: 0;
+
+      flex: 1;
     }
 
     .choice-label {
@@ -278,7 +309,7 @@
     .choice-name {
       color: #ffffff;
 
-      font-size: 22px;
+      font-size: 21px;
 
       font-weight: 1000;
 
@@ -286,10 +317,6 @@
 
       text-transform: uppercase;
     }
-
-    /* =========================================================
-       VALOR
-       ========================================================= */
 
     .value-area {
       padding:
@@ -326,10 +353,6 @@
         0 0 20px
         rgba(255, 216, 0, .16);
     }
-
-    /* =========================================================
-       DADOS
-       ========================================================= */
 
     .payer-area {
       padding: 19px;
@@ -425,10 +448,6 @@
         rgba(255,216,0,.07);
     }
 
-    /* =========================================================
-       BOTÃO CONTINUAR
-       ========================================================= */
-
     .generate-button {
       width: 100%;
 
@@ -502,10 +521,6 @@
       text-align: center;
     }
 
-    /* =========================================================
-       STATUS
-       ========================================================= */
-
     .status {
       margin-top: 18px;
 
@@ -567,10 +582,6 @@
 
       font-weight: 900;
     }
-
-    /* =========================================================
-       PAGAMENTO
-       ========================================================= */
 
     .payment-area {
       display: none;
@@ -728,10 +739,6 @@
       transform: none;
     }
 
-    /* =========================================================
-       AGUARDANDO CONFIRMAÇÃO
-       ========================================================= */
-
     .checking {
       margin-top: 16px;
 
@@ -755,10 +762,6 @@
       text-align: center;
     }
 
-    /* =========================================================
-       VOLTAR
-       ========================================================= */
-
     .back-area {
       margin-top: 17px;
 
@@ -779,10 +782,6 @@
       color: #ffd800;
     }
 
-    /* =========================================================
-       FOOTER
-       ========================================================= */
-
     .footer {
       margin-top: 18px;
 
@@ -794,10 +793,6 @@
 
       text-align: center;
     }
-
-    /* =========================================================
-       MOBILE
-       ========================================================= */
 
     @media (
       max-width: 520px
@@ -830,8 +825,16 @@
         border-radius: 17px;
       }
 
+      .choice-photo-wrapper {
+        width: 58px;
+
+        height: 58px;
+
+        min-width: 58px;
+      }
+
       .choice-name {
-        font-size: 19px;
+        font-size: 18px;
       }
 
       .value {
@@ -844,8 +847,10 @@
 
       #qrcode {
         width: 215px;
+
         height: 215px;
       }
+
     }
 
   </style>
@@ -859,45 +864,28 @@
   <div class="page">
 
 
-    <!-- ======================================================
-         CABEÇALHO
-         ====================================================== -->
-
     <header class="top">
 
       <div class="badge">
-
         ✅ CONFIRME SUA ESCOLHA
-
       </div>
 
-
       <h1>
-
         Finalize sua
-
         <span>
           participação
         </span>
-
       </h1>
 
-
       <p>
-
         Confirme os dados abaixo para continuar.
         Assim que a operação for concluída,
         seu voto será confirmado automaticamente.
-
       </p>
 
     </header>
 
 
-
-    <!-- ======================================================
-         CONTAINER
-         ====================================================== -->
 
     <main class="container">
 
@@ -906,25 +894,36 @@
 
 
         <!-- ==================================================
-             ESCOLHA
+             ESCOLHA COM FOTO
              ================================================== -->
 
         <div class="choice">
 
 
-          <div class="choice-label">
+          <div class="choice-photo-wrapper">
 
-            Sua escolha
+            <img
+              id="choicePhoto"
+              class="choice-photo"
+              src=""
+              alt=""
+            >
 
           </div>
 
 
-          <div
-            class="choice-name"
-            id="choiceName"
-          >
+          <div class="choice-info">
 
-            Carregando...
+            <div class="choice-label">
+              Sua escolha
+            </div>
+
+            <div
+              class="choice-name"
+              id="choiceName"
+            >
+              Carregando...
+            </div>
 
           </div>
 
@@ -932,69 +931,41 @@
         </div>
 
 
-
-        <!-- ==================================================
-             VALOR
-             ================================================== -->
 
         <div class="value-area">
 
-
           <div class="value-label">
-
             Valor de confirmação
-
           </div>
-
 
           <div class="value">
-
             R$ 1,00
-
           </div>
-
 
         </div>
 
 
-
-        <!-- ==================================================
-             DADOS DO PAGADOR
-             ================================================== -->
 
         <div
           id="payerArea"
           class="payer-area"
         >
 
-
           <div class="payer-title">
-
             Confirme seus dados
-
           </div>
-
 
           <div class="payer-description">
-
             Preencha as informações abaixo
             para gerar o PIX de confirmação.
-
           </div>
-
 
 
           <div class="field">
 
-
-            <label
-              for="payerEmail"
-            >
-
+            <label for="payerEmail">
               E-mail
-
             </label>
-
 
             <input
               id="payerEmail"
@@ -1003,22 +974,14 @@
               placeholder="seuemail@exemplo.com"
             >
 
-
           </div>
-
 
 
           <div class="field">
 
-
-            <label
-              for="payerCpf"
-            >
-
+            <label for="payerCpf">
               CPF
-
             </label>
-
 
             <input
               id="payerCpf"
@@ -1029,9 +992,7 @@
               placeholder="000.000.000-00"
             >
 
-
           </div>
-
 
 
           <button
@@ -1039,27 +1000,18 @@
             class="generate-button"
             type="button"
           >
-
             CONTINUAR
-
           </button>
 
 
           <div class="security">
-
             🔒 Seus dados são utilizados
             somente para processar esta transação.
-
           </div>
-
 
         </div>
 
 
-
-        <!-- ==================================================
-             STATUS
-             ================================================== -->
 
         <div
           id="status"
@@ -1067,55 +1019,36 @@
           style="display:none;"
         >
 
-
           <div class="status-title">
-
             Processando...
-
           </div>
-
 
           <div>
-
             Aguarde.
-
           </div>
-
 
         </div>
 
 
-
-        <!-- ==================================================
-             ÁREA PIX
-             ================================================== -->
 
         <div
           id="paymentArea"
           class="payment-area"
         >
 
-
           <div class="payment-title">
-
             PIX gerado com sucesso
-
           </div>
 
-
           <div class="payment-subtitle">
-
             Escaneie o QR Code ou copie
             o código PIX abaixo.
             Esta página identificará
             automaticamente a confirmação.
-
           </div>
 
 
-
           <div class="qr-container">
-
 
             <img
               id="qrcode"
@@ -1123,17 +1056,12 @@
               alt="QR Code PIX"
             >
 
-
           </div>
-
 
 
           <div class="pix-label">
-
             PIX copia e cola
-
           </div>
-
 
 
           <textarea
@@ -1143,49 +1071,34 @@
           ></textarea>
 
 
-
           <button
             id="copyButton"
             class="copy-button"
             type="button"
           >
-
             📋 COPIAR PIX
-
           </button>
-
 
 
           <div
             id="checkingMessage"
             class="checking"
           >
-
             ⏳ Aguardando confirmação...
-
           </div>
-
 
         </div>
 
 
 
-        <!-- ==================================================
-             VOLTAR
-             ================================================== -->
-
         <div class="back-area">
-
 
           <a
             class="back-link"
             href="index.html"
           >
-
             ← Voltar para a pesquisa
-
           </a>
-
 
         </div>
 
@@ -1195,10 +1108,8 @@
 
 
       <div class="footer">
-
         🔒 Processamento seguro •
         Confirmação automática
-
       </div>
 
 
@@ -1208,10 +1119,6 @@
   </div>
 
 
-
-  <!-- ========================================================
-       JAVASCRIPT
-       ======================================================== -->
 
   <script>
 
@@ -1241,23 +1148,28 @@
 
 
     // ==========================================================
-    // OPÇÕES
+    // OPÇÕES + FOTOS
     // ==========================================================
 
     const OPTIONS = {
 
+      "9823e037-4045-40dd-8b5f-a183ea4cdc44": {
+        name: "LULA",
+        photo: "imagens/candidato-1.jpeg",
+        position: "center 24%"
+      },
 
-      "9823e037-4045-40dd-8b5f-a183ea4cdc44":
-        "LULA",
+      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3": {
+        name: "FLÁVIO BOLSONARO",
+        photo: "imagens/candidato-2.jfif",
+        position: "center 20%"
+      },
 
-
-      "4debd19b-bf23-4a04-ae44-daa9c05f6fe3":
-        "FLÁVIO BOLSONARO",
-
-
-      "1b457898-2a19-4342-a5f6-2a867b07f27c":
-        "RENAN SANTOS"
-
+      "1b457898-2a19-4342-a5f6-2a867b07f27c": {
+        name: "RENAN SANTOS",
+        photo: "imagens/candidato-3.jpg",
+        position: "center 20%"
+      }
 
     };
 
@@ -1271,7 +1183,6 @@
       new URLSearchParams(
         window.location.search
       );
-
 
     const paymentOptionId =
       params.get(
@@ -1289,60 +1200,55 @@
         "choiceName"
       );
 
+    const choicePhoto =
+      document.getElementById(
+        "choicePhoto"
+      );
 
     const payerArea =
       document.getElementById(
         "payerArea"
       );
 
-
     const payerEmail =
       document.getElementById(
         "payerEmail"
       );
-
 
     const payerCpf =
       document.getElementById(
         "payerCpf"
       );
 
-
     const generateButton =
       document.getElementById(
         "generateButton"
       );
-
 
     const status =
       document.getElementById(
         "status"
       );
 
-
     const paymentArea =
       document.getElementById(
         "paymentArea"
       );
-
 
     const qrcode =
       document.getElementById(
         "qrcode"
       );
 
-
     const pixCode =
       document.getElementById(
         "pixCode"
       );
 
-
     const copyButton =
       document.getElementById(
         "copyButton"
       );
-
 
     const checkingMessage =
       document.getElementById(
@@ -1358,18 +1264,14 @@
     let currentPaymentId =
       null;
 
-
     let statusTimer =
       null;
-
 
     let statusStartedAt =
       null;
 
-
     let paymentConfirmed =
       false;
-
 
     let creatingPayment =
       false;
@@ -1377,7 +1279,7 @@
 
 
     // ==========================================================
-    // STATUS VISUAL
+    // STATUS
     // ==========================================================
 
     function showStatus(
@@ -1386,75 +1288,40 @@
       message
     ) {
 
-
       status.style.display =
         "block";
-
 
       status.className =
         "status " +
         type;
 
-
       status.innerHTML = `
-
         <div class="status-title">
-
           ${escapeHtml(title)}
-
         </div>
-
 
         <div>
-
           ${escapeHtml(message)}
-
         </div>
-
       `;
-
-
     }
 
 
 
     // ==========================================================
-    // ESCAPE HTML
+    // ESCAPE
     // ==========================================================
 
     function escapeHtml(
       value
     ) {
 
-
       return String(value)
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
     }
 
 
@@ -1467,15 +1334,8 @@
       value
     ) {
 
-
       return String(value)
-
-        .replace(
-          /\D/g,
-          ""
-        );
-
-
+        .replace(/\D/g, "");
     }
 
 
@@ -1484,102 +1344,38 @@
       value
     ) {
 
-
       const digits =
-        apenasNumeros(
-          value
-        )
-        .slice(
-          0,
-          11
-        );
-
+        apenasNumeros(value)
+          .slice(0, 11);
 
       let formatted =
         digits;
 
-
-      if (
-        digits.length > 3
-      ) {
-
+      if (digits.length > 3) {
 
         formatted =
-
-          digits.slice(
-            0,
-            3
-          )
-
-          +
-
-          "."
-
-          +
-
-          digits.slice(
-            3
-          );
-
-
+          digits.slice(0, 3) +
+          "." +
+          digits.slice(3);
       }
 
-
-      if (
-        digits.length > 6
-      ) {
-
+      if (digits.length > 6) {
 
         formatted =
-
-          formatted.slice(
-            0,
-            7
-          )
-
-          +
-
-          "."
-
-          +
-
-          digits.slice(
-            6
-          );
-
-
+          formatted.slice(0, 7) +
+          "." +
+          digits.slice(6);
       }
 
-
-      if (
-        digits.length > 9
-      ) {
-
+      if (digits.length > 9) {
 
         formatted =
-
-          formatted.slice(
-            0,
-            11
-          )
-
-          +
-
-          "-"
-
-          +
-
-          digits.slice(
-            9
-          );
-
-
+          formatted.slice(0, 11) +
+          "-" +
+          digits.slice(9);
       }
-
 
       return formatted;
-
-
     }
 
 
@@ -1588,41 +1384,33 @@
       "input",
       () => {
 
-
         payerCpf.value =
           formatarCpf(
             payerCpf.value
           );
-
-
       }
     );
 
 
 
     // ==========================================================
-    // VALIDAR DADOS
+    // VALIDAR
     // ==========================================================
 
     function validarDados() {
 
-
       const email =
-        payerEmail.value
-        .trim();
-
+        payerEmail.value.trim();
 
       const cpf =
         apenasNumeros(
           payerCpf.value
         );
 
-
       if (
         !email ||
         !email.includes("@")
       ) {
-
 
         showStatus(
           "error",
@@ -1630,20 +1418,14 @@
           "Informe um e-mail válido."
         );
 
-
         payerEmail.focus();
 
-
         return null;
-
-
       }
-
 
       if (
         cpf.length !== 11
       ) {
-
 
         showStatus(
           "error",
@@ -1651,25 +1433,15 @@
           "Informe um CPF válido com 11 números."
         );
 
-
         payerCpf.focus();
 
-
         return null;
-
-
       }
 
-
       return {
-
         email,
-
         cpf
-
       };
-
-
     }
 
 
@@ -1680,43 +1452,28 @@
 
     async function criarPagamento() {
 
-
       if (
         creatingPayment ||
         currentPaymentId
       ) {
-
-
         return;
-
-
       }
-
 
       const payer =
         validarDados();
 
-
       if (!payer) {
-
-
         return;
-
-
       }
-
 
       creatingPayment =
         true;
 
-
       generateButton.disabled =
         true;
 
-
       generateButton.textContent =
         "GERANDO...";
-
 
 
       showStatus(
@@ -1726,91 +1483,56 @@
       );
 
 
-
       try {
-
 
         const controller =
           new AbortController();
 
-
-
         const timeout =
           setTimeout(
-
-            () =>
-              controller.abort(),
-
+            () => controller.abort(),
             30000
-
           );
-
 
 
         const response =
           await fetch(
-
             PAYMENT_API_URL,
-
             {
+              method: "POST",
 
-              method:
-                "POST",
+              mode: "cors",
 
-
-              mode:
-                "cors",
-
-
-              cache:
-                "no-store",
-
+              cache: "no-store",
 
               signal:
                 controller.signal,
 
-
               headers: {
-
-
                 "Content-Type":
                   "application/json",
 
-
                 "Accept":
                   "application/json"
-
-
               },
-
 
               body:
                 JSON.stringify({
 
-
                   payment_option_id:
                     paymentOptionId,
-
 
                   payer_email:
                     payer.email,
 
-
                   payer_cpf:
                     payer.cpf,
 
-
                   amount:
                     PAYMENT_VALUE
-
-
                 })
-
-
             }
-
           );
-
 
 
         clearTimeout(
@@ -1818,35 +1540,25 @@
         );
 
 
-
         const responseText =
           await response.text();
-
-
 
         let data;
 
 
-
         try {
-
 
           data =
             JSON.parse(
               responseText
             );
 
-
         } catch {
-
 
           throw new Error(
             "O servidor respondeu algo inválido."
           );
-
-
         }
-
 
 
         if (
@@ -1854,39 +1566,23 @@
           !data.success
         ) {
 
-
           throw new Error(
-
             data?.error ||
-
             data?.message ||
-
             "Não foi possível gerar o PIX."
-
           );
-
-
         }
-
 
 
         if (
           !data.payment_id
         ) {
 
-
           throw new Error(
             "O servidor não retornou o identificador do pagamento."
           );
-
-
         }
 
-
-
-        // ======================================================
-        // PAYMENT ID
-        // ======================================================
 
         currentPaymentId =
           String(
@@ -1894,77 +1590,43 @@
           );
 
 
-
-        console.log(
-          "MERCADO PAGO PAYMENT ID:",
-          currentPaymentId
-        );
-
-
-
-        // ======================================================
-        // QR CODE
-        // ======================================================
-
         if (
           data.qr_code
         ) {
 
-
           qrcode.src =
             data.qr_code;
-
 
           qrcode.style.display =
             "block";
 
-
         } else {
-
 
           qrcode.style.display =
             "none";
-
-
         }
 
-
-
-        // ======================================================
-        // PIX
-        // ======================================================
 
         pixCode.value =
           data.pix_code ||
           "";
 
 
-
         if (
           !pixCode.value
         ) {
 
-
           throw new Error(
             "O pagamento foi criado, mas o código PIX não foi retornado."
           );
-
-
         }
 
-
-
-        // ======================================================
-        // INTERFACE
-        // ======================================================
 
         payerArea.style.display =
           "none";
 
-
         paymentArea.style.display =
           "block";
-
 
 
         showStatus(
@@ -1974,24 +1636,14 @@
         );
 
 
-
         checkingMessage.textContent =
           "⏳ Aguardando confirmação...";
 
 
-
-        // ======================================================
-        // MONITORAMENTO
-        // ======================================================
-
         iniciarMonitoramentoPagamento();
 
 
-
-      } catch (
-        error
-      ) {
-
+      } catch (error) {
 
         console.error(
           "Erro ao criar pagamento:",
@@ -1999,35 +1651,26 @@
         );
 
 
-
         let message =
           "Não foi possível gerar a confirmação.";
 
 
-
         if (
           error &&
-          error.name ===
-            "AbortError"
+          error.name === "AbortError"
         ) {
-
 
           message =
             "O servidor demorou mais de 30 segundos para responder.";
-
 
         } else if (
           error &&
           error.message
         ) {
 
-
           message =
             error.message;
-
-
         }
-
 
 
         showStatus(
@@ -2037,26 +1680,18 @@
         );
 
 
-
         generateButton.disabled =
           false;
-
 
         generateButton.textContent =
           "CONTINUAR";
 
 
-
       } finally {
-
 
         creatingPayment =
           false;
-
-
       }
-
-
     }
 
 
@@ -2067,226 +1702,137 @@
 
     function iniciarMonitoramentoPagamento() {
 
-
       if (
         !currentPaymentId
       ) {
-
-
         return;
-
-
       }
-
-
 
       if (
         statusTimer
       ) {
 
-
         clearInterval(
           statusTimer
         );
-
-
       }
-
-
 
       statusStartedAt =
         Date.now();
 
-
-
       verificarStatusPagamento();
-
-
 
       statusTimer =
         setInterval(
-
           verificarStatusPagamento,
-
           STATUS_INTERVAL
-
         );
-
-
     }
 
 
 
     // ==========================================================
-    // CONSULTAR STATUS
+    // STATUS PAGAMENTO
     // ==========================================================
 
     async function verificarStatusPagamento() {
-
 
       if (
         !currentPaymentId ||
         paymentConfirmed
       ) {
-
-
         return;
-
-
       }
 
 
-
       if (
-
         statusStartedAt &&
-
         Date.now() -
         statusStartedAt >
-
         STATUS_TIMEOUT
-
       ) {
-
 
         if (
           statusTimer
         ) {
 
-
           clearInterval(
             statusTimer
           );
 
-
           statusTimer =
             null;
-
-
         }
-
-
 
         checkingMessage.textContent =
           "A confirmação automática foi pausada. Atualize a página se necessário.";
 
-
         return;
-
-
       }
-
 
 
       try {
 
-
         const response =
           await fetch(
-
             PAYMENT_STATUS_API_URL,
-
             {
+              method: "POST",
 
-              method:
-                "POST",
+              mode: "cors",
 
-
-              mode:
-                "cors",
-
-
-              cache:
-                "no-store",
-
+              cache: "no-store",
 
               headers: {
-
-
                 "Content-Type":
                   "application/json",
 
-
                 "Accept":
                   "application/json"
-
-
               },
-
 
               body:
                 JSON.stringify({
-
-
                   payment_id:
                     currentPaymentId
-
-
                 })
-
-
             }
-
           );
-
 
 
         const responseText =
           await response.text();
 
-
-
         let data;
 
 
-
         try {
-
 
           data =
             JSON.parse(
               responseText
             );
 
-
         } catch {
-
 
           console.warn(
             "Rapid-worker retornou resposta inválida:",
             responseText
           );
 
-
           return;
-
-
         }
 
 
-
-        console.log(
-          "STATUS:",
-          data
-        );
-
-
-
         if (
-          response.status ===
-          404
+          response.status === 404
         ) {
-
 
           checkingMessage.textContent =
             "⏳ Aguardando registro...";
 
-
           return;
-
-
         }
-
 
 
         if (
@@ -2294,104 +1840,58 @@
           !data.success
         ) {
 
-
           console.warn(
             "Falha temporária na consulta:",
             data
           );
 
-
           return;
-
-
         }
-
 
 
         const currentStatus =
           String(
-
             data.payment_status ||
-
             data.status ||
-
             ""
-
           ).toUpperCase();
 
 
-
-        // ======================================================
-        // CONFIRMADO
-        // ======================================================
-
         if (
-
-          data.paid ===
-            true ||
-
-          currentStatus ===
-            "RECEIVED" ||
-
-          currentStatus ===
-            "CONFIRMED"
-
+          data.paid === true ||
+          currentStatus === "RECEIVED" ||
+          currentStatus === "CONFIRMED"
         ) {
-
 
           confirmarPagamento();
 
-
           return;
-
-
         }
 
 
-
-        // ======================================================
-        // PENDING
-        // ======================================================
-
         if (
-          currentStatus ===
-          "PENDING"
+          currentStatus === "PENDING"
         ) {
-
 
           checkingMessage.textContent =
             "⏳ Aguardando confirmação...";
 
-
           return;
-
-
         }
 
 
-
         checkingMessage.textContent =
-
           "Status atual: " +
-
           currentStatus;
 
 
-
-      } catch (
-        error
-      ) {
-
+      } catch (error) {
 
         console.warn(
           "Falha temporária ao consultar status:",
           error
         );
-
-
       }
-
-
     }
 
 
@@ -2402,45 +1902,31 @@
 
     function confirmarPagamento() {
 
-
       if (
         paymentConfirmed
       ) {
-
-
         return;
-
-
       }
-
-
 
       paymentConfirmed =
         true;
-
 
 
       if (
         statusTimer
       ) {
 
-
         clearInterval(
           statusTimer
         );
 
-
         statusTimer =
           null;
-
-
       }
-
 
 
       checkingMessage.textContent =
         "✅ Participação confirmada!";
-
 
 
       showStatus(
@@ -2450,33 +1936,22 @@
       );
 
 
-
       copyButton.disabled =
         true;
-
-
 
       copyButton.textContent =
         "✅ CONFIRMADO";
 
 
-
       setTimeout(
-
         () => {
-
 
           window.location.href =
             RESULT_URL;
 
-
         },
-
         2000
-
       );
-
-
     }
 
 
@@ -2487,92 +1962,63 @@
 
     async function copiarPix() {
 
-
       const codigo =
-        pixCode.value
-        .trim();
-
+        pixCode.value.trim();
 
 
       if (!codigo) {
-
 
         alert(
           "O código ainda não está disponível."
         );
 
-
         return;
-
-
       }
-
 
 
       try {
 
-
         await navigator
-        .clipboard
-        .writeText(
-          codigo
-        );
-
+          .clipboard
+          .writeText(
+            codigo
+          );
 
 
         copyButton.textContent =
           "✅ CÓDIGO COPIADO!";
 
 
-
         setTimeout(
-
           () => {
-
 
             if (
               !paymentConfirmed
             ) {
 
-
               copyButton.textContent =
                 "📋 COPIAR PIX";
-
-
             }
 
-
           },
-
           2000
-
         );
-
 
 
       } catch {
 
-
         pixCode.focus();
 
-
         pixCode.select();
-
 
         document.execCommand(
           "copy"
         );
 
-
-
         alert(
           "Código copiado!"
         );
-
-
       }
-
-
     }
 
 
@@ -2585,7 +2031,6 @@
       "click",
       criarPagamento
     );
-
 
     copyButton.addEventListener(
       "click",
@@ -2600,20 +2045,18 @@
 
     function iniciar() {
 
-
       if (
         !paymentOptionId
       ) {
 
-
         payerArea.style.display =
           "none";
 
-
+        choicePhoto.style.display =
+          "none";
 
         choiceName.textContent =
           "Nenhuma escolha foi informada";
-
 
 
         showStatus(
@@ -2622,33 +2065,28 @@
           "Nenhuma opção foi informada."
         );
 
-
-
         return;
-
-
       }
 
 
-
-      const nome =
+      const option =
         OPTIONS[
           paymentOptionId
         ];
 
 
-
-      if (!nome) {
-
+      if (
+        !option
+      ) {
 
         payerArea.style.display =
           "none";
 
-
+        choicePhoto.style.display =
+          "none";
 
         choiceName.textContent =
           "Opção desconhecida";
-
 
 
         showStatus(
@@ -2657,26 +2095,28 @@
           "A opção recebida não está cadastrada."
         );
 
-
-
         return;
-
-
       }
 
 
-
       choiceName.textContent =
-        nome;
+        option.name;
 
+
+      choicePhoto.src =
+        option.photo;
+
+
+      choicePhoto.alt =
+        option.name;
+
+
+      choicePhoto.style.objectPosition =
+        option.position;
 
     }
 
 
-
-    // ==========================================================
-    // EXECUTAR
-    // ==========================================================
 
     iniciar();
 
