@@ -1,162 +1,877 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta
+    name="theme-color"
+    content="#08002c"
+  >
+
   <title>Resultado da votação</title>
 
   <style>
+
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #111827;
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #ffffff;
+
+      background:
+        radial-gradient(
+          circle at 18% 35%,
+          rgba(70, 0, 255, 0.32),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 82% 28%,
+          rgba(255, 92, 0, 0.20),
+          transparent 32%
+        ),
+        linear-gradient(
+          120deg,
+          #02051d 0%,
+          #08002c 45%,
+          #170013 100%
+        );
+
+      overflow-x: hidden;
     }
 
-    .container {
+    body::before {
+      content: "";
+
+      position: fixed;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        45px 45px;
+
+      opacity: .5;
+    }
+
+    .page {
+      position: relative;
+
+      z-index: 1;
+
       width: 100%;
-      max-width: 620px;
+
+      min-height: 100vh;
+    }
+
+    /* =========================================================
+       CABEÇALHO
+       ========================================================= */
+
+    .hero {
+      width: 100%;
+
+      max-width: 1000px;
+
       margin: 0 auto;
-      padding: 30px 15px 50px;
+
+      padding:
+        34px 18px
+        18px;
+
+      text-align: center;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 26px;
+    .badge {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-bottom: 17px;
+
+      padding:
+        9px 18px;
+
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffd600,
+          #ffea00
+        );
+
+      color: #080808;
+
+      font-size: 11px;
+
+      font-weight: 1000;
+
+      letter-spacing: .8px;
+
+      text-transform: uppercase;
+
       box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.08);
+        0 0 20px
+        rgba(255, 214, 0, .32);
     }
 
-    .icon {
-      text-align: center;
-      font-size: 42px;
-      margin-bottom: 8px;
+    .hero h1 {
+      font-size:
+        clamp(
+          34px,
+          5vw,
+          54px
+        );
+
+      line-height: .98;
+
+      font-weight: 1000;
+
+      letter-spacing: -1.5px;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        0 4px 18px
+        rgba(0,0,0,.45);
     }
 
-    h1 {
-      text-align: center;
-      margin: 0;
-      font-size: 26px;
+    .hero h1 span {
+      color: #ffd800;
     }
 
-    .subtitle {
-      text-align: center;
-      margin-top: 8px;
-      margin-bottom: 28px;
-      color: #6b7280;
+    .hero p {
+      max-width: 650px;
+
+      margin:
+        14px auto 0;
+
+      color: #c7cad5;
+
+      font-size: 13px;
+
       line-height: 1.5;
     }
 
-    .total-box {
-      text-align: center;
-      background: #f1f5f9;
-      border-radius: 12px;
+    /* =========================================================
+       CONTAINER
+       ========================================================= */
+
+    .container {
+      width: 100%;
+
+      max-width: 1000px;
+
+      margin: 0 auto;
+
+      padding:
+        10px 18px
+        40px;
+    }
+
+    /* =========================================================
+       CARD PRINCIPAL
+       ========================================================= */
+
+    .main-card {
+      padding: 22px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.11);
+
+      border-radius: 21px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(20,15,48,.96),
+          rgba(7,7,25,.98)
+        );
+
+      box-shadow:
+        0 22px 60px
+        rgba(0,0,0,.42);
+
+      backdrop-filter:
+        blur(10px);
+    }
+
+    /* =========================================================
+       STATUS
+       ========================================================= */
+
+    .status {
       padding: 16px;
-      margin-bottom: 25px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+    .status.loading {
+      color: #bfdbfe;
+
+      background:
+        rgba(30,64,175,.18);
+
+      border:
+        1px solid
+        rgba(96,165,250,.18);
+    }
+
+    .status.error {
+      color: #fecaca;
+
+      background:
+        rgba(185,28,28,.18);
+
+      border:
+        1px solid
+        rgba(248,113,113,.18);
+    }
+
+    /* =========================================================
+       TOTAL
+       ========================================================= */
+
+    .summary {
+      display: grid;
+
+      grid-template-columns:
+        1fr auto;
+
+      align-items: center;
+
+      gap: 20px;
+
+      padding:
+        17px 20px;
+
+      margin-bottom: 20px;
+
+      border:
+        1px solid
+        rgba(255,216,0,.22);
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,216,0,.075),
+          rgba(255,255,255,.035)
+        );
+    }
+
+    .summary-left {
+      min-width: 0;
+    }
+
+    .summary-kicker {
+      margin-bottom: 4px;
+
+      color: #ffd800;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.5px;
+
+      text-transform: uppercase;
+    }
+
+    .summary-title {
+      color: #ffffff;
+
+      font-size: 18px;
+
+      font-weight: 900;
+    }
+
+    .summary-description {
+      margin-top: 4px;
+
+      color: #929bad;
+
+      font-size: 10px;
+
+      line-height: 1.4;
+    }
+
+    .total-box {
+      min-width: 120px;
+
+      text-align: center;
+
+      padding:
+        9px 17px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(0,0,0,.18);
     }
 
     .total-label {
-      font-size: 13px;
-      color: #64748b;
-      margin-bottom: 4px;
+      color: #a6adbe;
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
     }
 
     .total-value {
-      font-size: 30px;
-      font-weight: bold;
+      margin-top: 2px;
+
+      color: #ffd800;
+
+      font-size: 34px;
+
+      line-height: 1;
+
+      font-weight: 1000;
+
+      text-shadow:
+        0 0 20px
+        rgba(255,216,0,.16);
     }
 
-    .result-item {
-      margin-bottom: 24px;
-    }
+    /* =========================================================
+       RESULTADOS
+       ========================================================= */
 
-    .result-top {
-      display: flex;
-      justify-content: space-between;
+    .results-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
       gap: 15px;
+    }
+
+    .result-card {
+      position: relative;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(255,255,255,.11);
+
+      border-radius: 17px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(17,24,39,.96),
+          rgba(6,5,25,.98)
+        );
+
+      box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.25);
+
+      transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .result-card:hover {
+      transform:
+        translateY(-4px);
+
+      border-color:
+        rgba(255,216,0,.48);
+
+      box-shadow:
+        0 16px 35px
+        rgba(0,0,0,.38);
+    }
+
+    .result-card.leader {
+      border-color:
+        rgba(255,216,0,.72);
+
+      box-shadow:
+        0 14px 35px
+        rgba(0,0,0,.35),
+        0 0 20px
+        rgba(255,216,0,.08);
+    }
+
+    /* =========================================================
+       FOTO
+       ========================================================= */
+
+    .candidate-photo-area {
+      position: relative;
+
+      width: 100%;
+
+      height: 205px;
+
+      overflow: hidden;
+
+      background:
+        #111827;
+    }
+
+    .candidate-photo {
+      display: block;
+
+      width: 100%;
+
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .candidate-photo-area::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 80px;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          transparent,
+          rgba(6,5,25,.98)
+        );
+    }
+
+    /* =========================================================
+       RANKING
+       ========================================================= */
+
+    .ranking {
+      position: absolute;
+
+      z-index: 3;
+
+      top: 10px;
+
+      left: 10px;
+
+      display: flex;
+
       align-items: center;
-      margin-bottom: 8px;
+
+      justify-content: center;
+
+      min-width: 34px;
+
+      height: 30px;
+
+      padding:
+        0 8px;
+
+      border-radius: 9px;
+
+      background:
+        rgba(5,5,15,.78);
+
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      color: #ffffff;
+
+      font-size: 12px;
+
+      font-weight: 1000;
+
+      backdrop-filter:
+        blur(8px);
+    }
+
+    .leader .ranking {
+      background:
+        linear-gradient(
+          135deg,
+          #ffe000,
+          #ffb800
+        );
+
+      border-color:
+        transparent;
+
+      color: #070707;
+
+      box-shadow:
+        0 0 17px
+        rgba(255,216,0,.20);
+    }
+
+    /* =========================================================
+       CARD CONTEÚDO
+       ========================================================= */
+
+    .result-content {
+      padding:
+        7px 15px
+        16px;
+    }
+
+    .candidate-label {
+      margin-bottom: 6px;
+
+      color: #9098aa;
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.4px;
+
+      text-align: center;
+
+      text-transform: uppercase;
     }
 
     .candidate-name {
-      font-size: 18px;
-      font-weight: bold;
+      min-height: 45px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #ffffff;
+
+      font-size: 19px;
+
+      line-height: 1.08;
+
+      font-weight: 1000;
+
+      text-align: center;
+
+      text-transform: uppercase;
     }
 
     .percentage {
-      font-size: 18px;
-      font-weight: bold;
+      margin-top: 9px;
+
+      color: #ffd800;
+
+      font-size: 28px;
+
+      line-height: 1;
+
+      font-weight: 1000;
+
+      text-align: center;
     }
 
     .bar-background {
       width: 100%;
-      height: 18px;
-      background: #e5e7eb;
-      border-radius: 999px;
+
+      height: 11px;
+
+      margin-top: 12px;
+
       overflow: hidden;
+
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,.10);
     }
 
     .bar-fill {
-      height: 100%;
-      background: #111827;
-      border-radius: 999px;
       width: 0;
-      transition: width 0.6s ease;
+
+      height: 100%;
+
+      border-radius: 999px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffe000,
+          #ffb800
+        );
+
+      box-shadow:
+        0 0 12px
+        rgba(255,216,0,.16);
+
+      transition:
+        width .7s ease;
     }
 
     .vote-count {
-      margin-top: 7px;
-      font-size: 13px;
-      color: #6b7280;
+      margin-top: 8px;
+
+      color: #aeb5c4;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      text-align: center;
     }
 
-    .status {
-      text-align: center;
-      padding: 16px;
+    .leader-label {
+      display: none;
+
+      margin:
+        10px auto 0;
+
+      width: fit-content;
+
+      padding:
+        5px 9px;
+
+      border-radius: 999px;
+
+      color: #080808;
+
+      background:
+        #ffd800;
+
+      font-size: 8px;
+
+      font-weight: 1000;
+
+      letter-spacing: .7px;
+
+      text-transform: uppercase;
+    }
+
+    .leader .leader-label {
+      display: block;
+    }
+
+    /* =========================================================
+       ATUALIZAÇÃO
+       ========================================================= */
+
+    .update-panel {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-top: 18px;
+
+      padding:
+        10px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.07);
+
       border-radius: 10px;
-      line-height: 1.5;
-    }
 
-    .loading {
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
+      background:
+        rgba(255,255,255,.03);
 
-    .error {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
+      color: #858da0;
 
-    .updated-at {
+      font-size: 9px;
+
       text-align: center;
-      color: #9ca3af;
-      font-size: 12px;
-      margin-top: 20px;
     }
 
-    .footer {
-      text-align: center;
-      color: #9ca3af;
-      font-size: 12px;
-      margin-top: 20px;
+    .live-dot {
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #22c55e;
+
+      box-shadow:
+        0 0 10px
+        rgba(34,197,94,.7);
+
+      animation:
+        pulse 1.7s ease-in-out
+        infinite;
     }
 
-    @media (max-width: 480px) {
-      .card {
-        padding: 20px 16px;
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: .45;
       }
 
-      h1 {
-        font-size: 23px;
+      50% {
+        opacity: 1;
+      }
+
+    }
+
+    /* =========================================================
+       BOTÕES
+       ========================================================= */
+
+    .actions {
+      display: flex;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 17px;
+    }
+
+    .action-button {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 44px;
+
+      padding:
+        10px 18px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.15);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.045);
+
+      color: #ffffff;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+    }
+
+    .action-button:hover {
+      transform:
+        translateY(-2px);
+
+      background:
+        rgba(255,255,255,.08);
+
+      border-color:
+        rgba(255,216,0,.4);
+    }
+
+    .action-button.primary {
+      border: none;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffe000,
+          #ffb800
+        );
+
+      color: #050505;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .footer {
+      padding:
+        0 20px
+        28px;
+
+      color: #6f7789;
+
+      font-size: 9px;
+
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+    /* =========================================================
+       TABLET
+       ========================================================= */
+
+    @media (
+      max-width: 800px
+    ) {
+
+      .results-grid {
+        gap: 10px;
+      }
+
+      .candidate-photo-area {
+        height: 180px;
       }
 
       .candidate-name {
@@ -164,102 +879,409 @@
       }
 
       .percentage {
-        font-size: 16px;
+        font-size: 25px;
       }
+
     }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (
+      max-width: 650px
+    ) {
+
+      .hero {
+        padding:
+          24px 13px
+          12px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .hero p {
+        font-size: 12px;
+      }
+
+      .container {
+        padding:
+          8px 10px
+          30px;
+      }
+
+      .main-card {
+        padding: 14px;
+
+        border-radius: 17px;
+      }
+
+      .summary {
+        grid-template-columns:
+          1fr;
+
+        gap: 12px;
+
+        text-align: center;
+      }
+
+      .total-box {
+        width: 100%;
+
+        max-width: 180px;
+
+        margin: 0 auto;
+      }
+
+      .results-grid {
+        grid-template-columns:
+          1fr;
+
+        max-width: 430px;
+
+        margin: 0 auto;
+
+        gap: 16px;
+      }
+
+      .candidate-photo-area {
+        height: 300px;
+      }
+
+      .candidate-name {
+        min-height: auto;
+
+        font-size: 22px;
+      }
+
+      .percentage {
+        font-size: 32px;
+      }
+
+      .action-button {
+        width: 100%;
+      }
+
+    }
+
+    @media (
+      max-width: 420px
+    ) {
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .candidate-photo-area {
+        height: 260px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <div class="container">
 
-    <div class="card">
+  <div class="page">
 
-      <div class="icon">
-        🔥
+
+    <!-- =======================================================
+         CABEÇALHO
+         ======================================================= -->
+
+    <header class="hero">
+
+      <div class="badge">
+        📊 RESULTADO ATUALIZADO
       </div>
 
       <h1>
-        Resultado atual
+        QUEM ESTÁ
+        <span>
+          NA FRENTE?
+        </span>
       </h1>
 
-      <div class="subtitle">
-        Veja como está a votação neste momento.
-        Apenas votos com pagamento confirmado são contabilizados.
-      </div>
+      <p>
+        Acompanhe o resultado da pesquisa em tempo real.
+        Apenas participações confirmadas são contabilizadas.
+      </p>
 
-      <div
-        id="status"
-        class="status loading"
-      >
-        Carregando resultado...
-      </div>
+    </header>
 
-      <div
-        id="content"
-        style="display:none;"
-      >
 
-        <div class="total-box">
 
-          <div class="total-label">
-            Votos confirmados
-          </div>
+    <!-- =======================================================
+         CONTEÚDO
+         ======================================================= -->
+
+    <main class="container">
+
+
+      <section class="main-card">
+
+
+        <!-- ==================================================
+             STATUS
+             ================================================== -->
+
+        <div
+          id="status"
+          class="status loading"
+        >
+          Carregando resultado...
+        </div>
+
+
+
+        <!-- ==================================================
+             CONTEÚDO DOS RESULTADOS
+             ================================================== -->
+
+        <div
+          id="content"
+          style="display:none;"
+        >
+
+
+          <!-- ================================================
+               RESUMO
+               ================================================ -->
+
+          <section class="summary">
+
+
+            <div class="summary-left">
+
+              <div class="summary-kicker">
+                PLACAR DA PESQUISA
+              </div>
+
+              <div class="summary-title">
+                Resultado atual
+              </div>
+
+              <div class="summary-description">
+                O placar é atualizado automaticamente
+                conforme novas participações são confirmadas.
+              </div>
+
+            </div>
+
+
+            <div class="total-box">
+
+              <div class="total-label">
+                Votos confirmados
+              </div>
+
+              <div
+                id="totalVotes"
+                class="total-value"
+              >
+                0
+              </div>
+
+            </div>
+
+
+          </section>
+
+
+
+          <!-- ================================================
+               CANDIDATOS
+               ================================================ -->
 
           <div
-            id="totalVotes"
-            class="total-value"
-          >
-            0
+            id="results"
+            class="results-grid"
+          ></div>
+
+
+
+          <!-- ================================================
+               ATUALIZAÇÃO
+               ================================================ -->
+
+          <div class="update-panel">
+
+            <span class="live-dot"></span>
+
+            <span id="updatedAt">
+              Atualizando...
+            </span>
+
           </div>
+
+
+
+          <!-- ================================================
+               AÇÕES
+               ================================================ -->
+
+          <div class="actions">
+
+            <a
+              href="index.html"
+              class="action-button primary"
+            >
+              🗳️ PARTICIPAR NOVAMENTE
+            </a>
+
+            <button
+              id="refreshButton"
+              class="action-button"
+              type="button"
+            >
+              ↻ ATUALIZAR AGORA
+            </button>
+
+          </div>
+
 
         </div>
 
-        <div id="results"></div>
 
-        <div
-          id="updatedAt"
-          class="updated-at"
-        ></div>
+      </section>
 
-      </div>
 
-    </div>
+    </main>
 
-    <div class="footer">
+
+
+    <footer class="footer">
       Resultado atualizado automaticamente.
-    </div>
+      Os números representam as participações
+      confirmadas nesta pesquisa.
+    </footer>
+
 
   </div>
 
+
+
   <script>
+
+
+    // ==========================================================
+    // CONFIGURAÇÃO
+    // ==========================================================
 
     const RESULTS_API_URL =
       "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/results-api";
 
-    const SURVEY_ID = 1;
+    const SURVEY_ID =
+      1;
 
     const REFRESH_INTERVAL =
       10000;
 
+
+
+    // ==========================================================
+    // FOTOS
+    // ==========================================================
+
+    const CANDIDATE_DATA = {
+
+      "LULA": {
+        photo:
+          "imagens/candidato-1.jpeg",
+
+        position:
+          "center 24%"
+      },
+
+      "FLAVIO BOLSONARO": {
+        photo:
+          "imagens/candidato-2.jfif",
+
+        position:
+          "center 20%"
+      },
+
+      "RENAN SANTOS": {
+        photo:
+          "imagens/candidato-3.jpg",
+
+        position:
+          "center 20%"
+      }
+
+    };
+
+
+
+    // ==========================================================
+    // ELEMENTOS
+    // ==========================================================
+
     const statusBox =
-      document.getElementById("status");
+      document.getElementById(
+        "status"
+      );
 
     const content =
-      document.getElementById("content");
+      document.getElementById(
+        "content"
+      );
 
     const totalVotesElement =
-      document.getElementById("totalVotes");
+      document.getElementById(
+        "totalVotes"
+      );
 
     const resultsElement =
-      document.getElementById("results");
+      document.getElementById(
+        "results"
+      );
 
     const updatedAtElement =
-      document.getElementById("updatedAt");
+      document.getElementById(
+        "updatedAt"
+      );
+
+    const refreshButton =
+      document.getElementById(
+        "refreshButton"
+      );
 
 
-    function showError(message) {
+
+    // ==========================================================
+    // NORMALIZAR TEXTO
+    // ==========================================================
+
+    function normalizeText(
+      value
+    ) {
+
+      return String(value || "")
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        )
+        .trim()
+        .toUpperCase();
+    }
+
+
+
+    // ==========================================================
+    // STATUS
+    // ==========================================================
+
+    function showError(
+      message
+    ) {
 
       statusBox.className =
         "status error";
@@ -275,6 +1297,7 @@
     }
 
 
+
     function showLoading() {
 
       statusBox.className =
@@ -288,17 +1311,80 @@
     }
 
 
-    function formatVotes(value) {
 
-      if (value === 1) {
-        return "1 voto";
+    // ==========================================================
+    // VOTOS
+    // ==========================================================
+
+    function formatVotes(
+      value
+    ) {
+
+      if (
+        value === 1
+      ) {
+
+        return "1 voto confirmado";
       }
 
-      return value + " votos";
+      return value +
+        " votos confirmados";
     }
 
 
-    function renderResults(data) {
+
+    // ==========================================================
+    // PORCENTAGEM
+    // ==========================================================
+
+    function formatPercentage(
+      value
+    ) {
+
+      const number =
+        Number(
+          value || 0
+        );
+
+      return number.toFixed(
+        number % 1 === 0
+          ? 0
+          : 1
+      ) + "%";
+    }
+
+
+
+    // ==========================================================
+    // FOTO DO CANDIDATO
+    // ==========================================================
+
+    function getCandidateData(
+      title
+    ) {
+
+      const normalized =
+        normalizeText(
+          title
+        );
+
+      return CANDIDATE_DATA[
+        normalized
+      ] || {
+        photo: "",
+        position: "center"
+      };
+    }
+
+
+
+    // ==========================================================
+    // RENDERIZAR
+    // ==========================================================
+
+    function renderResults(
+      data
+    ) {
 
       statusBox.style.display =
         "none";
@@ -306,111 +1392,389 @@
       content.style.display =
         "block";
 
+
       totalVotesElement.textContent =
-        data.total_votes ?? 0;
+        Number(
+          data.total_votes || 0
+        );
+
 
       resultsElement.innerHTML =
         "";
 
-      const results =
-        Array.isArray(data.results)
+
+      const sourceResults =
+        Array.isArray(
+          data.results
+        )
           ? data.results
           : [];
 
-      for (const item of results) {
 
-        const wrapper =
-          document.createElement("div");
+      const results =
+        [...sourceResults]
+          .sort(
+            (a, b) => {
 
-        wrapper.className =
-          "result-item";
+              const voteDifference =
+                Number(b.votes || 0) -
+                Number(a.votes || 0);
 
-        const top =
-          document.createElement("div");
+              if (
+                voteDifference !== 0
+              ) {
 
-        top.className =
-          "result-top";
+                return voteDifference;
+              }
 
-        const name =
-          document.createElement("div");
+              return (
+                Number(b.percentage || 0) -
+                Number(a.percentage || 0)
+              );
+            }
+          );
 
-        name.className =
-          "candidate-name";
 
-        name.textContent =
-          item.title;
+      results.forEach(
+        (
+          item,
+          index
+        ) => {
 
-        const percentage =
-          document.createElement("div");
 
-        percentage.className =
-          "percentage";
+          const card =
+            document.createElement(
+              "article"
+            );
 
-        percentage.textContent =
-          Number(item.percentage || 0)
-            .toFixed(
-              Number(item.percentage) % 1 === 0
-                ? 0
-                : 1
-            ) + "%";
 
-        top.appendChild(name);
-        top.appendChild(percentage);
+          card.className =
+            "result-card" +
+            (
+              index === 0 &&
+              Number(item.votes || 0) > 0
+                ? " leader"
+                : ""
+            );
 
-        const barBackground =
-          document.createElement("div");
 
-        barBackground.className =
-          "bar-background";
+          // ====================================================
+          // FOTO
+          // ====================================================
 
-        const barFill =
-          document.createElement("div");
+          const photoArea =
+            document.createElement(
+              "div"
+            );
 
-        barFill.className =
-          "bar-fill";
 
-        const percentValue =
-          Math.max(
-            0,
-            Math.min(
-              100,
-              Number(
-                item.percentage || 0
+          photoArea.className =
+            "candidate-photo-area";
+
+
+          const ranking =
+            document.createElement(
+              "div"
+            );
+
+
+          ranking.className =
+            "ranking";
+
+
+          ranking.textContent =
+            index === 0
+              ? "1º"
+              : index === 1
+                ? "2º"
+                : (index + 1) + "º";
+
+
+          photoArea.appendChild(
+            ranking
+          );
+
+
+          const candidateData =
+            getCandidateData(
+              item.title
+            );
+
+
+          if (
+            candidateData.photo
+          ) {
+
+            const photo =
+              document.createElement(
+                "img"
+              );
+
+
+            photo.className =
+              "candidate-photo";
+
+
+            photo.src =
+              candidateData.photo;
+
+
+            photo.alt =
+              item.title || "";
+
+
+            photo.style.objectPosition =
+              candidateData.position;
+
+
+            photoArea.appendChild(
+              photo
+            );
+
+
+          } else {
+
+
+            const fallback =
+              document.createElement(
+                "div"
+              );
+
+
+            fallback.style.width =
+              "100%";
+
+
+            fallback.style.height =
+              "100%";
+
+
+            fallback.style.display =
+              "flex";
+
+
+            fallback.style.alignItems =
+              "center";
+
+
+            fallback.style.justifyContent =
+              "center";
+
+
+            fallback.style.fontSize =
+              "50px";
+
+
+            fallback.textContent =
+              "🗳️";
+
+
+            photoArea.appendChild(
+              fallback
+            );
+
+          }
+
+
+
+          // ====================================================
+          // CONTEÚDO
+          // ====================================================
+
+          const resultContent =
+            document.createElement(
+              "div"
+            );
+
+
+          resultContent.className =
+            "result-content";
+
+
+          const label =
+            document.createElement(
+              "div"
+            );
+
+
+          label.className =
+            "candidate-label";
+
+
+          label.textContent =
+            "Opção de voto";
+
+
+          const name =
+            document.createElement(
+              "div"
+            );
+
+
+          name.className =
+            "candidate-name";
+
+
+          name.textContent =
+            item.title || "";
+
+
+          const percentage =
+            document.createElement(
+              "div"
+            );
+
+
+          percentage.className =
+            "percentage";
+
+
+          percentage.textContent =
+            formatPercentage(
+              item.percentage
+            );
+
+
+          const barBackground =
+            document.createElement(
+              "div"
+            );
+
+
+          barBackground.className =
+            "bar-background";
+
+
+          const barFill =
+            document.createElement(
+              "div"
+            );
+
+
+          barFill.className =
+            "bar-fill";
+
+
+          const percentValue =
+            Math.max(
+              0,
+              Math.min(
+                100,
+                Number(
+                  item.percentage || 0
+                )
               )
-            )
+            );
+
+
+          barFill.style.width =
+            "0%";
+
+
+          barBackground.appendChild(
+            barFill
           );
 
-        barFill.style.width =
-          percentValue + "%";
 
-        barBackground.appendChild(
-          barFill
-        );
+          const votes =
+            document.createElement(
+              "div"
+            );
 
-        const votes =
-          document.createElement("div");
 
-        votes.className =
-          "vote-count";
+          votes.className =
+            "vote-count";
 
-        votes.textContent =
-          formatVotes(
-            Number(item.votes || 0)
+
+          votes.textContent =
+            formatVotes(
+              Number(
+                item.votes || 0
+              )
+            );
+
+
+          const leaderLabel =
+            document.createElement(
+              "div"
+            );
+
+
+          leaderLabel.className =
+            "leader-label";
+
+
+          leaderLabel.textContent =
+            "🏆 Liderando";
+
+
+          resultContent.appendChild(
+            label
           );
 
-        wrapper.appendChild(top);
-        wrapper.appendChild(
-          barBackground
-        );
-        wrapper.appendChild(votes);
 
-        resultsElement.appendChild(
-          wrapper
-        );
-      }
+          resultContent.appendChild(
+            name
+          );
+
+
+          resultContent.appendChild(
+            percentage
+          );
+
+
+          resultContent.appendChild(
+            barBackground
+          );
+
+
+          resultContent.appendChild(
+            votes
+          );
+
+
+          resultContent.appendChild(
+            leaderLabel
+          );
+
+
+          card.appendChild(
+            photoArea
+          );
+
+
+          card.appendChild(
+            resultContent
+          );
+
+
+          resultsElement.appendChild(
+            card
+          );
+
+
+          requestAnimationFrame(
+            () => {
+
+              requestAnimationFrame(
+                () => {
+
+                  barFill.style.width =
+                    percentValue + "%";
+
+                }
+              );
+
+            }
+          );
+
+        }
+      );
+
 
       const now =
         new Date();
+
 
       updatedAtElement.textContent =
         "Atualizado às " +
@@ -419,39 +1783,74 @@
           {
             hour:
               "2-digit",
+
             minute:
               "2-digit",
+
             second:
               "2-digit"
           }
-        );
+        ) +
+        " • atualização automática a cada 10 segundos";
+
     }
 
 
-    async function loadResults() {
+
+    // ==========================================================
+    // CARREGAR RESULTADOS
+    // ==========================================================
+
+    async function loadResults(
+      manual = false
+    ) {
+
+      if (
+        manual
+      ) {
+
+        refreshButton.disabled =
+          true;
+
+
+        refreshButton.textContent =
+          "ATUALIZANDO...";
+      }
+
 
       try {
 
         const response =
           await fetch(
+
             RESULTS_API_URL +
+
             "?survey_id=" +
             SURVEY_ID +
+
             "&t=" +
             Date.now(),
+
             {
+
               method:
                 "GET",
 
               cache:
                 "no-store"
+
             }
+
           );
+
 
         const data =
           await response.json();
 
-        if (!response.ok) {
+
+        if (
+          !response.ok
+        ) {
 
           throw new Error(
             data?.error ||
@@ -459,7 +1858,10 @@
           );
         }
 
-        if (!data.success) {
+
+        if (
+          !data.success
+        ) {
 
           throw new Error(
             data?.error ||
@@ -467,36 +1869,91 @@
           );
         }
 
+
         renderResults(
           data
         );
 
-      } catch (error) {
+
+      } catch (
+        error
+      ) {
 
         console.error(
           error
         );
+
 
         showError(
           error instanceof Error
             ? error.message
             : "Erro ao carregar resultado."
         );
+
+
+      } finally {
+
+
+        if (
+          manual
+        ) {
+
+          refreshButton.disabled =
+            false;
+
+
+          refreshButton.textContent =
+            "↻ ATUALIZAR AGORA";
+
+        }
+
       }
+
     }
 
 
+
+    // ==========================================================
+    // BOTÃO ATUALIZAR
+    // ==========================================================
+
+    refreshButton.addEventListener(
+      "click",
+      () => {
+
+        loadResults(
+          true
+        );
+
+      }
+    );
+
+
+
+    // ==========================================================
+    // INICIAR
+    // ==========================================================
+
     showLoading();
+
 
     loadResults();
 
 
+
     setInterval(
-      loadResults,
+      () => {
+
+        loadResults();
+
+      },
       REFRESH_INTERVAL
     );
 
+
   </script>
 
+
 </body>
+
 </html>
