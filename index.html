@@ -1,216 +1,554 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Pagamento do voto</title>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Confirme sua participação</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f8;
-      color: #222;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        #f4f6f8;
+
+      color:
+        #222;
     }
 
     .container {
       width: 100%;
       max-width: 520px;
       margin: 0 auto;
-      padding: 25px 15px 50px;
+      padding:
+        25px 15px 50px;
     }
 
     .card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 25px;
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      background:
+        #ffffff;
+
+      border-radius:
+        18px;
+
+      padding:
+        25px;
+
+      box-shadow:
+        0 5px 25px
+        rgba(0, 0, 0, 0.08);
     }
 
     .logo {
-      text-align: center;
-      font-size: 42px;
-      margin-bottom: 8px;
+      text-align:
+        center;
+
+      font-size:
+        42px;
+
+      margin-bottom:
+        8px;
     }
 
     h1 {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: 25px;
+      text-align:
+        center;
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        25px;
     }
 
     .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-      line-height: 1.5;
+      text-align:
+        center;
+
+      color:
+        #666;
+
+      margin-bottom:
+        25px;
+
+      line-height:
+        1.5;
     }
 
     .choice {
-      background: #f1f5f9;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 20px;
+      background:
+        #f1f5f9;
+
+      border-radius:
+        12px;
+
+      padding:
+        15px;
+
+      margin-bottom:
+        20px;
     }
 
     .choice-label {
-      font-size: 13px;
-      color: #64748b;
-      margin-bottom: 5px;
+      font-size:
+        13px;
+
+      color:
+        #64748b;
+
+      margin-bottom:
+        5px;
     }
 
     .choice-name {
-      font-size: 20px;
-      font-weight: bold;
-      color: #111827;
+      font-size:
+        20px;
+
+      font-weight:
+        bold;
+
+      color:
+        #111827;
     }
 
     .value-label {
-      text-align: center;
-      color: #666;
-      font-size: 13px;
-      margin-top: 5px;
+      text-align:
+        center;
+
+      color:
+        #666;
+
+      font-size:
+        13px;
+
+      margin-top:
+        5px;
     }
 
     .value {
-      text-align: center;
-      font-size: 34px;
-      font-weight: bold;
-      margin: 4px 0 25px;
-      color: #111;
+      text-align:
+        center;
+
+      font-size:
+        34px;
+
+      font-weight:
+        bold;
+
+      margin:
+        4px 0 25px;
+
+      color:
+        #111;
+    }
+
+    .payer-area {
+      margin-top:
+        20px;
+
+      padding:
+        18px;
+
+      background:
+        #f8fafc;
+
+      border-radius:
+        12px;
+    }
+
+    .payer-title {
+      font-weight:
+        bold;
+
+      margin-bottom:
+        5px;
+    }
+
+    .payer-description {
+      color:
+        #64748b;
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
+      margin-bottom:
+        15px;
+    }
+
+    .field {
+      margin-bottom:
+        14px;
+    }
+
+    .field label {
+      display:
+        block;
+
+      margin-bottom:
+        6px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        bold;
+    }
+
+    .field input {
+      width:
+        100%;
+
+      padding:
+        13px;
+
+      border:
+        1px solid #d1d5db;
+
+      border-radius:
+        8px;
+
+      font-size:
+        16px;
+
+      outline:
+        none;
+
+      background:
+        #ffffff;
+    }
+
+    .field input:focus {
+      border-color:
+        #64748b;
+    }
+
+    .generate-button {
+      width:
+        100%;
+
+      border:
+        none;
+
+      background:
+        #111827;
+
+      color:
+        #ffffff;
+
+      padding:
+        15px;
+
+      border-radius:
+        9px;
+
+      cursor:
+        pointer;
+
+      font-size:
+        16px;
+
+      font-weight:
+        bold;
+
+      margin-top:
+        4px;
+    }
+
+    .generate-button:hover {
+      opacity:
+        0.92;
+    }
+
+    .generate-button:disabled {
+      opacity:
+        0.55;
+
+      cursor:
+        not-allowed;
     }
 
     .status {
-      padding: 16px;
-      border-radius: 10px;
-      margin-top: 15px;
-      line-height: 1.5;
+      padding:
+        16px;
+
+      border-radius:
+        10px;
+
+      margin-top:
+        18px;
+
+      line-height:
+        1.5;
     }
 
     .status.loading {
-      background: #eff6ff;
-      color: #1d4ed8;
+      background:
+        #eff6ff;
+
+      color:
+        #1d4ed8;
     }
 
     .status.success {
-      background: #ecfdf5;
-      color: #047857;
+      background:
+        #ecfdf5;
+
+      color:
+        #047857;
     }
 
     .status.error {
-      background: #fef2f2;
-      color: #b91c1c;
+      background:
+        #fef2f2;
+
+      color:
+        #b91c1c;
     }
 
     .status.waiting {
-      background: #fff7ed;
-      color: #c2410c;
+      background:
+        #fff7ed;
+
+      color:
+        #c2410c;
     }
 
     .status-title {
-      font-weight: bold;
-      margin-bottom: 8px;
+      font-weight:
+        bold;
+
+      margin-bottom:
+        7px;
     }
 
     .payment-area {
-      display: none;
-      margin-top: 20px;
+      display:
+        none;
+
+      margin-top:
+        20px;
     }
 
     .qr-container {
-      text-align: center;
-      margin: 20px 0;
+      text-align:
+        center;
+
+      margin:
+        20px 0;
     }
 
     #qrcode {
-      display: block;
-      width: 220px;
-      height: 220px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      object-fit: contain;
+      display:
+        block;
+
+      width:
+        230px;
+
+      height:
+        230px;
+
+      object-fit:
+        contain;
+
+      margin:
+        0 auto;
+
+      background:
+        #ffffff;
+
+      padding:
+        10px;
+
+      border-radius:
+        12px;
+
+      border:
+        1px solid #ddd;
     }
 
     .pix-label {
-      font-weight: bold;
-      margin-bottom: 8px;
+      font-weight:
+        bold;
+
+      margin-bottom:
+        8px;
     }
 
     .pix-code {
-      width: 100%;
-      min-height: 110px;
-      resize: vertical;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 12px;
-      background: #f9fafb;
-      word-break: break-all;
+      width:
+        100%;
+
+      min-height:
+        110px;
+
+      resize:
+        vertical;
+
+      padding:
+        12px;
+
+      border:
+        1px solid #d1d5db;
+
+      border-radius:
+        8px;
+
+      font-size:
+        12px;
+
+      background:
+        #f9fafb;
+
+      word-break:
+        break-all;
     }
 
     .copy-button {
-      width: 100%;
-      border: none;
-      background: #111;
-      color: #fff;
-      padding: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 10px;
+      width:
+        100%;
+
+      border:
+        none;
+
+      background:
+        #111;
+
+      color:
+        #ffffff;
+
+      padding:
+        14px;
+
+      border-radius:
+        8px;
+
+      cursor:
+        pointer;
+
+      font-size:
+        16px;
+
+      font-weight:
+        bold;
+
+      margin-top:
+        10px;
     }
 
     .copy-button:hover {
-      opacity: 0.9;
+      opacity:
+        0.9;
     }
 
     .copy-button:disabled {
-      opacity: 0.65;
-      cursor: default;
+      opacity:
+        0.6;
+
+      cursor:
+        default;
     }
 
     .checking {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 13px;
-      color: #64748b;
-      line-height: 1.5;
+      text-align:
+        center;
+
+      margin-top:
+        18px;
+
+      font-size:
+        13px;
+
+      color:
+        #64748b;
+
+      line-height:
+        1.5;
+    }
+
+    .security {
+      text-align:
+        center;
+
+      color:
+        #94a3b8;
+
+      font-size:
+        11px;
+
+      margin-top:
+        14px;
+
+      line-height:
+        1.5;
     }
 
     .footer {
-      text-align: center;
-      color: #888;
-      font-size: 12px;
-      margin-top: 20px;
+      text-align:
+        center;
+
+      color:
+        #888;
+
+      font-size:
+        12px;
+
+      margin-top:
+        20px;
     }
 
-    @media (max-width: 480px) {
+    @media (
+      max-width: 480px
+    ) {
+
       .container {
-        padding: 15px 10px 40px;
+        padding:
+          15px 10px 40px;
       }
 
       .card {
-        padding: 20px 15px;
+        padding:
+          20px 15px;
       }
 
       h1 {
-        font-size: 23px;
+        font-size:
+          23px;
       }
 
       .value {
-        font-size: 30px;
+        font-size:
+          30px;
+      }
+
+      #qrcode {
+        width:
+          210px;
+
+        height:
+          210px;
       }
     }
+
   </style>
+
 </head>
 
 <body>
@@ -219,14 +557,19 @@
 
     <div class="card">
 
-      <div class="logo">📦</div>
+      <div class="logo">
+        🗳️
+      </div>
 
-      <h1>Finalize seu voto</h1>
+      <h1>
+        Confirme sua participação
+      </h1>
 
       <div class="subtitle">
-        Faça o pagamento de <strong>R$ 5,00</strong> via PIX
-        para confirmar sua participação.
+        Finalize sua participação
+        para confirmar sua escolha.
       </div>
+
 
       <div class="choice">
 
@@ -236,79 +579,168 @@
 
         <div
           class="choice-name"
-          id="choiceName">
+          id="choiceName"
+        >
           Carregando...
         </div>
 
       </div>
 
+
       <div class="value-label">
-        Valor para confirmar o voto
+        Valor
       </div>
 
       <div class="value">
         R$ 5,00
       </div>
 
+
+      <!-- ========================================= -->
+      <!-- DADOS NECESSÁRIOS PARA O MERCADO PAGO   -->
+      <!-- ========================================= -->
+
+      <div
+        id="payerArea"
+        class="payer-area"
+      >
+
+        <div class="payer-title">
+          Confirme seus dados
+        </div>
+
+        <div class="payer-description">
+          Estas informações são necessárias
+          para gerar a confirmação via PIX.
+        </div>
+
+
+        <div class="field">
+
+          <label for="payerEmail">
+            E-mail
+          </label>
+
+          <input
+            id="payerEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="seuemail@exemplo.com"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="payerCpf">
+            CPF
+          </label>
+
+          <input
+            id="payerCpf"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="14"
+            placeholder="000.000.000-00"
+          >
+
+        </div>
+
+
+        <button
+          id="generateButton"
+          class="generate-button"
+          type="button"
+        >
+          Continuar
+        </button>
+
+        <div class="security">
+          Seus dados são utilizados apenas
+          para processar esta transação.
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- STATUS                                    -->
+      <!-- ========================================= -->
+
       <div
         id="status"
-        class="status loading">
+        class="status loading"
+        style="display:none;"
+      >
 
         <div class="status-title">
           Processando...
         </div>
 
         <div>
-          Estamos preparando seu pagamento.
+          Aguarde.
         </div>
 
       </div>
 
+
+      <!-- ========================================= -->
+      <!-- PIX                                       -->
+      <!-- ========================================= -->
+
       <div
         id="paymentArea"
-        class="payment-area">
+        class="payment-area"
+      >
 
         <div class="qr-container">
 
           <img
             id="qrcode"
             src=""
-            alt="QR Code PIX">
+            alt="QR Code PIX"
+          >
 
         </div>
+
 
         <div class="pix-label">
           PIX copia e cola
         </div>
 
+
         <textarea
           id="pixCode"
           class="pix-code"
-          readonly></textarea>
+          readonly
+        ></textarea>
+
 
         <button
           id="copyButton"
           class="copy-button"
-          type="button">
-
+          type="button"
+        >
           📋 Copiar PIX
-
         </button>
+
 
         <div
           id="checkingMessage"
-          class="checking">
-
-          ⏳ Aguardando confirmação do pagamento...
-
+          class="checking"
+        >
+          ⏳ Aguardando confirmação...
         </div>
 
       </div>
 
     </div>
 
+
     <div class="footer">
-      Pagamento processado via PIX.
+      Processamento seguro.
     </div>
 
   </div>
@@ -321,7 +753,7 @@
     // ==========================================================
 
     const PAYMENT_API_URL =
-      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/clever-function";
+      "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/mercadopago-pix";
 
     const PAYMENT_STATUS_API_URL =
       "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/rapid-worker";
@@ -336,11 +768,11 @@
       3000;
 
     const STATUS_TIMEOUT =
-      20 * 60 * 1000;
+      30 * 60 * 1000;
 
 
     // ==========================================================
-    // CANDIDATOS
+    // OPÇÕES
     // ==========================================================
 
     const OPTIONS = {
@@ -358,7 +790,7 @@
 
 
     // ==========================================================
-    // LER PAYMENT_OPTION_ID
+    // QUERY STRING
     // ==========================================================
 
     const params =
@@ -381,6 +813,26 @@
         "choiceName"
       );
 
+    const payerArea =
+      document.getElementById(
+        "payerArea"
+      );
+
+    const payerEmail =
+      document.getElementById(
+        "payerEmail"
+      );
+
+    const payerCpf =
+      document.getElementById(
+        "payerCpf"
+      );
+
+    const generateButton =
+      document.getElementById(
+        "generateButton"
+      );
+
     const status =
       document.getElementById(
         "status"
@@ -391,14 +843,14 @@
         "paymentArea"
       );
 
-    const pixCode =
-      document.getElementById(
-        "pixCode"
-      );
-
     const qrcode =
       document.getElementById(
         "qrcode"
+      );
+
+    const pixCode =
+      document.getElementById(
+        "pixCode"
       );
 
     const copyButton =
@@ -428,9 +880,12 @@
     let paymentConfirmed =
       false;
 
+    let creatingPayment =
+      false;
+
 
     // ==========================================================
-    // MOSTRAR STATUS
+    // STATUS
     // ==========================================================
 
     function showStatus(
@@ -439,8 +894,12 @@
       message
     ) {
 
+      status.style.display =
+        "block";
+
       status.className =
-        "status " + type;
+        "status " +
+        type;
 
       status.innerHTML = `
         <div class="status-title">
@@ -455,7 +914,7 @@
 
 
     // ==========================================================
-    // ESCAPAR HTML
+    // ESCAPE
     // ==========================================================
 
     function escapeHtml(
@@ -463,43 +922,218 @@
     ) {
 
       return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
     }
 
 
     // ==========================================================
-    // IDENTIFICAR CANDIDATO
+    // CPF
     // ==========================================================
 
-    function identificarEscolha(
-      id
+    function apenasNumeros(
+      value
     ) {
 
-      return OPTIONS[id] ||
-        null;
+      return String(value)
+        .replace(
+          /\D/g,
+          ""
+        );
+    }
+
+
+    function formatarCpf(
+      value
+    ) {
+
+      const digits =
+        apenasNumeros(
+          value
+        )
+          .slice(
+            0,
+            11
+          );
+
+      let formatted =
+        digits;
+
+      if (
+        digits.length > 3
+      ) {
+
+        formatted =
+          digits.slice(
+            0,
+            3
+          ) +
+          "." +
+          digits.slice(
+            3
+          );
+      }
+
+      if (
+        digits.length > 6
+      ) {
+
+        formatted =
+          formatted.slice(
+            0,
+            7
+          ) +
+          "." +
+          digits.slice(
+            6
+          );
+      }
+
+      if (
+        digits.length > 9
+      ) {
+
+        formatted =
+          formatted.slice(
+            0,
+            11
+          ) +
+          "-" +
+          digits.slice(
+            9
+          );
+      }
+
+      return formatted;
+    }
+
+
+    payerCpf.addEventListener(
+      "input",
+      () => {
+
+        payerCpf.value =
+          formatarCpf(
+            payerCpf.value
+          );
+      }
+    );
+
+
+    // ==========================================================
+    // VALIDAR DADOS
+    // ==========================================================
+
+    function validarDados() {
+
+      const email =
+        payerEmail.value
+          .trim();
+
+      const cpf =
+        apenasNumeros(
+          payerCpf.value
+        );
+
+      if (
+        !email ||
+        !email.includes("@")
+      ) {
+
+        showStatus(
+          "error",
+          "Verifique seus dados",
+          "Informe um e-mail válido."
+        );
+
+        payerEmail.focus();
+
+        return null;
+      }
+
+      if (
+        cpf.length !==
+        11
+      ) {
+
+        showStatus(
+          "error",
+          "Verifique seus dados",
+          "Informe um CPF válido com 11 números."
+        );
+
+        payerCpf.focus();
+
+        return null;
+      }
+
+      return {
+        email,
+        cpf,
+      };
     }
 
 
     // ==========================================================
-    // CRIAR PAGAMENTO
+    // CRIAR PIX
     // ==========================================================
 
     async function criarPagamento() {
 
+      if (
+        creatingPayment ||
+        currentPaymentId
+      ) {
+        return;
+      }
+
+      const payer =
+        validarDados();
+
+      if (!payer) {
+        return;
+      }
+
+      creatingPayment =
+        true;
+
+      generateButton.disabled =
+        true;
+
+      generateButton.textContent =
+        "Gerando...";
+
+
       showStatus(
         "loading",
-        "Gerando pagamento...",
-        "Aguarde enquanto preparamos seu PIX."
+        "Preparando confirmação...",
+        "Aguarde enquanto geramos o PIX."
       );
+
 
       try {
 
         const controller =
           new AbortController();
+
 
         const timeout =
           setTimeout(
@@ -526,8 +1160,9 @@
                 controller.signal,
 
               headers: {
+
                 "Content-Type":
-                  "text/plain;charset=UTF-8",
+                  "application/json",
 
                 "Accept":
                   "application/json"
@@ -535,8 +1170,15 @@
 
               body:
                 JSON.stringify({
+
                   payment_option_id:
                     paymentOptionId,
+
+                  payer_email:
+                    payer.email,
+
+                  payer_cpf:
+                    payer.cpf,
 
                   amount:
                     PAYMENT_VALUE
@@ -556,6 +1198,7 @@
 
         let data;
 
+
         try {
 
           data =
@@ -566,27 +1209,30 @@
         } catch {
 
           throw new Error(
-            "A Edge Function respondeu algo que não é JSON."
+            "O servidor respondeu algo inválido."
           );
         }
 
 
-        if (!response.ok) {
+        if (
+          !response.ok ||
+          !data.success
+        ) {
 
           throw new Error(
-            data?.message ||
             data?.error ||
-            "Não foi possível criar o pagamento."
+            data?.message ||
+            "Não foi possível gerar o PIX."
           );
         }
 
 
-        if (!data.success) {
+        if (
+          !data.payment_id
+        ) {
 
           throw new Error(
-            data?.message ||
-            data?.error ||
-            "Não foi possível criar o pagamento."
+            "O servidor não retornou o identificador do pagamento."
           );
         }
 
@@ -595,26 +1241,20 @@
         // PAYMENT ID
         // ======================================================
 
-        if (!data.payment_id) {
-
-          throw new Error(
-            "O servidor não retornou o payment_id."
-          );
-        }
-
-
         currentPaymentId =
-          data.payment_id;
+          String(
+            data.payment_id
+          );
 
 
         console.log(
-          "PAYMENT ID CRIADO:",
+          "MERCADO PAGO PAYMENT ID:",
           currentPaymentId
         );
 
 
         // ======================================================
-        // QR CODE
+        // QR
         // ======================================================
 
         if (
@@ -635,26 +1275,31 @@
 
 
         // ======================================================
-        // PIX COPIA E COLA
+        // PIX CODE
         // ======================================================
 
+        pixCode.value =
+          data.pix_code ||
+          "";
+
+
         if (
-          data.pix_code
+          !pixCode.value
         ) {
 
-          pixCode.value =
-            data.pix_code;
-
-        } else {
-
-          pixCode.value =
-            "Código PIX não retornado.";
+          throw new Error(
+            "O pagamento foi criado, mas o código PIX não foi retornado."
+          );
         }
 
 
         // ======================================================
-        // MOSTRAR ÁREA
+        // INTERFACE
         // ======================================================
+
+        payerArea.style.display =
+          "none";
+
 
         paymentArea.style.display =
           "block";
@@ -662,29 +1307,25 @@
 
         showStatus(
           "waiting",
-          "PIX gerado!",
-          "Realize o pagamento. A confirmação será detectada automaticamente."
+          "Confirmação gerada!",
+          "Conclua a operação pelo PIX. A página identificará automaticamente quando estiver confirmada."
         );
 
 
         checkingMessage.textContent =
-          "⏳ Aguardando confirmação do pagamento...";
-
-
-        console.log(
-          "Pagamento criado:",
-          data
-        );
+          "⏳ Aguardando confirmação...";
 
 
         // ======================================================
-        // COMEÇAR MONITORAMENTO
+        // MONITORAR
         // ======================================================
 
         iniciarMonitoramentoPagamento();
 
 
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Erro ao criar pagamento:",
@@ -693,7 +1334,7 @@
 
 
         let message =
-          "Não foi possível conectar ao servidor de pagamento.";
+          "Não foi possível gerar a confirmação.";
 
 
         if (
@@ -703,7 +1344,7 @@
         ) {
 
           message =
-            "A conexão demorou mais de 30 segundos e foi encerrada.";
+            "O servidor demorou mais de 30 segundos para responder.";
 
         } else if (
           error &&
@@ -717,15 +1358,27 @@
 
         showStatus(
           "error",
-          "Não foi possível gerar o pagamento.",
+          "Não foi possível continuar.",
           message
         );
+
+
+        generateButton.disabled =
+          false;
+
+        generateButton.textContent =
+          "Continuar";
+
+      } finally {
+
+        creatingPayment =
+          false;
       }
     }
 
 
     // ==========================================================
-    // INICIAR MONITORAMENTO
+    // MONITORAMENTO
     // ==========================================================
 
     function iniciarMonitoramentoPagamento() {
@@ -751,11 +1404,9 @@
         Date.now();
 
 
-      // Consulta imediatamente
       verificarStatusPagamento();
 
 
-      // Depois consulta a cada 3 segundos
       statusTimer =
         setInterval(
           verificarStatusPagamento,
@@ -765,7 +1416,7 @@
 
 
     // ==========================================================
-    // CONSULTAR STATUS
+    // CONSULTAR RAPID-WORKER
     // ==========================================================
 
     async function verificarStatusPagamento() {
@@ -774,13 +1425,10 @@
         !currentPaymentId ||
         paymentConfirmed
       ) {
+
         return;
       }
 
-
-      // ========================================================
-      // TIMEOUT
-      // ========================================================
 
       if (
         statusStartedAt &&
@@ -803,23 +1451,13 @@
 
 
         checkingMessage.textContent =
-          "A confirmação automática foi pausada. Se você já pagou, atualize a página.";
+          "A confirmação automática foi pausada. Atualize a página se necessário.";
 
         return;
       }
 
 
       try {
-
-        console.log(
-          "Consultando status:",
-          currentPaymentId
-        );
-
-
-        // ======================================================
-        // RAPID-WORKER USA POST
-        // ======================================================
 
         const response =
           await fetch(
@@ -835,6 +1473,7 @@
                 "no-store",
 
               headers: {
+
                 "Content-Type":
                   "application/json",
 
@@ -844,8 +1483,10 @@
 
               body:
                 JSON.stringify({
+
                   payment_id:
                     currentPaymentId
+
                 })
             }
           );
@@ -868,7 +1509,7 @@
         } catch {
 
           console.warn(
-            "Resposta não JSON da rapid-worker:",
+            "Rapid-worker retornou resposta inválida:",
             responseText
           );
 
@@ -877,51 +1518,34 @@
 
 
         console.log(
-          "RESPOSTA RAPID-WORKER:",
+          "STATUS:",
           data
         );
 
 
         // ======================================================
-        // AINDA NÃO ENCONTRADO
+        // NÃO ENCONTRADO AINDA
         // ======================================================
 
         if (
           response.status ===
-            404
+          404
         ) {
 
           checkingMessage.textContent =
-            "⏳ Aguardando registro do pagamento...";
-
-          return;
-        }
-
-
-        // ======================================================
-        // ERRO TEMPORÁRIO
-        // ======================================================
-
-        if (
-          !response.ok
-        ) {
-
-          console.warn(
-            "Erro ao consultar status:",
-            response.status,
-            data
-          );
+            "⏳ Aguardando registro...";
 
           return;
         }
 
 
         if (
+          !response.ok ||
           !data.success
         ) {
 
           console.warn(
-            "Consulta de status sem sucesso:",
+            "Falha temporária na consulta:",
             data
           );
 
@@ -929,25 +1553,16 @@
         }
 
 
-        // ======================================================
-        // STATUS
-        // ======================================================
-
         const currentStatus =
           String(
+            data.payment_status ||
             data.status ||
             ""
           ).toUpperCase();
 
 
-        console.log(
-          "STATUS ATUAL:",
-          currentStatus
-        );
-
-
         // ======================================================
-        // CONFIRMADO
+        // RECEIVED
         // ======================================================
 
         if (
@@ -966,31 +1581,29 @@
 
 
         // ======================================================
-        // PENDENTE
+        // PENDING
         // ======================================================
 
         if (
           currentStatus ===
-            "PENDING"
+          "PENDING"
         ) {
 
           checkingMessage.textContent =
-            "⏳ Aguardando confirmação do PIX...";
+            "⏳ Aguardando confirmação...";
 
           return;
         }
 
 
-        // ======================================================
-        // OUTRO STATUS
-        // ======================================================
-
         checkingMessage.textContent =
-          "⏳ Status do pagamento: " +
+          "Status atual: " +
           currentStatus;
 
 
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.warn(
           "Falha temporária ao consultar status:",
@@ -1001,7 +1614,7 @@
 
 
     // ==========================================================
-    // PAGAMENTO CONFIRMADO
+    // CONFIRMADO
     // ==========================================================
 
     function confirmarPagamento() {
@@ -1031,13 +1644,13 @@
 
 
       checkingMessage.textContent =
-        "✅ Pagamento confirmado!";
+        "✅ Participação confirmada!";
 
 
       showStatus(
         "success",
-        "Pagamento confirmado! ✅",
-        "Seu voto foi confirmado. Você será direcionado para o resultado da votação."
+        "Participação confirmada! ✅",
+        "Sua escolha foi registrada. Você será direcionado para o resultado atualizado."
       );
 
 
@@ -1046,7 +1659,7 @@
 
 
       copyButton.textContent =
-        "✅ Pagamento confirmado";
+        "✅ Confirmado";
 
 
       setTimeout(
@@ -1068,15 +1681,14 @@
     async function copiarPix() {
 
       const codigo =
-        pixCode.value.trim();
+        pixCode.value
+          .trim();
 
 
-      if (
-        !codigo
-      ) {
+      if (!codigo) {
 
         alert(
-          "O código PIX ainda não está disponível."
+          "O código ainda não está disponível."
         );
 
         return;
@@ -1085,13 +1697,15 @@
 
       try {
 
-        await navigator.clipboard.writeText(
-          codigo
-        );
+        await navigator
+          .clipboard
+          .writeText(
+            codigo
+          );
 
 
         copyButton.textContent =
-          "✅ PIX copiado!";
+          "✅ Código copiado!";
 
 
         setTimeout(
@@ -1122,15 +1736,21 @@
 
 
         alert(
-          "PIX copiado!"
+          "Código copiado!"
         );
       }
     }
 
 
     // ==========================================================
-    // BOTÃO
+    // EVENTOS
     // ==========================================================
+
+    generateButton.addEventListener(
+      "click",
+      criarPagamento
+    );
+
 
     copyButton.addEventListener(
       "click",
@@ -1142,11 +1762,15 @@
     // INICIAR
     // ==========================================================
 
-    async function iniciar() {
+    function iniciar() {
 
       if (
         !paymentOptionId
       ) {
+
+        payerArea.style.display =
+          "none";
+
 
         choiceName.textContent =
           "Nenhuma escolha foi informada";
@@ -1154,23 +1778,26 @@
 
         showStatus(
           "error",
-          "Não foi possível gerar o pagamento.",
-          "Nenhuma opção de voto foi informada."
+          "Não foi possível continuar.",
+          "Nenhuma opção foi informada."
         );
+
 
         return;
       }
 
 
       const nome =
-        identificarEscolha(
+        OPTIONS[
           paymentOptionId
-        );
+        ];
 
 
-      if (
-        !nome
-      ) {
+      if (!nome) {
+
+        payerArea.style.display =
+          "none";
+
 
         choiceName.textContent =
           "Opção desconhecida";
@@ -1178,9 +1805,10 @@
 
         showStatus(
           "error",
-          "Não foi possível gerar o pagamento.",
-          "O identificador da opção de voto não está cadastrado."
+          "Não foi possível continuar.",
+          "A opção recebida não está cadastrada."
         );
+
 
         return;
       }
@@ -1188,9 +1816,6 @@
 
       choiceName.textContent =
         nome;
-
-
-      await criarPagamento();
     }
 
 
