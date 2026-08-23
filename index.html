@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Quem merece vencer?</title>
 
@@ -12,6 +18,7 @@
   >
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -23,27 +30,37 @@
     }
 
     body {
+
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       color: #ffffff;
 
       background:
+
         radial-gradient(
           circle at 18% 40%,
           rgba(70, 0, 255, 0.30),
           transparent 32%
         ),
+
         radial-gradient(
           circle at 82% 25%,
           rgba(255, 92, 0, 0.20),
           transparent 32%
         ),
+
         linear-gradient(
           120deg,
           #02051d 0%,
           #08002c 45%,
           #170013 100%
         );
+
     }
 
     a {
@@ -56,31 +73,44 @@
     }
 
     .page {
+
       width: 100%;
       min-height: 100vh;
       overflow: hidden;
+
     }
 
+
     /* =========================================================
-       HERO
+       CABEÇALHO
        ========================================================= */
 
     .hero {
+
       width: 100%;
       max-width: 1200px;
+
       margin: 0 auto;
-      padding: 38px 20px 20px;
+
+      padding:
+        38px 20px
+        20px;
+
       text-align: center;
+
     }
 
+
     .badge {
+
       display: inline-block;
 
-      background: linear-gradient(
-        90deg,
-        #ffd600,
-        #ffea00
-      );
+      background:
+        linear-gradient(
+          90deg,
+          #ffd600,
+          #ffea00
+        );
 
       color: #050505;
 
@@ -89,92 +119,147 @@
 
       letter-spacing: 0.8px;
 
-      padding: 10px 24px;
+      padding:
+        10px 24px;
 
       border-radius: 9px;
 
       box-shadow:
-        0 0 18px rgba(255, 214, 0, 0.38);
+        0 0 18px
+        rgba(
+          255,
+          214,
+          0,
+          0.38
+        );
 
       margin-bottom: 22px;
+
     }
 
+
     .hero h1 {
-      font-size: clamp(44px, 6vw, 76px);
+
+      font-size:
+        clamp(
+          44px,
+          6vw,
+          76px
+        );
+
       line-height: 0.92;
+
       font-weight: 1000;
+
       text-transform: uppercase;
+
       letter-spacing: -2px;
 
       text-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.45);
+        0 5px 18px
+        rgba(
+          0,
+          0,
+          0,
+          0.45
+        );
+
     }
+
 
     .hero h1 span {
+
       display: block;
+
       color: #ffd800;
+
     }
 
+
     .hero-description {
+
       max-width: 720px;
 
       margin:
         26px auto 0;
 
       font-size: 17px;
+
       line-height: 1.55;
 
       color: #e5e7eb;
+
     }
 
+
     /* =========================================================
-       PESQUISA
+       ÁREA DA PESQUISA
        ========================================================= */
 
     .poll-section {
+
       width: 100%;
+
       max-width: 1100px;
 
       margin: 0 auto;
 
       padding:
-        22px 20px 35px;
+        22px 20px
+        35px;
+
     }
 
+
     .section-title {
+
       text-align: center;
 
       font-size: 19px;
+
       font-weight: 700;
 
       margin-bottom: 24px;
 
       color: #ffffff;
+
     }
 
+
     .section-title span {
+
       color: #ffe000;
+
     }
+
 
     /* =========================================================
        CARDS
        ========================================================= */
 
     .candidates {
+
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(
+          3,
+          1fr
+        );
 
       gap: 20px;
 
       align-items: stretch;
+
     }
 
+
     .candidate-card {
+
       position: relative;
 
       display: flex;
+
       flex-direction: column;
 
       min-width: 0;
@@ -191,7 +276,8 @@
         );
 
       border:
-        1px solid rgba(
+        1px solid
+        rgba(
           255,
           255,
           255,
@@ -199,78 +285,134 @@
         );
 
       box-shadow:
-        0 16px 40px rgba(0, 0, 0, 0.32);
+        0 16px 40px
+        rgba(
+          0,
+          0,
+          0,
+          0.32
+        );
 
       transition:
         transform 0.25s ease,
         box-shadow 0.25s ease,
         border-color 0.25s ease;
+
     }
+
 
     .candidate-card:hover {
-      transform: translateY(-7px);
+
+      transform:
+        translateY(-7px);
 
       border-color:
-        rgba(255, 216, 0, 0.75);
+        rgba(
+          255,
+          216,
+          0,
+          0.75
+        );
 
       box-shadow:
-        0 20px 45px rgba(0, 0, 0, 0.45),
-        0 0 24px rgba(255, 216, 0, 0.10);
+
+        0 20px 45px
+        rgba(
+          0,
+          0,
+          0,
+          0.45
+        ),
+
+        0 0 24px
+        rgba(
+          255,
+          216,
+          0,
+          0.10
+        );
+
     }
 
+
     /* =========================================================
-       FOTOS
+       IMAGENS
        ========================================================= */
 
     .candidate-image {
+
       position: relative;
 
       width: 100%;
+
       height: 310px;
 
       overflow: hidden;
 
       background: #101827;
+
     }
 
+
     .candidate-image img {
+
       display: block;
 
       width: 100%;
+
       height: 100%;
 
       object-fit: cover;
 
       transition:
         transform 0.4s ease;
+
     }
+
 
     .candidate-card:hover
     .candidate-image img {
-      transform: scale(1.035);
+
+      transform:
+        scale(1.035);
+
     }
 
+
     /*
-     * Ajustes individuais de enquadramento.
+     * Ajuste individual das fotos
      */
 
     .photo-lula {
-      object-position: center 24%;
+
+      object-position:
+        center 24%;
+
     }
+
 
     .photo-flavio {
-      object-position: center 20%;
+
+      object-position:
+        center 20%;
+
     }
+
 
     .photo-renan {
-      object-position: center 20%;
+
+      object-position:
+        center 20%;
+
     }
 
+
     /*
-     * Degradê entre foto e card.
+     * Degradê da foto para o card
      */
 
     .candidate-image::after {
+
       content: "";
 
       position: absolute;
@@ -285,30 +427,44 @@
         linear-gradient(
           to bottom,
           transparent,
-          rgba(7, 5, 29, 0.98)
+          rgba(
+            7,
+            5,
+            29,
+            0.98
+          )
         );
+
     }
 
+
     /* =========================================================
-       CONTEÚDO
+       CONTEÚDO DOS CARDS
        ========================================================= */
 
     .candidate-content {
+
       flex: 1;
 
       display: flex;
+
       flex-direction: column;
 
       text-align: center;
 
       padding:
-        5px 17px 18px;
+        5px 17px
+        18px;
+
     }
 
+
     .option-label {
+
       color: #b9b9d3;
 
       font-size: 11px;
+
       font-weight: 700;
 
       letter-spacing: 2px;
@@ -316,18 +472,24 @@
       text-transform: uppercase;
 
       margin-bottom: 14px;
+
     }
 
+
     .candidate-name {
+
       min-height: 55px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       color: #ffffff;
 
       font-size: 23px;
+
       line-height: 1.15;
 
       font-weight: 1000;
@@ -335,23 +497,33 @@
       text-transform: uppercase;
 
       text-shadow:
-        0 2px 5px rgba(0, 0, 0, 0.35);
+        0 2px 5px
+        rgba(
+          0,
+          0,
+          0,
+          0.35
+        );
+
     }
 
+
     /* =========================================================
-       BOTÃO
+       BOTÃO DE VOTO
        ========================================================= */
 
     .vote-button {
+
       width: 100%;
 
       margin-top: auto;
 
-      border: 0;
+      border: none;
 
       border-radius: 11px;
 
-      padding: 16px 10px;
+      padding:
+        16px 10px;
 
       background:
         linear-gradient(
@@ -363,6 +535,7 @@
       color: #050505;
 
       font-size: 16px;
+
       font-weight: 1000;
 
       text-transform: uppercase;
@@ -370,48 +543,81 @@
       cursor: pointer;
 
       box-shadow:
-        0 8px 22px rgba(255, 196, 0, 0.20);
+        0 8px 22px
+        rgba(
+          255,
+          196,
+          0,
+          0.20
+        );
 
       transition:
         transform 0.2s ease,
         box-shadow 0.2s ease,
         filter 0.2s ease;
+
     }
+
 
     .vote-button:hover {
-      transform: translateY(-2px);
 
-      filter: brightness(1.06);
+      transform:
+        translateY(-2px);
+
+      filter:
+        brightness(1.06);
 
       box-shadow:
-        0 10px 28px rgba(255, 196, 0, 0.34);
+        0 10px 28px
+        rgba(
+          255,
+          196,
+          0,
+          0.34
+        );
+
     }
 
+
     .vote-button:active {
-      transform: translateY(0);
+
+      transform:
+        translateY(0);
+
     }
+
 
     /* =========================================================
        INFORMAÇÕES
        ========================================================= */
 
     .info-grid {
+
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(
+          3,
+          1fr
+        );
 
       gap: 14px;
 
       margin-top: 30px;
+
     }
 
+
     .info-box {
+
       min-height: 108px;
 
       display: flex;
+
       flex-direction: column;
+
       justify-content: center;
+
       align-items: center;
 
       text-align: center;
@@ -421,57 +627,84 @@
       border-radius: 14px;
 
       background:
-        rgba(255, 255, 255, 0.055);
+        rgba(
+          255,
+          255,
+          255,
+          0.055
+        );
 
       border:
-        1px solid rgba(
+        1px solid
+        rgba(
           255,
           255,
           255,
           0.10
         );
+
     }
+
 
     .info-icon {
+
       font-size: 25px;
+
       margin-bottom: 9px;
+
     }
 
+
     .info-title {
+
       font-size: 13px;
+
       font-weight: 900;
 
       text-transform: uppercase;
 
       margin-bottom: 7px;
+
     }
 
+
     .info-text {
+
       color: #bfc3d4;
 
       font-size: 12px;
+
       line-height: 1.4;
+
     }
+
 
     /* =========================================================
        RESULTADOS
        ========================================================= */
 
     .results-area {
+
       text-align: center;
+
       margin-top: 25px;
+
     }
 
+
     .results-button {
+
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       gap: 7px;
 
       border:
-        1px solid rgba(
+        1px solid
+        rgba(
           255,
           255,
           255,
@@ -480,51 +713,78 @@
 
       border-radius: 10px;
 
-      padding: 12px 22px;
+      padding:
+        12px 22px;
 
       background:
-        rgba(255, 255, 255, 0.05);
+        rgba(
+          255,
+          255,
+          255,
+          0.05
+        );
 
       color: #ffffff;
 
       font-size: 14px;
+
       font-weight: 700;
 
       transition:
         background 0.2s ease,
         border-color 0.2s ease,
         transform 0.2s ease;
+
     }
+
 
     .results-button:hover {
-      transform: translateY(-2px);
+
+      transform:
+        translateY(-2px);
 
       background:
-        rgba(255, 255, 255, 0.10);
+        rgba(
+          255,
+          255,
+          255,
+          0.10
+        );
 
       border-color:
-        rgba(255, 216, 0, 0.60);
+        rgba(
+          255,
+          216,
+          0,
+          0.60
+        );
+
     }
+
 
     /* =========================================================
        RODAPÉ
        ========================================================= */
 
     .footer {
+
       width: 100%;
 
       text-align: center;
 
       padding:
-        5px 20px 30px;
+        5px 20px
+        30px;
 
       color: #777b91;
 
       font-size: 11px;
+
     }
 
+
     /* =========================================================
-       TABLET
+       TABLETS
        ========================================================= */
 
     @media (
@@ -532,26 +792,41 @@
     ) {
 
       .hero {
+
         padding-top: 30px;
+
       }
+
 
       .candidates {
+
         gap: 13px;
+
       }
+
 
       .candidate-image {
+
         height: 260px;
+
       }
+
 
       .candidate-name {
+
         font-size: 19px;
+
       }
 
+
       .vote-button {
+
         font-size: 14px;
+
       }
 
     }
+
 
     /* =========================================================
        CELULAR
@@ -562,20 +837,28 @@
     ) {
 
       .hero {
+
         padding:
-          25px 16px 10px;
+          25px 16px
+          10px;
+
       }
 
+
       .badge {
+
         font-size: 11px;
 
         padding:
           9px 16px;
 
         margin-bottom: 18px;
+
       }
 
+
       .hero h1 {
+
         font-size:
           clamp(
             39px,
@@ -584,77 +867,115 @@
           );
 
         letter-spacing: -1px;
+
       }
 
+
       .hero-description {
+
         font-size: 15px;
 
         margin-top: 20px;
+
       }
+
 
       .poll-section {
+
         padding:
-          22px 14px 30px;
+          22px 14px
+          30px;
+
       }
+
 
       .section-title {
+
         font-size: 17px;
+
         margin-bottom: 20px;
+
       }
 
+
       /*
-       * No celular os candidatos
-       * ficam um abaixo do outro.
+       * Um candidato por linha
+       * no celular
        */
 
       .candidates {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
 
         max-width: 430px;
 
-        margin: 0 auto;
+        margin:
+          0 auto;
 
         gap: 22px;
+
       }
+
 
       .candidate-image {
+
         height: 390px;
+
       }
+
 
       .candidate-content {
+
         padding:
-          5px 17px 18px;
+          5px 17px
+          18px;
+
       }
 
+
       .candidate-name {
+
         min-height: auto;
 
         font-size: 25px;
 
         margin-bottom: 18px;
+
       }
 
+
       .vote-button {
+
         font-size: 16px;
 
         padding:
           17px 10px;
+
       }
 
+
       .info-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
 
         max-width: 430px;
 
         margin:
           28px auto 0;
+
       }
 
+
       .info-box {
+
         min-height: 95px;
+
       }
 
     }
+
 
     /* =========================================================
        CELULARES PEQUENOS
@@ -665,21 +986,30 @@
     ) {
 
       .candidate-image {
+
         height: 340px;
+
       }
 
+
       .candidate-name {
+
         font-size: 22px;
+
       }
 
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
   <div class="page">
+
 
     <!-- =======================================================
          CABEÇALHO
@@ -687,21 +1017,35 @@
 
     <header class="hero">
 
+
       <div class="badge">
+
         🔥 A SUA OPINIÃO DECIDE!
+
       </div>
 
+
       <h1>
+
         QUEM MERECE
-        <span>VENCER?</span>
+
+        <span>
+          VENCER?
+        </span>
+
       </h1>
 
+
       <p class="hero-description">
+
         Participe da pesquisa e escolha uma das opções abaixo.
         Sua participação ajuda a definir o resultado.
+
       </p>
 
+
     </header>
+
 
 
     <!-- =======================================================
@@ -710,10 +1054,17 @@
 
     <main class="poll-section">
 
+
       <div class="section-title">
+
         👇 Escolha uma opção para
-        <span>participar</span>
+
+        <span>
+          participar
+        </span>
+
       </div>
+
 
 
       <div class="candidates">
@@ -725,39 +1076,59 @@
 
         <article class="candidate-card">
 
+
           <div class="candidate-image">
 
+
             <img
-              src="imagens/-1.jpeg"
+              src="imagens/candidato-1.jpeg"
               alt="Opção LULA"
               class="photo-lula"
             >
 
+
           </div>
+
 
           <div class="candidate-content">
 
+
             <div class="option-label">
+
               Opção de voto
+
             </div>
+
 
             <div class="candidate-name">
+
               LULA
+
             </div>
 
+
             <button
+
               class="vote-button"
+
               type="button"
+
               onclick="votar(
                 '9823e037-4045-40dd-8b5f-a183ea4cdc44'
               )"
+
             >
-              📦 VOTAR NESTA OPÇÃO
+
+              🗳️ VOTAR NESTA OPÇÃO
+
             </button>
+
 
           </div>
 
+
         </article>
+
 
 
         <!-- ===================================================
@@ -766,39 +1137,59 @@
 
         <article class="candidate-card">
 
+
           <div class="candidate-image">
 
+
             <img
-              src="imagens/-2.jfif"
+              src="imagens/candidato-2.jfif"
               alt="Opção FLÁVIO BOLSONARO"
               class="photo-flavio"
             >
 
+
           </div>
+
 
           <div class="candidate-content">
 
+
             <div class="option-label">
+
               Opção de voto
+
             </div>
+
 
             <div class="candidate-name">
+
               FLÁVIO BOLSONARO
+
             </div>
 
+
             <button
+
               class="vote-button"
+
               type="button"
+
               onclick="votar(
                 '4debd19b-bf23-4a04-ae44-daa9c05f6fe3'
               )"
+
             >
-              📦 VOTAR NESTA OPÇÃO
+
+              🗳️ VOTAR NESTA OPÇÃO
+
             </button>
+
 
           </div>
 
+
         </article>
+
 
 
         <!-- ===================================================
@@ -807,41 +1198,62 @@
 
         <article class="candidate-card">
 
+
           <div class="candidate-image">
 
+
             <img
-              src="imagens/-3.jpg"
+              src="imagens/candidato-3.jpg"
               alt="Opção RENAN SANTOS"
               class="photo-renan"
             >
 
+
           </div>
+
 
           <div class="candidate-content">
 
+
             <div class="option-label">
+
               Opção de voto
+
             </div>
+
 
             <div class="candidate-name">
+
               RENAN SANTOS
+
             </div>
 
+
             <button
+
               class="vote-button"
+
               type="button"
+
               onclick="votar(
                 '1b457898-2a19-4342-a5f6-2a867b07f27c'
               )"
+
             >
-              📦 VOTAR NESTA OPÇÃO
+
+              🗳️ VOTAR NESTA OPÇÃO
+
             </button>
+
 
           </div>
 
+
         </article>
 
+
       </div>
+
 
 
       <!-- =====================================================
@@ -850,60 +1262,95 @@
 
       <section class="info-grid">
 
+
         <div class="info-box">
 
+
           <div class="info-icon">
+
             🔒
+
           </div>
+
 
           <div class="info-title">
+
             PARTICIPAÇÃO SEGURA
+
           </div>
 
+
           <div class="info-text">
+
             Sua participação é processada
             de forma segura.
+
           </div>
+
 
         </div>
 
 
+
         <div class="info-box">
 
+
           <div class="info-icon">
+
             📊
+
           </div>
+
 
           <div class="info-title">
+
             RESULTADO ATUALIZADO
+
           </div>
 
+
           <div class="info-text">
+
             Acompanhe o resultado
             atualizado da pesquisa.
+
           </div>
 
+
         </div>
+
 
 
         <div class="info-box">
 
+
           <div class="info-icon">
+
             💬
+
           </div>
+
 
           <div class="info-title">
+
             SUA OPINIÃO IMPORTA
+
           </div>
 
+
           <div class="info-text">
+
             Cada participação confirmada
             ajuda a definir o resultado.
+
           </div>
+
 
         </div>
 
+
       </section>
+
 
 
       <!-- =====================================================
@@ -912,16 +1359,22 @@
 
       <div class="results-area">
 
+
         <a
           href="resultados.html"
           class="results-button"
         >
+
           📊 Ver resultado atual
+
         </a>
+
 
       </div>
 
+
     </main>
+
 
 
     <!-- =======================================================
@@ -929,10 +1382,14 @@
          ======================================================= -->
 
     <footer class="footer">
+
       Pesquisa independente de opinião.
+
     </footer>
 
+
   </div>
+
 
 
   <!-- =========================================================
@@ -941,33 +1398,45 @@
 
   <script>
 
+
     /*
-     * Ao clicar em uma opção,
-     * envia o identificador para
-     * pagamento.html.
+     * Envia a opção escolhida
+     * para pagamento.html
      */
 
     function votar(
       paymentOptionId
     ) {
 
+
       if (!paymentOptionId) {
+
         return;
+
       }
 
+
       const destino =
+
         "pagamento.html" +
+
         "?payment_option_id=" +
+
         encodeURIComponent(
           paymentOptionId
         );
 
+
       window.location.href =
         destino;
 
+
     }
+
 
   </script>
 
+
 </body>
+
 </html>
