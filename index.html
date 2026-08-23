@@ -136,6 +136,7 @@
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ddd;
+      object-fit: contain;
     }
 
     .pix-label {
@@ -172,11 +173,17 @@
       opacity: 0.9;
     }
 
+    .copy-button:disabled {
+      opacity: 0.65;
+      cursor: default;
+    }
+
     .checking {
       text-align: center;
       margin-top: 18px;
       font-size: 13px;
       color: #64748b;
+      line-height: 1.5;
     }
 
     .footer {
@@ -197,6 +204,10 @@
 
       h1 {
         font-size: 23px;
+      }
+
+      .value {
+        font-size: 30px;
       }
     }
   </style>
@@ -288,7 +299,7 @@
           id="checkingMessage"
           class="checking">
 
-          Aguardando confirmação do pagamento...
+          ⏳ Aguardando confirmação do pagamento...
 
         </div>
 
@@ -312,36 +323,24 @@
     const PAYMENT_API_URL =
       "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/clever-function";
 
-    /*
-     * Sua função que consulta o pagamento no Supabase.
-     *
-     * Pela estrutura anterior do projeto, o endpoint existente
-     * corresponde à função payment-status / rapid-worker.
-     */
     const PAYMENT_STATUS_API_URL =
       "https://gyxuyzsovbvbpixggcet.supabase.co/functions/v1/rapid-worker";
 
-    /*
-     * Página final de resultados.
-     */
     const RESULT_URL =
       "https://ramonviana28-commits.github.io/cash/resultados";
 
-    const PAYMENT_VALUE = 5.00;
+    const PAYMENT_VALUE =
+      5.00;
 
-    /*
-     * Verifica o pagamento a cada 3 segundos.
-     */
-    const STATUS_INTERVAL = 3000;
+    const STATUS_INTERVAL =
+      3000;
 
-    /*
-     * Limite de 20 minutos.
-     */
-    const STATUS_TIMEOUT = 20 * 60 * 1000;
+    const STATUS_TIMEOUT =
+      20 * 60 * 1000;
 
 
     // ==========================================================
-    // OPÇÕES
+    // CANDIDATOS
     // ==========================================================
 
     const OPTIONS = {
@@ -359,7 +358,7 @@
 
 
     // ==========================================================
-    // QUERY STRING
+    // LER PAYMENT_OPTION_ID
     // ==========================================================
 
     const params =
@@ -414,20 +413,24 @@
 
 
     // ==========================================================
-    // VARIÁVEIS DO PAGAMENTO
+    // ESTADO
     // ==========================================================
 
-    let currentPaymentId = null;
+    let currentPaymentId =
+      null;
 
-    let statusTimer = null;
+    let statusTimer =
+      null;
 
-    let statusStartedAt = null;
+    let statusStartedAt =
+      null;
 
-    let paymentConfirmed = false;
+    let paymentConfirmed =
+      false;
 
 
     // ==========================================================
-    // STATUS VISUAL
+    // MOSTRAR STATUS
     // ==========================================================
 
     function showStatus(
@@ -452,10 +455,12 @@
 
 
     // ==========================================================
-    // SEGURANÇA DE TEXTO
+    // ESCAPAR HTML
     // ==========================================================
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(value)
         .replace(/&/g, "&amp;")
@@ -467,12 +472,15 @@
 
 
     // ==========================================================
-    // CANDIDATO
+    // IDENTIFICAR CANDIDATO
     // ==========================================================
 
-    function identificarEscolha(id) {
+    function identificarEscolha(
+      id
+    ) {
 
-      return OPTIONS[id] || null;
+      return OPTIONS[id] ||
+        null;
     }
 
 
@@ -495,19 +503,24 @@
 
         const timeout =
           setTimeout(
-            () => controller.abort(),
+            () =>
+              controller.abort(),
             30000
           );
+
 
         const response =
           await fetch(
             PAYMENT_API_URL,
             {
-              method: "POST",
+              method:
+                "POST",
 
-              mode: "cors",
+              mode:
+                "cors",
 
-              cache: "no-store",
+              cache:
+                "no-store",
 
               signal:
                 controller.signal,
@@ -531,10 +544,15 @@
             }
           );
 
-        clearTimeout(timeout);
+
+        clearTimeout(
+          timeout
+        );
+
 
         const responseText =
           await response.text();
+
 
         let data;
 
@@ -552,18 +570,22 @@
           );
         }
 
+
         if (!response.ok) {
 
           throw new Error(
             data?.message ||
-            `Erro HTTP ${response.status}.`
+            data?.error ||
+            "Não foi possível criar o pagamento."
           );
         }
+
 
         if (!data.success) {
 
           throw new Error(
             data?.message ||
+            data?.error ||
             "Não foi possível criar o pagamento."
           );
         }
@@ -576,15 +598,17 @@
         if (!data.payment_id) {
 
           throw new Error(
-            "O servidor criou o PIX, mas não retornou payment_id."
+            "O servidor não retornou o payment_id."
           );
         }
+
 
         currentPaymentId =
           data.payment_id;
 
+
         console.log(
-          "PAYMENT ID:",
+          "PAYMENT ID CRIADO:",
           currentPaymentId
         );
 
@@ -593,7 +617,9 @@
         // QR CODE
         // ======================================================
 
-        if (data.qr_code) {
+        if (
+          data.qr_code
+        ) {
 
           qrcode.src =
             data.qr_code;
@@ -612,7 +638,9 @@
         // PIX COPIA E COLA
         // ======================================================
 
-        if (data.pix_code) {
+        if (
+          data.pix_code
+        ) {
 
           pixCode.value =
             data.pix_code;
@@ -624,6 +652,10 @@
         }
 
 
+        // ======================================================
+        // MOSTRAR ÁREA
+        // ======================================================
+
         paymentArea.style.display =
           "block";
 
@@ -631,7 +663,7 @@
         showStatus(
           "waiting",
           "PIX gerado!",
-          "Realize o pagamento. Esta página identificará automaticamente quando o PIX for confirmado."
+          "Realize o pagamento. A confirmação será detectada automaticamente."
         );
 
 
@@ -659,8 +691,10 @@
           error
         );
 
+
         let message =
           "Não foi possível conectar ao servidor de pagamento.";
+
 
         if (
           error &&
@@ -680,6 +714,7 @@
             error.message;
         }
 
+
         showStatus(
           "error",
           "Não foi possível gerar o pagamento.",
@@ -690,36 +725,37 @@
 
 
     // ==========================================================
-    // MONITORAMENTO
+    // INICIAR MONITORAMENTO
     // ==========================================================
 
     function iniciarMonitoramentoPagamento() {
 
-      if (!currentPaymentId) {
+      if (
+        !currentPaymentId
+      ) {
         return;
       }
 
-      /*
-       * Evita criar mais de um timer.
-       */
-      if (statusTimer) {
+
+      if (
+        statusTimer
+      ) {
 
         clearInterval(
           statusTimer
         );
       }
 
+
       statusStartedAt =
         Date.now();
 
-      /*
-       * Faz uma consulta imediatamente.
-       */
+
+      // Consulta imediatamente
       verificarStatusPagamento();
 
-      /*
-       * Depois continua a cada 3 segundos.
-       */
+
+      // Depois consulta a cada 3 segundos
       statusTimer =
         setInterval(
           verificarStatusPagamento,
@@ -742,9 +778,9 @@
       }
 
 
-      // --------------------------------------------------------
+      // ========================================================
       // TIMEOUT
-      // --------------------------------------------------------
+      // ========================================================
 
       if (
         statusStartedAt &&
@@ -753,14 +789,21 @@
           STATUS_TIMEOUT
       ) {
 
-        clearInterval(
+        if (
           statusTimer
-        );
+        ) {
 
-        statusTimer = null;
+          clearInterval(
+            statusTimer
+          );
+
+          statusTimer =
+            null;
+        }
+
 
         checkingMessage.textContent =
-          "A confirmação automática foi pausada. Se você já pagou, atualize esta página.";
+          "A confirmação automática foi pausada. Se você já pagou, atualize a página.";
 
         return;
       }
@@ -768,22 +811,42 @@
 
       try {
 
-        const url =
-          PAYMENT_STATUS_API_URL +
-          "?payment_id=" +
-          encodeURIComponent(
-            currentPaymentId
-          ) +
-          "&t=" +
-          Date.now();
+        console.log(
+          "Consultando status:",
+          currentPaymentId
+        );
 
+
+        // ======================================================
+        // RAPID-WORKER USA POST
+        // ======================================================
 
         const response =
           await fetch(
-            url,
+            PAYMENT_STATUS_API_URL,
             {
-              method: "GET",
-              cache: "no-store"
+              method:
+                "POST",
+
+              mode:
+                "cors",
+
+              cache:
+                "no-store",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "Accept":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+                  payment_id:
+                    currentPaymentId
+                })
             }
           );
 
@@ -793,6 +856,7 @@
 
 
         let data;
+
 
         try {
 
@@ -804,7 +868,7 @@
         } catch {
 
           console.warn(
-            "Status retornou resposta não JSON:",
+            "Resposta não JSON da rapid-worker:",
             responseText
           );
 
@@ -812,10 +876,38 @@
         }
 
 
-        if (!response.ok) {
+        console.log(
+          "RESPOSTA RAPID-WORKER:",
+          data
+        );
+
+
+        // ======================================================
+        // AINDA NÃO ENCONTRADO
+        // ======================================================
+
+        if (
+          response.status ===
+            404
+        ) {
+
+          checkingMessage.textContent =
+            "⏳ Aguardando registro do pagamento...";
+
+          return;
+        }
+
+
+        // ======================================================
+        // ERRO TEMPORÁRIO
+        // ======================================================
+
+        if (
+          !response.ok
+        ) {
 
           console.warn(
-            "Erro ao consultar pagamento:",
+            "Erro ao consultar status:",
             response.status,
             data
           );
@@ -824,31 +916,43 @@
         }
 
 
-        console.log(
-          "Status do pagamento:",
-          data
-        );
+        if (
+          !data.success
+        ) {
+
+          console.warn(
+            "Consulta de status sem sucesso:",
+            data
+          );
+
+          return;
+        }
 
 
         // ======================================================
-        // ACEITA ALGUNS FORMATOS DE RESPOSTA
+        // STATUS
         // ======================================================
 
         const currentStatus =
           String(
-            data.payment_status ||
             data.status ||
-            data?.vote?.payment_status ||
-            data?.vote?.status ||
             ""
           ).toUpperCase();
 
 
+        console.log(
+          "STATUS ATUAL:",
+          currentStatus
+        );
+
+
         // ======================================================
-        // PAGAMENTO CONFIRMADO
+        // CONFIRMADO
         // ======================================================
 
         if (
+          data.paid ===
+            true ||
           currentStatus ===
             "RECEIVED" ||
           currentStatus ===
@@ -862,7 +966,7 @@
 
 
         // ======================================================
-        // AINDA PENDENTE
+        // PENDENTE
         // ======================================================
 
         if (
@@ -877,13 +981,16 @@
         }
 
 
-      } catch (error) {
+        // ======================================================
+        // OUTRO STATUS
+        // ======================================================
 
-        /*
-         * Não exibimos erro para o usuário a cada tentativa.
-         * Uma eventual falha momentânea de rede não deve
-         * interromper o pagamento.
-         */
+        checkingMessage.textContent =
+          "⏳ Status do pagamento: " +
+          currentStatus;
+
+
+      } catch (error) {
 
         console.warn(
           "Falha temporária ao consultar status:",
@@ -905,11 +1012,14 @@
         return;
       }
 
+
       paymentConfirmed =
         true;
 
 
-      if (statusTimer) {
+      if (
+        statusTimer
+      ) {
 
         clearInterval(
           statusTimer
@@ -931,21 +1041,13 @@
       );
 
 
-      /*
-       * Evita que o usuário tente pagar novamente.
-       */
-
       copyButton.disabled =
         true;
+
 
       copyButton.textContent =
         "✅ Pagamento confirmado";
 
-
-      /*
-       * Espera 2 segundos para o usuário ver
-       * a confirmação antes do redirecionamento.
-       */
 
       setTimeout(
         () => {
@@ -969,7 +1071,9 @@
         pixCode.value.trim();
 
 
-      if (!codigo) {
+      if (
+        !codigo
+      ) {
 
         alert(
           "O código PIX ainda não está disponível."
@@ -984,6 +1088,7 @@
         await navigator.clipboard.writeText(
           codigo
         );
+
 
         copyButton.textContent =
           "✅ PIX copiado!";
@@ -1015,6 +1120,7 @@
           "copy"
         );
 
+
         alert(
           "PIX copiado!"
         );
@@ -1038,10 +1144,13 @@
 
     async function iniciar() {
 
-      if (!paymentOptionId) {
+      if (
+        !paymentOptionId
+      ) {
 
         choiceName.textContent =
           "Nenhuma escolha foi informada";
+
 
         showStatus(
           "error",
@@ -1059,10 +1168,13 @@
         );
 
 
-      if (!nome) {
+      if (
+        !nome
+      ) {
 
         choiceName.textContent =
           "Opção desconhecida";
+
 
         showStatus(
           "error",
