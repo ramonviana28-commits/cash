@@ -2,136 +2,297 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#070016"
+  >
 
   <title>Quem merece vencer?</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       color: #ffffff;
 
       background:
         radial-gradient(
-          circle at 80% 20%,
-          rgba(255, 123, 0, 0.30),
-          transparent 30%
+          circle at 80% 18%,
+          rgba(255, 115, 0, 0.30),
+          transparent 31%
         ),
         radial-gradient(
-          circle at 20% 40%,
-          rgba(64, 0, 255, 0.35),
-          transparent 35%
+          circle at 17% 45%,
+          rgba(69, 0, 255, 0.40),
+          transparent 36%
         ),
         linear-gradient(
           135deg,
           #020617 0%,
-          #090020 50%,
-          #120018 100%
+          #090020 48%,
+          #170015 100%
         );
+
+      overflow-x: hidden;
     }
 
-    /* ================================
-       TOPO
-    ================================= */
+
+    /* =========================================================
+       FUNDO
+       ========================================================= */
+
+    body::before {
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.015) 1px,
+          transparent 1px
+        );
+
+      background-size:
+        45px 45px;
+
+      opacity: 0.6;
+    }
+
+
+    /* =========================================================
+       HERO
+       ========================================================= */
 
     .hero {
+      position: relative;
+      z-index: 2;
+
       text-align: center;
-      padding: 45px 20px 25px;
+
+      padding:
+        42px
+        20px
+        25px;
     }
 
     .badge {
-      display: inline-block;
-      background: #ffd900;
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffe600,
+          #ffc400
+        );
+
       color: #050505;
 
-      padding: 9px 22px;
-      border-radius: 8px;
+      padding:
+        10px 23px;
 
-      font-size: 14px;
-      font-weight: 900;
+      border-radius:
+        9px;
 
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size:
+        14px;
 
-      transform: rotate(-1deg);
+      font-weight:
+        1000;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        0.5px;
+
+      transform:
+        rotate(-1deg);
 
       box-shadow:
-        0 0 25px rgba(255, 217, 0, 0.35);
+        0 0 30px
+        rgba(255, 217, 0, 0.38);
 
-      margin-bottom: 20px;
+      margin-bottom:
+        22px;
     }
 
     .hero h1 {
-      font-size: clamp(38px, 6vw, 72px);
-      line-height: 0.95;
+      max-width:
+        950px;
 
-      font-weight: 1000;
-      text-transform: uppercase;
+      margin:
+        0 auto;
 
-      max-width: 950px;
-      margin: 0 auto;
+      font-size:
+        clamp(
+          42px,
+          6vw,
+          76px
+        );
+
+      line-height:
+        0.93;
+
+      font-weight:
+        1000;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        -2px;
 
       text-shadow:
-        0 4px 0 rgba(0,0,0,.3),
-        0 0 30px rgba(255,255,255,.08);
+        0 5px 0
+        rgba(0,0,0,.28),
+        0 0 30px
+        rgba(255,255,255,.07);
     }
 
     .hero h1 span {
-      color: #ffd900;
+      display: block;
+
+      color:
+        #ffd900;
+
+      margin-top:
+        7px;
+
+      text-shadow:
+        0 0 28px
+        rgba(255,217,0,.20);
     }
 
     .hero p {
-      color: #d5d8e1;
-      font-size: 18px;
+      color:
+        #d5d8e1;
 
-      max-width: 650px;
-      margin: 20px auto 0;
+      font-size:
+        17px;
 
-      line-height: 1.5;
+      max-width:
+        680px;
+
+      margin:
+        22px auto 0;
+
+      line-height:
+        1.55;
     }
 
-    /* ================================
+
+    /* =========================================================
        CONTAINER
-    ================================= */
+       ========================================================= */
 
     .container {
-      width: 100%;
-      max-width: 1250px;
+      position: relative;
+      z-index: 2;
 
-      margin: 0 auto;
-      padding: 20px 25px 60px;
+      width: 100%;
+
+      max-width:
+        1250px;
+
+      margin:
+        0 auto;
+
+      padding:
+        20px
+        25px
+        60px;
     }
+
+
+    /* =========================================================
+       TÍTULO DA VOTAÇÃO
+       ========================================================= */
 
     .section-title {
       text-align: center;
-      font-size: 20px;
-      margin-bottom: 25px;
 
-      color: #ffffff;
+      font-size:
+        19px;
+
+      font-weight:
+        700;
+
+      margin-bottom:
+        25px;
+
+      color:
+        #ffffff;
     }
 
-    /* ================================
+    .section-title span {
+      color:
+        #ffd900;
+    }
+
+
+    /* =========================================================
        CARDS
-    ================================= */
+       ========================================================= */
 
     .candidates {
       display: grid;
 
       grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(
+          3,
+          minmax(0, 1fr)
+        );
 
-      gap: 22px;
+      gap:
+        22px;
+
+      align-items:
+        stretch;
     }
 
     .candidate {
       position: relative;
+
+      display: flex;
+
+      flex-direction:
+        column;
+
+      overflow: hidden;
 
       background:
         linear-gradient(
@@ -141,14 +302,15 @@
         );
 
       border:
-        1px solid rgba(255,255,255,.12);
+        1px solid
+        rgba(255,255,255,.12);
 
-      border-radius: 20px;
-
-      overflow: hidden;
+      border-radius:
+        20px;
 
       box-shadow:
-        0 15px 45px rgba(0,0,0,.45);
+        0 15px 45px
+        rgba(0,0,0,.45);
 
       transition:
         transform .25s ease,
@@ -157,144 +319,250 @@
     }
 
     .candidate:hover {
-      transform: translateY(-7px);
+      transform:
+        translateY(-7px);
 
       border-color:
-        rgba(255, 217, 0, .8);
+        rgba(255, 217, 0, .85);
 
       box-shadow:
-        0 20px 55px rgba(0,0,0,.55),
-        0 0 30px rgba(255,217,0,.12);
+        0 20px 55px
+        rgba(0,0,0,.58),
+        0 0 35px
+        rgba(255,217,0,.10);
     }
 
-    /* ================================
+
+    /* =========================================================
        FOTO
-    ================================= */
+       ========================================================= */
 
     .photo-wrapper {
-      width: 100%;
-      height: 340px;
-
-      overflow: hidden;
-
-      background: #111827;
-
       position: relative;
+
+      width:
+        100%;
+
+      height:
+        340px;
+
+      overflow:
+        hidden;
+
+      background:
+        #111827;
     }
 
     .photo-wrapper::after {
       content: "";
 
       position: absolute;
+
       left: 0;
       right: 0;
       bottom: 0;
 
-      height: 90px;
+      height:
+        100px;
+
+      pointer-events:
+        none;
 
       background:
         linear-gradient(
+          to bottom,
           transparent,
-          rgba(7,8,24,.95)
+          rgba(7,8,24,.98)
         );
     }
 
     .candidate-photo {
-      width: 100%;
-      height: 100%;
-
       display: block;
 
-      object-fit: cover;
+      width:
+        100%;
 
-      object-position:
-        center 25%;
+      height:
+        100%;
+
+      object-fit:
+        cover;
 
       transition:
         transform .35s ease;
     }
 
+
+    /* LULA */
+
+    .candidate-lula
+    .candidate-photo {
+      object-position:
+        center 25%;
+    }
+
+
+    /* FLÁVIO */
+
+    .candidate-flavio
+    .candidate-photo {
+      object-position:
+        center 22%;
+    }
+
+
+    /* RENAN */
+
+    .candidate-renan
+    .candidate-photo {
+      object-position:
+        center 20%;
+    }
+
+
     .candidate:hover
     .candidate-photo {
-      transform: scale(1.035);
+      transform:
+        scale(1.035);
     }
 
-    /* ================================
-       CONTEÚDO
-    ================================= */
+
+    /* =========================================================
+       CONTEÚDO DOS CARDS
+       ========================================================= */
 
     .candidate-content {
-      padding:
-        5px 22px 24px;
-
-      text-align: center;
-    }
-
-    .candidate-label {
-      color: #aab0c0;
-
-      font-size: 12px;
-
-      text-transform: uppercase;
-
-      letter-spacing: 1.5px;
-
-      margin-bottom: 7px;
-    }
-
-    .candidate-name {
-      font-size: 24px;
-
-      font-weight: 900;
-
-      min-height: 58px;
+      flex: 1;
 
       display: flex;
 
-      align-items: center;
-      justify-content: center;
+      flex-direction:
+        column;
 
-      text-transform: uppercase;
+      padding:
+        4px
+        20px
+        22px;
 
-      line-height: 1.1;
+      text-align:
+        center;
     }
 
-    /* ================================
+    .candidate-label {
+      color:
+        #aab0c0;
+
+      font-size:
+        11px;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        1.7px;
+
+      margin-bottom:
+        10px;
+    }
+
+    .candidate-name {
+      display: flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      min-height:
+        58px;
+
+      color:
+        #ffffff;
+
+      font-size:
+        23px;
+
+      font-weight:
+        1000;
+
+      text-transform:
+        uppercase;
+
+      line-height:
+        1.08;
+    }
+
+    .candidate-description {
+      margin:
+        10px 0 5px;
+
+      color:
+        #9ba4b6;
+
+      font-size:
+        12px;
+
+      line-height:
+        1.45;
+    }
+
+
+    /* =========================================================
        BOTÃO
-    ================================= */
+       ========================================================= */
 
     .vote-button {
       display: flex;
 
-      align-items: center;
-      justify-content: center;
+      align-items:
+        center;
 
-      width: 100%;
+      justify-content:
+        center;
 
-      min-height: 54px;
+      width:
+        100%;
 
-      margin-top: 18px;
+      min-height:
+        54px;
 
-      border: none;
-      border-radius: 11px;
+      margin-top:
+        auto;
+
+      padding:
+        13px 15px;
+
+      border:
+        none;
+
+      border-radius:
+        11px;
 
       background:
         linear-gradient(
           135deg,
           #ffe600,
-          #ffb800
+          #ffbc00
         );
 
-      color: #080808;
+      color:
+        #080808;
 
-      font-size: 17px;
-      font-weight: 900;
+      font-size:
+        16px;
 
-      text-transform: uppercase;
+      font-weight:
+        1000;
 
-      text-decoration: none;
+      text-transform:
+        uppercase;
 
-      cursor: pointer;
+      text-decoration:
+        none;
+
+      cursor:
+        pointer;
 
       box-shadow:
         0 8px 25px
@@ -306,37 +574,52 @@
     }
 
     .vote-button:hover {
-      transform: scale(1.025);
+      transform:
+        scale(1.025);
 
       box-shadow:
-        0 10px 30px
-        rgba(255, 193, 0, .4);
+        0 11px 32px
+        rgba(255, 193, 0, .42);
     }
 
-    /* ================================
+    .vote-button:active {
+      transform:
+        scale(.98);
+    }
+
+
+    /* =========================================================
        INFORMAÇÕES
-    ================================= */
+       ========================================================= */
 
     .info {
-      margin-top: 35px;
+      margin-top:
+        35px;
 
       display: grid;
 
       grid-template-columns:
-        repeat(3, 1fr);
+        repeat(
+          3,
+          1fr
+        );
 
-      gap: 15px;
+      gap:
+        15px;
     }
 
     .info-item {
-      text-align: center;
+      text-align:
+        center;
 
-      padding: 18px;
+      padding:
+        19px;
 
-      border-radius: 13px;
+      border-radius:
+        14px;
 
       background:
-        rgba(255,255,255,.05);
+        rgba(255,255,255,.045);
 
       border:
         1px solid
@@ -344,188 +627,314 @@
     }
 
     .info-icon {
-      font-size: 25px;
-      margin-bottom: 8px;
+      font-size:
+        27px;
+
+      margin-bottom:
+        8px;
     }
 
     .info-title {
-      font-weight: bold;
-      font-size: 14px;
+      font-weight:
+        900;
+
+      font-size:
+        13px;
     }
 
     .info-text {
-      margin-top: 5px;
+      margin-top:
+        6px;
 
-      font-size: 12px;
+      font-size:
+        12px;
 
-      color: #aab0c0;
+      color:
+        #aab0c0;
 
-      line-height: 1.4;
+      line-height:
+        1.45;
     }
 
-    /* ================================
+
+    /* =========================================================
        RESULTADOS
-    ================================= */
+       ========================================================= */
 
     .results-area {
-      text-align: center;
-      margin-top: 35px;
+      text-align:
+        center;
+
+      margin-top:
+        32px;
     }
 
     .results-button {
-      display: inline-block;
+      display:
+        inline-flex;
 
-      color: #ffffff;
+      align-items:
+        center;
 
-      text-decoration: none;
+      justify-content:
+        center;
+
+      gap:
+        7px;
+
+      color:
+        #ffffff;
+
+      text-decoration:
+        none;
 
       border:
         1px solid
         rgba(255,255,255,.25);
 
-      border-radius: 10px;
+      border-radius:
+        11px;
 
-      padding: 12px 22px;
+      padding:
+        13px 24px;
 
-      font-size: 14px;
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+      background:
+        rgba(255,255,255,.035);
 
       transition:
-        background .2s ease;
+        background .2s ease,
+        border-color .2s ease;
     }
 
     .results-button:hover {
       background:
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.09);
+
+      border-color:
+        rgba(255,217,0,.5);
     }
 
-    /* ================================
+
+    /* =========================================================
        RODAPÉ
-    ================================= */
+       ========================================================= */
 
     footer {
-      text-align: center;
+      position: relative;
 
-      color: #777f91;
+      z-index: 2;
 
-      font-size: 12px;
+      text-align:
+        center;
+
+      color:
+        #777f91;
+
+      font-size:
+        11px;
+
+      line-height:
+        1.6;
 
       padding:
-        0 20px 35px;
+        0
+        20px
+        35px;
     }
 
-    /* ================================
+
+    /* =========================================================
        TABLET
-    ================================= */
+       ========================================================= */
 
     @media
-    (max-width: 900px) {
+    (max-width: 950px) {
+
+      .container {
+        padding-left:
+          15px;
+
+        padding-right:
+          15px;
+      }
 
       .candidates {
-        gap: 15px;
+        gap:
+          14px;
       }
 
       .photo-wrapper {
-        height: 280px;
+        height:
+          280px;
       }
 
       .candidate-name {
-        font-size: 19px;
+        font-size:
+          18px;
       }
 
       .candidate-content {
         padding:
-          5px 15px 20px;
+          4px
+          14px
+          18px;
+      }
+
+      .vote-button {
+        font-size:
+          13px;
       }
     }
 
-    /* ================================
+
+    /* =========================================================
        CELULAR
-    ================================= */
+       ========================================================= */
 
     @media
     (max-width: 700px) {
 
       .hero {
         padding:
-          30px 15px 15px;
+          28px
+          15px
+          15px;
+      }
+
+      .badge {
+        font-size:
+          11px;
+
+        padding:
+          8px
+          15px;
+
+        margin-bottom:
+          18px;
       }
 
       .hero h1 {
-        font-size: 42px;
+        font-size:
+          42px;
+
+        letter-spacing:
+          -1.5px;
       }
 
       .hero p {
-        font-size: 15px;
+        font-size:
+          15px;
+
+        margin-top:
+          17px;
       }
 
       .container {
         padding:
-          15px 14px 45px;
+          14px
+          13px
+          45px;
       }
 
       .section-title {
-        font-size: 17px;
-      }
+        font-size:
+          16px;
 
-      /*
-       * No celular os candidatos
-       * ficam um abaixo do outro.
-       */
+        margin-bottom:
+          20px;
+      }
 
       .candidates {
         grid-template-columns:
           1fr;
 
-        max-width: 430px;
+        max-width:
+          430px;
 
         margin:
           0 auto;
 
-        gap: 22px;
+        gap:
+          23px;
       }
 
       .photo-wrapper {
-        height: 390px;
-      }
-
-      .candidate-name {
-        font-size: 25px;
-
-        min-height: auto;
+        height:
+          400px;
       }
 
       .candidate-content {
         padding:
-          5px 20px 24px;
+          5px
+          20px
+          23px;
+      }
+
+      .candidate-name {
+        font-size:
+          25px;
+
+        min-height:
+          auto;
+
+        margin-bottom:
+          5px;
+      }
+
+      .candidate-description {
+        margin-bottom:
+          18px;
       }
 
       .vote-button {
-        min-height: 57px;
+        min-height:
+          56px;
 
-        font-size: 18px;
+        font-size:
+          17px;
       }
 
       .info {
         grid-template-columns:
           1fr;
 
-        max-width: 430px;
+        max-width:
+          430px;
 
         margin:
           30px auto 0;
       }
     }
 
+
+    /* =========================================================
+       CELULAR PEQUENO
+       ========================================================= */
+
     @media
     (max-width: 420px) {
 
       .hero h1 {
-        font-size: 36px;
+        font-size:
+          36px;
       }
 
       .photo-wrapper {
-        height: 350px;
+        height:
+          350px;
       }
+
+      .candidate-name {
+        font-size:
+          23px;
+      }
+
     }
 
   </style>
@@ -535,9 +944,9 @@
 <body>
 
 
-  <!-- =================================
+  <!-- ========================================================
        CABEÇALHO
-  ================================== -->
+       ======================================================== -->
 
   <header class="hero">
 
@@ -558,56 +967,71 @@
   </header>
 
 
-  <!-- =================================
+
+  <!-- ========================================================
        CONTEÚDO
-  ================================== -->
+       ======================================================== -->
 
   <main class="container">
 
+
     <div class="section-title">
-      👇 Escolha uma opção para participar
+      👇 Escolha uma opção para <span>participar</span>
     </div>
 
 
-    <!-- ===============================
+
+    <!-- ======================================================
          CANDIDATOS
-    ================================ -->
+         ====================================================== -->
 
     <section class="candidates">
 
 
-      <!-- =============================
-           OPÇÃO 1
-      ============================== -->
+      <!-- ====================================================
+           LULA
+           ==================================================== -->
 
-      <article class="candidate">
+      <article class="candidate candidate-lula">
+
 
         <div class="photo-wrapper">
 
           <img
             class="candidate-photo"
-            src="imagens/candidato-1.jpg"
-            alt="Opção LULA"
+            src="imagens/candidato-1.jpeg"
+            alt="Lula"
           >
 
         </div>
 
+
         <div class="candidate-content">
+
 
           <div class="candidate-label">
             Opção de voto
           </div>
+
 
           <div class="candidate-name">
             LULA
           </div>
 
+
+          <div class="candidate-description">
+            Escolha esta opção para continuar
+            e confirmar sua participação.
+          </div>
+
+
           <a
             class="vote-button"
             href="pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44"
           >
-            VOTAR NESTA OPÇÃO
+            🗳️ VOTAR NESTA OPÇÃO
           </a>
+
 
         </div>
 
@@ -615,38 +1039,50 @@
 
 
 
-      <!-- =============================
-           OPÇÃO 2
-      ============================== -->
+      <!-- ====================================================
+           FLÁVIO BOLSONARO
+           ==================================================== -->
 
-      <article class="candidate">
+      <article class="candidate candidate-flavio">
+
 
         <div class="photo-wrapper">
 
           <img
             class="candidate-photo"
-            src="imagens/candidato-2.jpg"
-            alt="Opção FLÁVIO BOLSONARO"
+            src="imagens/candidato-2.jfif"
+            alt="Flávio Bolsonaro"
           >
 
         </div>
 
+
         <div class="candidate-content">
+
 
           <div class="candidate-label">
             Opção de voto
           </div>
 
+
           <div class="candidate-name">
             FLÁVIO BOLSONARO
           </div>
+
+
+          <div class="candidate-description">
+            Escolha esta opção para continuar
+            e confirmar sua participação.
+          </div>
+
 
           <a
             class="vote-button"
             href="pagamento.html?payment_option_id=4debd19b-bf23-4a04-ae44-daa9c05f6fe3"
           >
-            VOTAR NESTA OPÇÃO
+            🗳️ VOTAR NESTA OPÇÃO
           </a>
+
 
         </div>
 
@@ -654,38 +1090,50 @@
 
 
 
-      <!-- =============================
-           OPÇÃO 3
-      ============================== -->
+      <!-- ====================================================
+           RENAN SANTOS
+           ==================================================== -->
 
-      <article class="candidate">
+      <article class="candidate candidate-renan">
+
 
         <div class="photo-wrapper">
 
           <img
             class="candidate-photo"
             src="imagens/candidato-3.jpg"
-            alt="Opção RENAN SANTOS"
+            alt="Renan Santos"
           >
 
         </div>
 
+
         <div class="candidate-content">
+
 
           <div class="candidate-label">
             Opção de voto
           </div>
 
+
           <div class="candidate-name">
             RENAN SANTOS
           </div>
+
+
+          <div class="candidate-description">
+            Escolha esta opção para continuar
+            e confirmar sua participação.
+          </div>
+
 
           <a
             class="vote-button"
             href="pagamento.html?payment_option_id=1b457898-2a19-4342-a5f6-2a867b07f27c"
           >
-            VOTAR NESTA OPÇÃO
+            🗳️ VOTAR NESTA OPÇÃO
           </a>
+
 
         </div>
 
@@ -695,11 +1143,13 @@
     </section>
 
 
-    <!-- ===============================
+
+    <!-- ======================================================
          INFORMAÇÕES
-    ================================ -->
+         ====================================================== -->
 
     <section class="info">
+
 
       <div class="info-item">
 
@@ -712,10 +1162,12 @@
         </div>
 
         <div class="info-text">
-          Seu voto é processado de forma segura.
+          Sua participação é processada
+          de forma segura.
         </div>
 
       </div>
+
 
 
       <div class="info-item">
@@ -729,10 +1181,12 @@
         </div>
 
         <div class="info-text">
-          Acompanhe o resultado da votação.
+          Acompanhe o resultado atualizado
+          da pesquisa.
         </div>
 
       </div>
+
 
 
       <div class="info-item">
@@ -746,17 +1200,20 @@
         </div>
 
         <div class="info-text">
-          Cada participação ajuda a definir o resultado.
+          Cada participação confirmada
+          ajuda a definir o resultado.
         </div>
 
       </div>
 
+
     </section>
 
 
-    <!-- ===============================
+
+    <!-- ======================================================
          RESULTADOS
-    ================================ -->
+         ====================================================== -->
 
     <div class="results-area">
 
@@ -769,11 +1226,18 @@
 
     </div>
 
+
   </main>
 
 
+
+  <!-- ========================================================
+       RODAPÉ
+       ======================================================== -->
+
   <footer>
     Pesquisa independente de opinião.
+    Os resultados representam as participações registradas nesta página.
   </footer>
 
 
