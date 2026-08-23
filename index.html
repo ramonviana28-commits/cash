@@ -2,21 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="theme-color"
-    content="#070016"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Quem merece vencer?</title>
 
-  <style>
+  <meta
+    name="description"
+    content="Participe da pesquisa e escolha sua opção."
+  >
 
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -29,240 +24,137 @@
 
     body {
       min-height: 100vh;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       color: #ffffff;
 
       background:
         radial-gradient(
-          circle at 80% 18%,
-          rgba(255, 115, 0, 0.30),
-          transparent 31%
+          circle at 18% 40%,
+          rgba(70, 0, 255, 0.30),
+          transparent 32%
         ),
         radial-gradient(
-          circle at 17% 45%,
-          rgba(69, 0, 255, 0.40),
-          transparent 36%
+          circle at 82% 25%,
+          rgba(255, 92, 0, 0.20),
+          transparent 32%
         ),
         linear-gradient(
-          135deg,
-          #020617 0%,
-          #090020 48%,
-          #170015 100%
+          120deg,
+          #02051d 0%,
+          #08002c 45%,
+          #170013 100%
         );
-
-      overflow-x: hidden;
     }
 
-
-    /* =========================================================
-       FUNDO
-       ========================================================= */
-
-    body::before {
-      content: "";
-
-      position: fixed;
-
-      inset: 0;
-
-      pointer-events: none;
-
-      background:
-        linear-gradient(
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,0.015) 1px,
-          transparent 1px
-        );
-
-      background-size:
-        45px 45px;
-
-      opacity: 0.6;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
+    button {
+      font-family: inherit;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
 
     /* =========================================================
        HERO
        ========================================================= */
 
     .hero {
-      position: relative;
-      z-index: 2;
-
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 38px 20px 20px;
       text-align: center;
-
-      padding:
-        42px
-        20px
-        25px;
     }
 
     .badge {
-      display: inline-flex;
+      display: inline-block;
 
-      align-items: center;
-      justify-content: center;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ffe600,
-          #ffc400
-        );
+      background: linear-gradient(
+        90deg,
+        #ffd600,
+        #ffea00
+      );
 
       color: #050505;
 
-      padding:
-        10px 23px;
+      font-size: 14px;
+      font-weight: 900;
 
-      border-radius:
-        9px;
+      letter-spacing: 0.8px;
 
-      font-size:
-        14px;
+      padding: 10px 24px;
 
-      font-weight:
-        1000;
-
-      text-transform:
-        uppercase;
-
-      letter-spacing:
-        0.5px;
-
-      transform:
-        rotate(-1deg);
+      border-radius: 9px;
 
       box-shadow:
-        0 0 30px
-        rgba(255, 217, 0, 0.38);
+        0 0 18px rgba(255, 214, 0, 0.38);
 
-      margin-bottom:
-        22px;
+      margin-bottom: 22px;
     }
 
     .hero h1 {
-      max-width:
-        950px;
-
-      margin:
-        0 auto;
-
-      font-size:
-        clamp(
-          42px,
-          6vw,
-          76px
-        );
-
-      line-height:
-        0.93;
-
-      font-weight:
-        1000;
-
-      text-transform:
-        uppercase;
-
-      letter-spacing:
-        -2px;
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: 0.92;
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: -2px;
 
       text-shadow:
-        0 5px 0
-        rgba(0,0,0,.28),
-        0 0 30px
-        rgba(255,255,255,.07);
+        0 5px 18px rgba(0, 0, 0, 0.45);
     }
 
     .hero h1 span {
       display: block;
-
-      color:
-        #ffd900;
-
-      margin-top:
-        7px;
-
-      text-shadow:
-        0 0 28px
-        rgba(255,217,0,.20);
+      color: #ffd800;
     }
 
-    .hero p {
-      color:
-        #d5d8e1;
-
-      font-size:
-        17px;
-
-      max-width:
-        680px;
+    .hero-description {
+      max-width: 720px;
 
       margin:
-        22px auto 0;
+        26px auto 0;
 
-      line-height:
-        1.55;
+      font-size: 17px;
+      line-height: 1.55;
+
+      color: #e5e7eb;
     }
-
 
     /* =========================================================
-       CONTAINER
+       PESQUISA
        ========================================================= */
 
-    .container {
-      position: relative;
-      z-index: 2;
-
+    .poll-section {
       width: 100%;
+      max-width: 1100px;
 
-      max-width:
-        1250px;
-
-      margin:
-        0 auto;
+      margin: 0 auto;
 
       padding:
-        20px
-        25px
-        60px;
+        22px 20px 35px;
     }
-
-
-    /* =========================================================
-       TÍTULO DA VOTAÇÃO
-       ========================================================= */
 
     .section-title {
       text-align: center;
 
-      font-size:
-        19px;
+      font-size: 19px;
+      font-weight: 700;
 
-      font-weight:
-        700;
+      margin-bottom: 24px;
 
-      margin-bottom:
-        25px;
-
-      color:
-        #ffffff;
+      color: #ffffff;
     }
 
     .section-title span {
-      color:
-        #ffd900;
+      color: #ffe000;
     }
-
 
     /* =========================================================
        CARDS
@@ -272,88 +164,113 @@
       display: grid;
 
       grid-template-columns:
-        repeat(
-          3,
-          minmax(0, 1fr)
-        );
+        repeat(3, 1fr);
 
-      gap:
-        22px;
+      gap: 20px;
 
-      align-items:
-        stretch;
+      align-items: stretch;
     }
 
-    .candidate {
+    .candidate-card {
       position: relative;
 
       display: flex;
+      flex-direction: column;
 
-      flex-direction:
-        column;
+      min-width: 0;
 
       overflow: hidden;
+
+      border-radius: 19px;
 
       background:
         linear-gradient(
           180deg,
-          rgba(21, 15, 48, 0.98),
-          rgba(7, 8, 24, 0.98)
+          #111827 0%,
+          #07051d 100%
         );
 
       border:
-        1px solid
-        rgba(255,255,255,.12);
-
-      border-radius:
-        20px;
+        1px solid rgba(
+          255,
+          255,
+          255,
+          0.14
+        );
 
       box-shadow:
-        0 15px 45px
-        rgba(0,0,0,.45);
+        0 16px 40px rgba(0, 0, 0, 0.32);
 
       transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
     }
 
-    .candidate:hover {
-      transform:
-        translateY(-7px);
+    .candidate-card:hover {
+      transform: translateY(-7px);
 
       border-color:
-        rgba(255, 217, 0, .85);
+        rgba(255, 216, 0, 0.75);
 
       box-shadow:
-        0 20px 55px
-        rgba(0,0,0,.58),
-        0 0 35px
-        rgba(255,217,0,.10);
+        0 20px 45px rgba(0, 0, 0, 0.45),
+        0 0 24px rgba(255, 216, 0, 0.10);
     }
-
 
     /* =========================================================
-       FOTO
+       FOTOS
        ========================================================= */
 
-    .photo-wrapper {
+    .candidate-image {
       position: relative;
 
-      width:
-        100%;
+      width: 100%;
+      height: 310px;
 
-      height:
-        340px;
+      overflow: hidden;
 
-      overflow:
-        hidden;
-
-      background:
-        #111827;
+      background: #101827;
     }
 
-    .photo-wrapper::after {
+    .candidate-image img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition:
+        transform 0.4s ease;
+    }
+
+    .candidate-card:hover
+    .candidate-image img {
+      transform: scale(1.035);
+    }
+
+    /*
+     * Ajustes individuais de enquadramento.
+     */
+
+    .photo-lula {
+      object-position: center 24%;
+    }
+
+    .photo-flavio {
+      object-position: center 20%;
+    }
+
+    .photo-renan {
+      object-position: center 20%;
+    }
+
+    /*
+     * Degradê entre foto e card.
+     */
+
+    .candidate-image::after {
       content: "";
 
       position: absolute;
@@ -362,577 +279,397 @@
       right: 0;
       bottom: 0;
 
-      height:
-        100px;
-
-      pointer-events:
-        none;
+      height: 90px;
 
       background:
         linear-gradient(
           to bottom,
           transparent,
-          rgba(7,8,24,.98)
+          rgba(7, 5, 29, 0.98)
         );
     }
 
-    .candidate-photo {
-      display: block;
-
-      width:
-        100%;
-
-      height:
-        100%;
-
-      object-fit:
-        cover;
-
-      transition:
-        transform .35s ease;
-    }
-
-
-    /* LULA */
-
-    .candidate-lula
-    .candidate-photo {
-      object-position:
-        center 25%;
-    }
-
-
-    /* FLÁVIO */
-
-    .candidate-flavio
-    .candidate-photo {
-      object-position:
-        center 22%;
-    }
-
-
-    /* RENAN */
-
-    .candidate-renan
-    .candidate-photo {
-      object-position:
-        center 20%;
-    }
-
-
-    .candidate:hover
-    .candidate-photo {
-      transform:
-        scale(1.035);
-    }
-
-
     /* =========================================================
-       CONTEÚDO DOS CARDS
+       CONTEÚDO
        ========================================================= */
 
     .candidate-content {
       flex: 1;
 
       display: flex;
+      flex-direction: column;
 
-      flex-direction:
-        column;
+      text-align: center;
 
       padding:
-        4px
-        20px
-        22px;
-
-      text-align:
-        center;
+        5px 17px 18px;
     }
 
-    .candidate-label {
-      color:
-        #aab0c0;
+    .option-label {
+      color: #b9b9d3;
 
-      font-size:
-        11px;
+      font-size: 11px;
+      font-weight: 700;
 
-      text-transform:
-        uppercase;
+      letter-spacing: 2px;
 
-      letter-spacing:
-        1.7px;
+      text-transform: uppercase;
 
-      margin-bottom:
-        10px;
+      margin-bottom: 14px;
     }
 
     .candidate-name {
+      min-height: 55px;
+
       display: flex;
+      align-items: center;
+      justify-content: center;
 
-      align-items:
-        center;
+      color: #ffffff;
 
-      justify-content:
-        center;
+      font-size: 23px;
+      line-height: 1.15;
 
-      min-height:
-        58px;
+      font-weight: 1000;
 
-      color:
-        #ffffff;
+      text-transform: uppercase;
 
-      font-size:
-        23px;
-
-      font-weight:
-        1000;
-
-      text-transform:
-        uppercase;
-
-      line-height:
-        1.08;
+      text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.35);
     }
-
-    .candidate-description {
-      margin:
-        10px 0 5px;
-
-      color:
-        #9ba4b6;
-
-      font-size:
-        12px;
-
-      line-height:
-        1.45;
-    }
-
 
     /* =========================================================
        BOTÃO
        ========================================================= */
 
     .vote-button {
-      display: flex;
+      width: 100%;
 
-      align-items:
-        center;
+      margin-top: auto;
 
-      justify-content:
-        center;
+      border: 0;
 
-      width:
-        100%;
+      border-radius: 11px;
 
-      min-height:
-        54px;
-
-      margin-top:
-        auto;
-
-      padding:
-        13px 15px;
-
-      border:
-        none;
-
-      border-radius:
-        11px;
+      padding: 16px 10px;
 
       background:
         linear-gradient(
-          135deg,
-          #ffe600,
-          #ffbc00
+          90deg,
+          #ffe000,
+          #ffb800
         );
 
-      color:
-        #080808;
+      color: #050505;
 
-      font-size:
-        16px;
+      font-size: 16px;
+      font-weight: 1000;
 
-      font-weight:
-        1000;
+      text-transform: uppercase;
 
-      text-transform:
-        uppercase;
-
-      text-decoration:
-        none;
-
-      cursor:
-        pointer;
+      cursor: pointer;
 
       box-shadow:
-        0 8px 25px
-        rgba(255, 193, 0, .25);
+        0 8px 22px rgba(255, 196, 0, 0.20);
 
       transition:
-        transform .15s ease,
-        box-shadow .15s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
     }
 
     .vote-button:hover {
-      transform:
-        scale(1.025);
+      transform: translateY(-2px);
+
+      filter: brightness(1.06);
 
       box-shadow:
-        0 11px 32px
-        rgba(255, 193, 0, .42);
+        0 10px 28px rgba(255, 196, 0, 0.34);
     }
 
     .vote-button:active {
-      transform:
-        scale(.98);
+      transform: translateY(0);
     }
-
 
     /* =========================================================
        INFORMAÇÕES
        ========================================================= */
 
-    .info {
-      margin-top:
-        35px;
-
+    .info-grid {
       display: grid;
 
       grid-template-columns:
-        repeat(
-          3,
-          1fr
-        );
+        repeat(3, 1fr);
 
-      gap:
-        15px;
+      gap: 14px;
+
+      margin-top: 30px;
     }
 
-    .info-item {
-      text-align:
-        center;
+    .info-box {
+      min-height: 108px;
 
-      padding:
-        19px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-      border-radius:
-        14px;
+      text-align: center;
+
+      padding: 18px;
+
+      border-radius: 14px;
 
       background:
-        rgba(255,255,255,.045);
+        rgba(255, 255, 255, 0.055);
 
       border:
-        1px solid
-        rgba(255,255,255,.08);
+        1px solid rgba(
+          255,
+          255,
+          255,
+          0.10
+        );
     }
 
     .info-icon {
-      font-size:
-        27px;
-
-      margin-bottom:
-        8px;
+      font-size: 25px;
+      margin-bottom: 9px;
     }
 
     .info-title {
-      font-weight:
-        900;
+      font-size: 13px;
+      font-weight: 900;
 
-      font-size:
-        13px;
+      text-transform: uppercase;
+
+      margin-bottom: 7px;
     }
 
     .info-text {
-      margin-top:
-        6px;
+      color: #bfc3d4;
 
-      font-size:
-        12px;
-
-      color:
-        #aab0c0;
-
-      line-height:
-        1.45;
+      font-size: 12px;
+      line-height: 1.4;
     }
-
 
     /* =========================================================
        RESULTADOS
        ========================================================= */
 
     .results-area {
-      text-align:
-        center;
-
-      margin-top:
-        32px;
+      text-align: center;
+      margin-top: 25px;
     }
 
     .results-button {
-      display:
-        inline-flex;
+      display: inline-flex;
 
-      align-items:
-        center;
+      align-items: center;
+      justify-content: center;
 
-      justify-content:
-        center;
-
-      gap:
-        7px;
-
-      color:
-        #ffffff;
-
-      text-decoration:
-        none;
+      gap: 7px;
 
       border:
-        1px solid
-        rgba(255,255,255,.25);
+        1px solid rgba(
+          255,
+          255,
+          255,
+          0.30
+        );
 
-      border-radius:
-        11px;
+      border-radius: 10px;
 
-      padding:
-        13px 24px;
-
-      font-size:
-        14px;
-
-      font-weight:
-        700;
+      padding: 12px 22px;
 
       background:
-        rgba(255,255,255,.035);
+        rgba(255, 255, 255, 0.05);
+
+      color: #ffffff;
+
+      font-size: 14px;
+      font-weight: 700;
 
       transition:
-        background .2s ease,
-        border-color .2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
     }
 
     .results-button:hover {
+      transform: translateY(-2px);
+
       background:
-        rgba(255,255,255,.09);
+        rgba(255, 255, 255, 0.10);
 
       border-color:
-        rgba(255,217,0,.5);
+        rgba(255, 216, 0, 0.60);
     }
-
 
     /* =========================================================
        RODAPÉ
        ========================================================= */
 
-    footer {
-      position: relative;
+    .footer {
+      width: 100%;
 
-      z-index: 2;
-
-      text-align:
-        center;
-
-      color:
-        #777f91;
-
-      font-size:
-        11px;
-
-      line-height:
-        1.6;
+      text-align: center;
 
       padding:
-        0
-        20px
-        35px;
-    }
+        5px 20px 30px;
 
+      color: #777b91;
+
+      font-size: 11px;
+    }
 
     /* =========================================================
        TABLET
        ========================================================= */
 
-    @media
-    (max-width: 950px) {
+    @media (
+      max-width: 900px
+    ) {
 
-      .container {
-        padding-left:
-          15px;
-
-        padding-right:
-          15px;
+      .hero {
+        padding-top: 30px;
       }
 
       .candidates {
-        gap:
-          14px;
+        gap: 13px;
       }
 
-      .photo-wrapper {
-        height:
-          280px;
+      .candidate-image {
+        height: 260px;
       }
 
       .candidate-name {
-        font-size:
-          18px;
-      }
-
-      .candidate-content {
-        padding:
-          4px
-          14px
-          18px;
+        font-size: 19px;
       }
 
       .vote-button {
-        font-size:
-          13px;
+        font-size: 14px;
       }
-    }
 
+    }
 
     /* =========================================================
        CELULAR
        ========================================================= */
 
-    @media
-    (max-width: 700px) {
+    @media (
+      max-width: 700px
+    ) {
 
       .hero {
         padding:
-          28px
-          15px
-          15px;
+          25px 16px 10px;
       }
 
       .badge {
-        font-size:
-          11px;
+        font-size: 11px;
 
         padding:
-          8px
-          15px;
+          9px 16px;
 
-        margin-bottom:
-          18px;
+        margin-bottom: 18px;
       }
 
       .hero h1 {
         font-size:
-          42px;
+          clamp(
+            39px,
+            13vw,
+            58px
+          );
 
-        letter-spacing:
-          -1.5px;
+        letter-spacing: -1px;
       }
 
-      .hero p {
-        font-size:
-          15px;
+      .hero-description {
+        font-size: 15px;
 
-        margin-top:
-          17px;
+        margin-top: 20px;
       }
 
-      .container {
+      .poll-section {
         padding:
-          14px
-          13px
-          45px;
+          22px 14px 30px;
       }
 
       .section-title {
-        font-size:
-          16px;
-
-        margin-bottom:
-          20px;
+        font-size: 17px;
+        margin-bottom: 20px;
       }
+
+      /*
+       * No celular os candidatos
+       * ficam um abaixo do outro.
+       */
 
       .candidates {
-        grid-template-columns:
-          1fr;
+        grid-template-columns: 1fr;
 
-        max-width:
-          430px;
+        max-width: 430px;
 
-        margin:
-          0 auto;
+        margin: 0 auto;
 
-        gap:
-          23px;
+        gap: 22px;
       }
 
-      .photo-wrapper {
-        height:
-          400px;
+      .candidate-image {
+        height: 390px;
       }
 
       .candidate-content {
         padding:
-          5px
-          20px
-          23px;
+          5px 17px 18px;
       }
 
       .candidate-name {
-        font-size:
-          25px;
+        min-height: auto;
 
-        min-height:
-          auto;
+        font-size: 25px;
 
-        margin-bottom:
-          5px;
-      }
-
-      .candidate-description {
-        margin-bottom:
-          18px;
+        margin-bottom: 18px;
       }
 
       .vote-button {
-        min-height:
-          56px;
+        font-size: 16px;
 
-        font-size:
-          17px;
+        padding:
+          17px 10px;
       }
 
-      .info {
-        grid-template-columns:
-          1fr;
+      .info-grid {
+        grid-template-columns: 1fr;
 
-        max-width:
-          430px;
+        max-width: 430px;
 
         margin:
-          30px auto 0;
+          28px auto 0;
       }
+
+      .info-box {
+        min-height: 95px;
+      }
+
     }
 
-
     /* =========================================================
-       CELULAR PEQUENO
+       CELULARES PEQUENOS
        ========================================================= */
 
-    @media
-    (max-width: 420px) {
+    @media (
+      max-width: 420px
+    ) {
 
-      .hero h1 {
-        font-size:
-          36px;
-      }
-
-      .photo-wrapper {
-        height:
-          350px;
+      .candidate-image {
+        height: 340px;
       }
 
       .candidate-name {
-        font-size:
-          23px;
+        font-size: 22px;
       }
 
     }
@@ -940,306 +677,297 @@
   </style>
 </head>
 
-
 <body>
 
+  <div class="page">
 
-  <!-- ========================================================
-       CABEÇALHO
-       ======================================================== -->
+    <!-- =======================================================
+         CABEÇALHO
+         ======================================================= -->
 
-  <header class="hero">
+    <header class="hero">
 
-    <div class="badge">
-      🔥 A SUA OPINIÃO DECIDE!
-    </div>
+      <div class="badge">
+        🔥 A SUA OPINIÃO DECIDE!
+      </div>
 
-    <h1>
-      QUEM MERECE
-      <span>VENCER?</span>
-    </h1>
+      <h1>
+        QUEM MERECE
+        <span>VENCER?</span>
+      </h1>
 
-    <p>
-      Participe da pesquisa e escolha uma das opções abaixo.
-      Sua participação ajuda a definir o resultado.
-    </p>
+      <p class="hero-description">
+        Participe da pesquisa e escolha uma das opções abaixo.
+        Sua participação ajuda a definir o resultado.
+      </p>
 
-  </header>
-
-
-
-  <!-- ========================================================
-       CONTEÚDO
-       ======================================================== -->
-
-  <main class="container">
+    </header>
 
 
-    <div class="section-title">
-      👇 Escolha uma opção para <span>participar</span>
-    </div>
+    <!-- =======================================================
+         PESQUISA
+         ======================================================= -->
+
+    <main class="poll-section">
+
+      <div class="section-title">
+        👇 Escolha uma opção para
+        <span>participar</span>
+      </div>
 
 
-
-    <!-- ======================================================
-         CANDIDATOS
-         ====================================================== -->
-
-    <section class="candidates">
+      <div class="candidates">
 
 
-      <!-- ====================================================
-           LULA
-           ==================================================== -->
+        <!-- ===================================================
+             LULA
+             =================================================== -->
 
-      <article class="candidate candidate-lula">
+        <article class="candidate-card">
 
+          <div class="candidate-image">
 
-        <div class="photo-wrapper">
+            <img
+              src="imagens/-1.jpeg"
+              alt="Opção LULA"
+              class="photo-lula"
+            >
 
-          <img
-            class="candidate-photo"
-            src="imagens/candidato-1.jpeg"
-            alt="Lula"
-          >
-
-        </div>
-
-
-        <div class="candidate-content">
-
-
-          <div class="candidate-label">
-            Opção de voto
           </div>
 
+          <div class="candidate-content">
 
-          <div class="candidate-name">
-            LULA
+            <div class="option-label">
+              Opção de voto
+            </div>
+
+            <div class="candidate-name">
+              LULA
+            </div>
+
+            <button
+              class="vote-button"
+              type="button"
+              onclick="votar(
+                '9823e037-4045-40dd-8b5f-a183ea4cdc44'
+              )"
+            >
+              📦 VOTAR NESTA OPÇÃO
+            </button>
+
           </div>
 
+        </article>
 
-          <div class="candidate-description">
-            Escolha esta opção para continuar
-            e confirmar sua participação.
+
+        <!-- ===================================================
+             FLÁVIO BOLSONARO
+             =================================================== -->
+
+        <article class="candidate-card">
+
+          <div class="candidate-image">
+
+            <img
+              src="imagens/-2.jfif"
+              alt="Opção FLÁVIO BOLSONARO"
+              class="photo-flavio"
+            >
+
           </div>
 
+          <div class="candidate-content">
 
-          <a
-            class="vote-button"
-            href="pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44"
-          >
-            🗳️ VOTAR NESTA OPÇÃO
-          </a>
+            <div class="option-label">
+              Opção de voto
+            </div>
 
+            <div class="candidate-name">
+              FLÁVIO BOLSONARO
+            </div>
 
-        </div>
+            <button
+              class="vote-button"
+              type="button"
+              onclick="votar(
+                '4debd19b-bf23-4a04-ae44-daa9c05f6fe3'
+              )"
+            >
+              📦 VOTAR NESTA OPÇÃO
+            </button>
 
-      </article>
-
-
-
-      <!-- ====================================================
-           FLÁVIO BOLSONARO
-           ==================================================== -->
-
-      <article class="candidate candidate-flavio">
-
-
-        <div class="photo-wrapper">
-
-          <img
-            class="candidate-photo"
-            src="imagens/candidato-2.jfif"
-            alt="Flávio Bolsonaro"
-          >
-
-        </div>
-
-
-        <div class="candidate-content">
-
-
-          <div class="candidate-label">
-            Opção de voto
           </div>
 
+        </article>
 
-          <div class="candidate-name">
-            FLÁVIO BOLSONARO
+
+        <!-- ===================================================
+             RENAN SANTOS
+             =================================================== -->
+
+        <article class="candidate-card">
+
+          <div class="candidate-image">
+
+            <img
+              src="imagens/-3.jpg"
+              alt="Opção RENAN SANTOS"
+              class="photo-renan"
+            >
+
           </div>
 
+          <div class="candidate-content">
 
-          <div class="candidate-description">
-            Escolha esta opção para continuar
-            e confirmar sua participação.
+            <div class="option-label">
+              Opção de voto
+            </div>
+
+            <div class="candidate-name">
+              RENAN SANTOS
+            </div>
+
+            <button
+              class="vote-button"
+              type="button"
+              onclick="votar(
+                '1b457898-2a19-4342-a5f6-2a867b07f27c'
+              )"
+            >
+              📦 VOTAR NESTA OPÇÃO
+            </button>
+
           </div>
 
-
-          <a
-            class="vote-button"
-            href="pagamento.html?payment_option_id=4debd19b-bf23-4a04-ae44-daa9c05f6fe3"
-          >
-            🗳️ VOTAR NESTA OPÇÃO
-          </a>
-
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ====================================================
-           RENAN SANTOS
-           ==================================================== -->
-
-      <article class="candidate candidate-renan">
-
-
-        <div class="photo-wrapper">
-
-          <img
-            class="candidate-photo"
-            src="imagens/candidato-3.jpg"
-            alt="Renan Santos"
-          >
-
-        </div>
-
-
-        <div class="candidate-content">
-
-
-          <div class="candidate-label">
-            Opção de voto
-          </div>
-
-
-          <div class="candidate-name">
-            RENAN SANTOS
-          </div>
-
-
-          <div class="candidate-description">
-            Escolha esta opção para continuar
-            e confirmar sua participação.
-          </div>
-
-
-          <a
-            class="vote-button"
-            href="pagamento.html?payment_option_id=1b457898-2a19-4342-a5f6-2a867b07f27c"
-          >
-            🗳️ VOTAR NESTA OPÇÃO
-          </a>
-
-
-        </div>
-
-      </article>
-
-
-    </section>
-
-
-
-    <!-- ======================================================
-         INFORMAÇÕES
-         ====================================================== -->
-
-    <section class="info">
-
-
-      <div class="info-item">
-
-        <div class="info-icon">
-          🔒
-        </div>
-
-        <div class="info-title">
-          PARTICIPAÇÃO SEGURA
-        </div>
-
-        <div class="info-text">
-          Sua participação é processada
-          de forma segura.
-        </div>
+        </article>
 
       </div>
 
 
+      <!-- =====================================================
+           INFORMAÇÕES
+           ===================================================== -->
 
-      <div class="info-item">
+      <section class="info-grid">
 
-        <div class="info-icon">
-          📊
+        <div class="info-box">
+
+          <div class="info-icon">
+            🔒
+          </div>
+
+          <div class="info-title">
+            PARTICIPAÇÃO SEGURA
+          </div>
+
+          <div class="info-text">
+            Sua participação é processada
+            de forma segura.
+          </div>
+
         </div>
 
-        <div class="info-title">
-          RESULTADO ATUALIZADO
+
+        <div class="info-box">
+
+          <div class="info-icon">
+            📊
+          </div>
+
+          <div class="info-title">
+            RESULTADO ATUALIZADO
+          </div>
+
+          <div class="info-text">
+            Acompanhe o resultado
+            atualizado da pesquisa.
+          </div>
+
         </div>
 
-        <div class="info-text">
-          Acompanhe o resultado atualizado
-          da pesquisa.
+
+        <div class="info-box">
+
+          <div class="info-icon">
+            💬
+          </div>
+
+          <div class="info-title">
+            SUA OPINIÃO IMPORTA
+          </div>
+
+          <div class="info-text">
+            Cada participação confirmada
+            ajuda a definir o resultado.
+          </div>
+
         </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           RESULTADOS
+           ===================================================== -->
+
+      <div class="results-area">
+
+        <a
+          href="resultados.html"
+          class="results-button"
+        >
+          📊 Ver resultado atual
+        </a>
 
       </div>
 
+    </main>
 
 
-      <div class="info-item">
+    <!-- =======================================================
+         RODAPÉ
+         ======================================================= -->
 
-        <div class="info-icon">
-          💬
-        </div>
+    <footer class="footer">
+      Pesquisa independente de opinião.
+    </footer>
 
-        <div class="info-title">
-          SUA OPINIÃO IMPORTA
-        </div>
-
-        <div class="info-text">
-          Cada participação confirmada
-          ajuda a definir o resultado.
-        </div>
-
-      </div>
+  </div>
 
 
-    </section>
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
 
+  <script>
 
+    /*
+     * Ao clicar em uma opção,
+     * envia o identificador para
+     * pagamento.html.
+     */
 
-    <!-- ======================================================
-         RESULTADOS
-         ====================================================== -->
+    function votar(
+      paymentOptionId
+    ) {
 
-    <div class="results-area">
+      if (!paymentOptionId) {
+        return;
+      }
 
-      <a
-        class="results-button"
-        href="resultados.html"
-      >
-        📊 Ver resultado atual
-      </a>
+      const destino =
+        "pagamento.html" +
+        "?payment_option_id=" +
+        encodeURIComponent(
+          paymentOptionId
+        );
 
-    </div>
+      window.location.href =
+        destino;
 
+    }
 
-  </main>
-
-
-
-  <!-- ========================================================
-       RODAPÉ
-       ======================================================== -->
-
-  <footer>
-    Pesquisa independente de opinião.
-    Os resultados representam as participações registradas nesta página.
-  </footer>
-
+  </script>
 
 </body>
 </html>
