@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Quem merece vencer?</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #ffffff;
+
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(255, 123, 0, 0.30),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 20% 40%,
+          rgba(64, 0, 255, 0.35),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #020617 0%,
+          #090020 50%,
+          #120018 100%
+        );
+    }
+
+    /* ================================
+       TOPO
+    ================================= */
+
+    .hero {
+      text-align: center;
+      padding: 45px 20px 25px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ffd900;
+      color: #050505;
+
+      padding: 9px 22px;
+      border-radius: 8px;
+
+      font-size: 14px;
+      font-weight: 900;
+
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      transform: rotate(-1deg);
+
+      box-shadow:
+        0 0 25px rgba(255, 217, 0, 0.35);
+
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.95;
+
+      font-weight: 1000;
+      text-transform: uppercase;
+
+      max-width: 950px;
+      margin: 0 auto;
+
+      text-shadow:
+        0 4px 0 rgba(0,0,0,.3),
+        0 0 30px rgba(255,255,255,.08);
+    }
+
+    .hero h1 span {
+      color: #ffd900;
+    }
+
+    .hero p {
+      color: #d5d8e1;
+      font-size: 18px;
+
+      max-width: 650px;
+      margin: 20px auto 0;
+
+      line-height: 1.5;
+    }
+
+    /* ================================
+       CONTAINER
+    ================================= */
+
+    .container {
+      width: 100%;
+      max-width: 1250px;
+
+      margin: 0 auto;
+      padding: 20px 25px 60px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 25px;
+
+      color: #ffffff;
+    }
+
+    /* ================================
+       CARDS
+    ================================= */
+
+    .candidates {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 22px;
+    }
+
+    .candidate {
+      position: relative;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(21, 15, 48, 0.98),
+          rgba(7, 8, 24, 0.98)
+        );
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      border-radius: 20px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.45);
+
+      transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .candidate:hover {
+      transform: translateY(-7px);
+
+      border-color:
+        rgba(255, 217, 0, .8);
+
+      box-shadow:
+        0 20px 55px rgba(0,0,0,.55),
+        0 0 30px rgba(255,217,0,.12);
+    }
+
+    /* ================================
+       FOTO
+    ================================= */
+
+    .photo-wrapper {
+      width: 100%;
+      height: 340px;
+
+      overflow: hidden;
+
+      background: #111827;
+
+      position: relative;
+    }
+
+    .photo-wrapper::after {
+      content: "";
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 90px;
+
+      background:
+        linear-gradient(
+          transparent,
+          rgba(7,8,24,.95)
+        );
+    }
+
+    .candidate-photo {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: cover;
+
+      object-position:
+        center 25%;
+
+      transition:
+        transform .35s ease;
+    }
+
+    .candidate:hover
+    .candidate-photo {
+      transform: scale(1.035);
+    }
+
+    /* ================================
+       CONTEÚDO
+    ================================= */
+
+    .candidate-content {
+      padding:
+        5px 22px 24px;
+
+      text-align: center;
+    }
+
+    .candidate-label {
+      color: #aab0c0;
+
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.5px;
+
+      margin-bottom: 7px;
+    }
+
+    .candidate-name {
+      font-size: 24px;
+
+      font-weight: 900;
+
+      min-height: 58px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      text-transform: uppercase;
+
+      line-height: 1.1;
+    }
+
+    /* ================================
+       BOTÃO
+    ================================= */
+
+    .vote-button {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+
+      min-height: 54px;
+
+      margin-top: 18px;
+
+      border: none;
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffe600,
+          #ffb800
+        );
+
+      color: #080808;
+
+      font-size: 17px;
+      font-weight: 900;
+
+      text-transform: uppercase;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 25px
+        rgba(255, 193, 0, .25);
+
+      transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+    }
+
+    .vote-button:hover {
+      transform: scale(1.025);
+
+      box-shadow:
+        0 10px 30px
+        rgba(255, 193, 0, .4);
+    }
+
+    /* ================================
+       INFORMAÇÕES
+    ================================= */
+
+    .info {
+      margin-top: 35px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 15px;
+    }
+
+    .info-item {
+      text-align: center;
+
+      padding: 18px;
+
+      border-radius: 13px;
+
+      background:
+        rgba(255,255,255,.05);
+
+      border:
+        1px solid
+        rgba(255,255,255,.08);
+    }
+
+    .info-icon {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .info-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .info-text {
+      margin-top: 5px;
+
+      font-size: 12px;
+
+      color: #aab0c0;
+
+      line-height: 1.4;
+    }
+
+    /* ================================
+       RESULTADOS
+    ================================= */
+
+    .results-area {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .results-button {
+      display: inline-block;
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      border:
+        1px solid
+        rgba(255,255,255,.25);
+
+      border-radius: 10px;
+
+      padding: 12px 22px;
+
+      font-size: 14px;
+
+      transition:
+        background .2s ease;
+    }
+
+    .results-button:hover {
+      background:
+        rgba(255,255,255,.08);
+    }
+
+    /* ================================
+       RODAPÉ
+    ================================= */
+
+    footer {
+      text-align: center;
+
+      color: #777f91;
+
+      font-size: 12px;
+
+      padding:
+        0 20px 35px;
+    }
+
+    /* ================================
+       TABLET
+    ================================= */
+
+    @media
+    (max-width: 900px) {
+
+      .candidates {
+        gap: 15px;
+      }
+
+      .photo-wrapper {
+        height: 280px;
+      }
+
+      .candidate-name {
+        font-size: 19px;
+      }
+
+      .candidate-content {
+        padding:
+          5px 15px 20px;
+      }
+    }
+
+    /* ================================
+       CELULAR
+    ================================= */
+
+    @media
+    (max-width: 700px) {
+
+      .hero {
+        padding:
+          30px 15px 15px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .container {
+        padding:
+          15px 14px 45px;
+      }
+
+      .section-title {
+        font-size: 17px;
+      }
+
+      /*
+       * No celular os candidatos
+       * ficam um abaixo do outro.
+       */
+
+      .candidates {
+        grid-template-columns:
+          1fr;
+
+        max-width: 430px;
+
+        margin:
+          0 auto;
+
+        gap: 22px;
+      }
+
+      .photo-wrapper {
+        height: 390px;
+      }
+
+      .candidate-name {
+        font-size: 25px;
+
+        min-height: auto;
+      }
+
+      .candidate-content {
+        padding:
+          5px 20px 24px;
+      }
+
+      .vote-button {
+        min-height: 57px;
+
+        font-size: 18px;
+      }
+
+      .info {
+        grid-template-columns:
+          1fr;
+
+        max-width: 430px;
+
+        margin:
+          30px auto 0;
+      }
+    }
+
+    @media
+    (max-width: 420px) {
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .photo-wrapper {
+        height: 350px;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =================================
+       CABEÇALHO
+  ================================== -->
+
+  <header class="hero">
+
+    <div class="badge">
+      🔥 A SUA OPINIÃO DECIDE!
+    </div>
+
+    <h1>
+      QUEM MERECE
+      <span>VENCER?</span>
+    </h1>
+
+    <p>
+      Participe da pesquisa e escolha uma das opções abaixo.
+      Sua participação ajuda a definir o resultado.
+    </p>
+
+  </header>
+
+
+  <!-- =================================
+       CONTEÚDO
+  ================================== -->
+
+  <main class="container">
+
+    <div class="section-title">
+      👇 Escolha uma opção para participar
+    </div>
+
+
+    <!-- ===============================
+         CANDIDATOS
+    ================================ -->
+
+    <section class="candidates">
+
+
+      <!-- =============================
+           OPÇÃO 1
+      ============================== -->
+
+      <article class="candidate">
+
+        <div class="photo-wrapper">
+
+          <img
+            class="candidate-photo"
+            src="imagens/candidato-1.jpg"
+            alt="Opção LULA"
+          >
+
+        </div>
+
+        <div class="candidate-content">
+
+          <div class="candidate-label">
+            Opção de voto
+          </div>
+
+          <div class="candidate-name">
+            LULA
+          </div>
+
+          <a
+            class="vote-button"
+            href="pagamento.html?payment_option_id=9823e037-4045-40dd-8b5f-a183ea4cdc44"
+          >
+            VOTAR NESTA OPÇÃO
+          </a>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =============================
+           OPÇÃO 2
+      ============================== -->
+
+      <article class="candidate">
+
+        <div class="photo-wrapper">
+
+          <img
+            class="candidate-photo"
+            src="imagens/candidato-2.jpg"
+            alt="Opção FLÁVIO BOLSONARO"
+          >
+
+        </div>
+
+        <div class="candidate-content">
+
+          <div class="candidate-label">
+            Opção de voto
+          </div>
+
+          <div class="candidate-name">
+            FLÁVIO BOLSONARO
+          </div>
+
+          <a
+            class="vote-button"
+            href="pagamento.html?payment_option_id=4debd19b-bf23-4a04-ae44-daa9c05f6fe3"
+          >
+            VOTAR NESTA OPÇÃO
+          </a>
+
+        </div>
+
+      </article>
+
+
+
+      <!-- =============================
+           OPÇÃO 3
+      ============================== -->
+
+      <article class="candidate">
+
+        <div class="photo-wrapper">
+
+          <img
+            class="candidate-photo"
+            src="imagens/candidato-3.jpg"
+            alt="Opção RENAN SANTOS"
+          >
+
+        </div>
+
+        <div class="candidate-content">
+
+          <div class="candidate-label">
+            Opção de voto
+          </div>
+
+          <div class="candidate-name">
+            RENAN SANTOS
+          </div>
+
+          <a
+            class="vote-button"
+            href="pagamento.html?payment_option_id=1b457898-2a19-4342-a5f6-2a867b07f27c"
+          >
+            VOTAR NESTA OPÇÃO
+          </a>
+
+        </div>
+
+      </article>
+
+
+    </section>
+
+
+    <!-- ===============================
+         INFORMAÇÕES
+    ================================ -->
+
+    <section class="info">
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          🔒
+        </div>
+
+        <div class="info-title">
+          PARTICIPAÇÃO SEGURA
+        </div>
+
+        <div class="info-text">
+          Seu voto é processado de forma segura.
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          📊
+        </div>
+
+        <div class="info-title">
+          RESULTADO ATUALIZADO
+        </div>
+
+        <div class="info-text">
+          Acompanhe o resultado da votação.
+        </div>
+
+      </div>
+
+
+      <div class="info-item">
+
+        <div class="info-icon">
+          💬
+        </div>
+
+        <div class="info-title">
+          SUA OPINIÃO IMPORTA
+        </div>
+
+        <div class="info-text">
+          Cada participação ajuda a definir o resultado.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===============================
+         RESULTADOS
+    ================================ -->
+
+    <div class="results-area">
+
+      <a
+        class="results-button"
+        href="resultados.html"
+      >
+        📊 Ver resultado atual
+      </a>
+
+    </div>
+
+  </main>
+
+
+  <footer>
+    Pesquisa independente de opinião.
+  </footer>
+
+
+</body>
+</html>
