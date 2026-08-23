@@ -15,7 +15,7 @@
     content="#08002c"
   >
 
-  <title>Resultado da votação</title>
+  <title>Placar da disputa</title>
 
   <style>
 
@@ -272,7 +272,7 @@
     }
 
     /* =========================================================
-       TOTAL
+       RESUMO
        ========================================================= */
 
     .summary {
@@ -383,7 +383,7 @@
     }
 
     /* =========================================================
-       RESULTADOS
+       PARTICIPANTES
        ========================================================= */
 
     .results-grid {
@@ -494,7 +494,7 @@
     }
 
     /* =========================================================
-       RANKING
+       POSIÇÃO
        ========================================================= */
 
     .ranking {
@@ -557,7 +557,7 @@
     }
 
     /* =========================================================
-       CARD CONTEÚDO
+       CONTEÚDO
        ========================================================= */
 
     .result-content {
@@ -998,7 +998,7 @@
     <header class="hero">
 
       <div class="badge">
-        📊 RESULTADO ATUALIZADO
+        🔥 PLACAR AO VIVO
       </div>
 
       <h1>
@@ -1009,8 +1009,8 @@
       </h1>
 
       <p>
-        Acompanhe o resultado da pesquisa em tempo real.
-        Apenas participações confirmadas são contabilizadas.
+        Acompanhe a disputa em tempo real.
+        Cada participação confirmada movimenta o placar.
       </p>
 
     </header>
@@ -1027,22 +1027,18 @@
       <section class="main-card">
 
 
-        <!-- ==================================================
-             STATUS
-             ================================================== -->
+        <!-- STATUS -->
 
         <div
           id="status"
           class="status loading"
         >
-          Carregando resultado...
+          Carregando placar...
         </div>
 
 
 
-        <!-- ==================================================
-             CONTEÚDO DOS RESULTADOS
-             ================================================== -->
+        <!-- CONTEÚDO -->
 
         <div
           id="content"
@@ -1050,9 +1046,7 @@
         >
 
 
-          <!-- ================================================
-               RESUMO
-               ================================================ -->
+          <!-- RESUMO -->
 
           <section class="summary">
 
@@ -1060,15 +1054,15 @@
             <div class="summary-left">
 
               <div class="summary-kicker">
-                PLACAR DA PESQUISA
+                PLACAR DA DISPUTA
               </div>
 
               <div class="summary-title">
-                Resultado atual
+                Situação atual
               </div>
 
               <div class="summary-description">
-                O placar é atualizado automaticamente
+                O placar muda automaticamente
                 conforme novas participações são confirmadas.
               </div>
 
@@ -1078,7 +1072,7 @@
             <div class="total-box">
 
               <div class="total-label">
-                Votos confirmados
+                PARTICIPAÇÕES
               </div>
 
               <div
@@ -1095,9 +1089,7 @@
 
 
 
-          <!-- ================================================
-               CANDIDATOS
-               ================================================ -->
+          <!-- PARTICIPANTES -->
 
           <div
             id="results"
@@ -1106,25 +1098,21 @@
 
 
 
-          <!-- ================================================
-               ATUALIZAÇÃO
-               ================================================ -->
+          <!-- ATUALIZAÇÃO -->
 
           <div class="update-panel">
 
             <span class="live-dot"></span>
 
             <span id="updatedAt">
-              Atualizando...
+              Atualizando placar...
             </span>
 
           </div>
 
 
 
-          <!-- ================================================
-               AÇÕES
-               ================================================ -->
+          <!-- AÇÕES -->
 
           <div class="actions">
 
@@ -1132,7 +1120,7 @@
               href="index.html"
               class="action-button primary"
             >
-              🗳️ PARTICIPAR NOVAMENTE
+              🔥 ENTRAR NA DISPUTA
             </a>
 
             <button
@@ -1140,7 +1128,7 @@
               class="action-button"
               type="button"
             >
-              ↻ ATUALIZAR AGORA
+              ↻ ATUALIZAR PLACAR
             </button>
 
           </div>
@@ -1157,9 +1145,9 @@
 
 
     <footer class="footer">
-      Resultado atualizado automaticamente.
-      Os números representam as participações
-      confirmadas nesta pesquisa.
+      Placar atualizado automaticamente.
+      Cada número representa uma participação
+      confirmada na disputa.
     </footer>
 
 
@@ -1304,7 +1292,7 @@
         "status loading";
 
       statusBox.textContent =
-        "Carregando resultado...";
+        "Carregando placar...";
 
       statusBox.style.display =
         "block";
@@ -1313,7 +1301,7 @@
 
 
     // ==========================================================
-    // VOTOS
+    // PARTICIPAÇÕES
     // ==========================================================
 
     function formatVotes(
@@ -1324,11 +1312,11 @@
         value === 1
       ) {
 
-        return "1 voto confirmado";
+        return "1 participação confirmada";
       }
 
       return value +
-        " votos confirmados";
+        " participações confirmadas";
     }
 
 
@@ -1356,7 +1344,7 @@
 
 
     // ==========================================================
-    // FOTO DO CANDIDATO
+    // FOTO
     // ==========================================================
 
     function getCandidateData(
@@ -1416,15 +1404,15 @@
           .sort(
             (a, b) => {
 
-              const voteDifference =
+              const participationDifference =
                 Number(b.votes || 0) -
                 Number(a.votes || 0);
 
               if (
-                voteDifference !== 0
+                participationDifference !== 0
               ) {
 
-                return voteDifference;
+                return participationDifference;
               }
 
               return (
@@ -1566,7 +1554,7 @@
 
 
             fallback.textContent =
-              "🗳️";
+              "🔥";
 
 
             photoArea.appendChild(
@@ -1602,7 +1590,7 @@
 
 
           label.textContent =
-            "Opção de voto";
+            "PARTICIPANTE";
 
 
           const name =
@@ -1676,17 +1664,17 @@
           );
 
 
-          const votes =
+          const participations =
             document.createElement(
               "div"
             );
 
 
-          votes.className =
+          participations.className =
             "vote-count";
 
 
-          votes.textContent =
+          participations.textContent =
             formatVotes(
               Number(
                 item.votes || 0
@@ -1705,7 +1693,7 @@
 
 
           leaderLabel.textContent =
-            "🏆 Liderando";
+            "🏆 NA LIDERANÇA";
 
 
           resultContent.appendChild(
@@ -1729,7 +1717,7 @@
 
 
           resultContent.appendChild(
-            votes
+            participations
           );
 
 
@@ -1777,7 +1765,7 @@
 
 
       updatedAtElement.textContent =
-        "Atualizado às " +
+        "AO VIVO • atualizado às " +
         now.toLocaleTimeString(
           "pt-BR",
           {
@@ -1798,7 +1786,7 @@
 
 
     // ==========================================================
-    // CARREGAR RESULTADOS
+    // CARREGAR PLACAR
     // ==========================================================
 
     async function loadResults(
@@ -1854,7 +1842,7 @@
 
           throw new Error(
             data?.error ||
-            "Não foi possível carregar o resultado."
+            "Não foi possível carregar o placar."
           );
         }
 
@@ -1865,7 +1853,7 @@
 
           throw new Error(
             data?.error ||
-            "Erro ao carregar resultado."
+            "Erro ao carregar o placar."
           );
         }
 
@@ -1887,7 +1875,7 @@
         showError(
           error instanceof Error
             ? error.message
-            : "Erro ao carregar resultado."
+            : "Erro ao carregar o placar."
         );
 
 
@@ -1903,7 +1891,7 @@
 
 
           refreshButton.textContent =
-            "↻ ATUALIZAR AGORA";
+            "↻ ATUALIZAR PLACAR";
 
         }
 
